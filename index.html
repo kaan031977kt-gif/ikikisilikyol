@@ -127,6 +127,8 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .pulse{animation:pulse .5s}@keyframes pulse{50%{transform:scale(1.35);color:#fff}}
 @media(max-width:700px),(max-height:420px){.dialogue{min-height:64px;padding:6px 10px;gap:8px}#portrait{width:44px;height:44px}.speaker{font-size:8px;margin:0 0 4px}.line{font-size:10px;line-height:1.4;min-height:2.6em}.hint{display:none}.card{padding:12px}.card p{font-size:10px;line-height:1.5;margin-bottom:6px}.card h2{margin-bottom:8px}#toast{font-size:9px;top:6px}}
 .puz{overflow:auto}
+@media(max-height:420px){.grow{margin:3px 0;padding:3px 6px}.grow .gt small{display:none}.grow .gi{font-size:16px}.grow button{padding:4px 6px}#garage .card{padding:8px}}
+.grow{display:flex;gap:8px;align-items:center;justify-content:space-between;margin:6px 0;text-align:left;border:2px solid #34465c;padding:6px 8px;background:#0c1522}.grow .gi{font-size:20px}.grow .gt{flex:1;font-size:11px;line-height:1.35}.grow .gt small{display:block;opacity:.75;font-size:9px}.grow button{min-width:78px;font-size:10px}.gpips{letter-spacing:2px;color:var(--gold)}
 @media(prefers-reduced-motion:reduce){.dialogue,.hint{animation:none}#title{transition:none}}
 </style>
 </head>
@@ -138,13 +140,14 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 <div class="hud"><span>BÖLÜM: <b id="chapter">1 / 6 — Başlangıç Noktası</b></span><span>HATIRA: <b id="memories">0 / 3</b></span><span>OYUNCU: <b id="who">KAAN</b></span><span id="hpStatus"></span><span id="carStatus"></span><span id="bikeStatus">🔴 DOMINAR: PARKTA</span></div>
 <div id="toast"></div>
 <div id="puz" class="puz" style="display:none"><div class="card"><h2>Bulmaca</h2><p id="pq"></p><div id="po" class="po"></div><p class="small">Esc: vazgeç</p><button id="pclose">Vazgeç</button></div></div>
+<div id="garage" class="puz" style="display:none"><div class="card"><h2>🔧 Garaj</h2><p id="gbolts" class="small"></p><div id="glist"></div><button id="gclose">Devam</button></div></div>
 <div class="dialogue" id="dialogue"><canvas id="portrait" width="24" height="24"></canvas><div class="dtext"><div class="speaker" id="speaker"></div><p class="line" id="line"></p></div><div class="hint">▼ E / ENTER / dokun</div></div>
 <div id="title"><small id="tsub"></small><i></i><h2 id="tname"></h2><i></i></div>
 <div class="overlay" id="overlay"><div class="card" id="card"><h2>İki Kişilik Bir Yol</h2><p>Günümüz. Kaan ve Gizem motorla yolda ilerliyor. Her şey yolunda gibi... ta ki kötü kalpli bir tamirci araya girene kadar.</p><p><em>“Hatırla, Kaan, hatırla!”</em></p><p>Dominar’ı sür, küçük kalplerle hatıraları aç, yaratıkları vur. Gizem’i bul ve hikâyenin sonuna ulaş.</p><button id="start">Yolculuğa başla</button><button id="continue" style="display:none">Kaldığın yerden devam et</button><p class="small">A/D veya ←/→ hareket · W/↑/Space çift zıpla · E etkileşim · Q karakter değiştir · M motor · F ateş · C süper güç · S ses</p></div></div>
 </div>
 
 <div class="help" id="help"></div>
-<div class="ctl"><button id="helpBtn" aria-label="Tuşlar ne işe yarar?" title="Tuşlar ne işe yarar?">❓</button><button id="modeBtn" aria-label="Mobil kontroller" title="Mobil kontroller">📱</button><button id="fsBtn" aria-label="Tam ekran" title="Tam ekran">⛶</button><button id="menuBtn" aria-label="Menü" title="Menü">☰</button><div class="menu" id="menu"><div class="keys">A / D veya ← / →: hareket<br>W / ↑ / Space: çift zıpla<br>E: konuş / hatıra al · Q: karakter değiştir<br>M: motora bin / in / çağır · F: ateş<br>C: süper güç · Shift: nitro · G: Gizem atılışı<br>S: ses</div><button id="installBtn" style="display:none">📲 Uygulama olarak yükle</button><button id="mute">Ses: açık</button><button id="restart">Bölümü baştan al</button><button id="reset">Kaydı sil</button></div></div>
+<div class="ctl"><button id="helpBtn" aria-label="Tuşlar ne işe yarar?" title="Tuşlar ne işe yarar?">❓</button><button id="modeBtn" aria-label="Mobil kontroller" title="Mobil kontroller">📱</button><button id="fsBtn" aria-label="Tam ekran" title="Tam ekran">⛶</button><button id="garBtn" aria-label="Garaj" title="Garaj (B)">🔧</button><button id="menuBtn" aria-label="Menü" title="Menü">☰</button><div class="menu" id="menu"><div class="keys">A / D veya ← / →: hareket<br>W / ↑ / Space: çift zıpla<br>E: konuş / hatıra al · Q: karakter değiştir<br>M: motora bin / in / çağır · F: ateş<br>C: süper güç · Shift: nitro · G: Gizem atılışı<br>B: garaj (cıvata harca) · S: ses<br>Yarışta: SOL fren · Shift nitro</div><button id="installBtn" style="display:none">📲 Uygulama olarak yükle</button><button id="mute">Ses: açık</button><button id="restart">Bölümü baştan al</button><button id="reset">Kaydı sil</button></div></div>
 <div class="touch"><div class="tg tl"><button id="left" aria-label="Sol"><span class="lt">◀</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-8 7 8 7z" fill="currentColor"/></svg></span></button><button id="right" aria-label="Sağ"><span class="lt">▶</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l8 7-8 7z" fill="currentColor"/></svg></span></button></div><div class="joy" id="joy"><div class="knob"></div></div><div class="tg tr"><button id="jump" aria-label="Zıpla"><span class="lt">⬆</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V5M5 11l7-7 7 7"/></svg></span><span class="tx">ZIPLA</span></button><button id="interact"><span class="lt">E</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-6l-5 4v-4H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M8 10.5h.01M12 10.5h.01M16 10.5h.01" stroke-width="3"/></svg></span><span class="tx">ETKİLEŞ</span></button><button id="swap"><span class="lt">Q</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></span><span class="tx">DEĞİŞ</span></button><button id="mbtn"><span class="lt">M</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-6h5l3 6M10 10L8.5 7H6M14 10l1-3h3"/></svg></span><span class="tx">MOTOR</span></button><button id="fbtn"><span class="lt">F</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6.5"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg></span><span class="tx">ATEŞ</span></button><button id="cbtn"><span class="lt">C</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16v-3l2-4.5h10l3.5 4.5H21v3z"/><circle cx="7.5" cy="17" r="2" fill="currentColor"/><circle cx="16.5" cy="17" r="2" fill="currentColor"/></svg></span><span class="tx">ARABA</span></button><button id="nbtn"><span class="lt">⚡</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c.6 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3.5 2.4-4.6.1 1.8.9 2.8 1.8 3C10.5 8 10.5 5 12 2z" fill="currentColor"/></svg></span><span class="tx">NİTRO</span></button><button id="gbtn"><span class="lt">G</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h7M2 12h10M4 16h7M14 6l7 6-7 6z" /></svg></span><span class="tx">ATILIŞ</span></button></div></div>
 </div>
 </div>
@@ -193,6 +196,26 @@ const CH=[
   puz:[{type:'pipe',title:'Mühür: Enerji Hattı',need:2,cols:5,rows:4,clue:'Mühürün enerjisini sağ tarafa ulaştır. Boruları tıklayarak döndür.'},{type:'jig',title:'Mühür: Dominar Haritası',need:2,pic:'bike',clue:'Parçaları yer değiştirerek resmi tamamla. İki parçaya sırayla tıkla.'}],
   th:{sky:['#101828','#223250','#3d5470'],style:'storm',far:'#16213a',mid:'#101a2c',near:'#0a111e',ground:'#1b232e',gtop:'#6b8296',pf:'#2c3a49',acc:'#86a0b6',win:0,stars:0,wx:'storm',mult:'#9aa8c4',lamp:'255,214,150',cloud:['#25324a','#141d30'],mus:3,grass:'#344a46',cast:'kaan',npc:1,startMounted:1,en:[380,620],boss:[760,1040],final:1,gun:[560,900]}}
 ];
+CH.push(
+ {name:'Gece Yarışı',intro:[['YOL','Ömer’in garajından çıkan Kaan, şehir çıkışına gelir. Tamircinin adamları gece yarışı düzenliyor.'],['ÖMER','(telsizden) Kanka, kazanırsan Gizem’in izini söylerler. Gazı kökle!'],['YOL','Yol kendiliğinden akıyor. SOL: fren · Shift: nitro · W: zıpla. Rampalardan hızlı çık, sarı çizgilerden hız al!']],mem:[],
+  end:[['YOL','Kaan çizgiyi geçer. Yarışçılardan biri dişlerini sıkıp mırıldanır.'],['YARIŞÇI','Tamirci seni yolda bekliyor, kahraman. Bu iş burada bitmeyecek.'],['KAAN','Ben de onu bekliyorum.']],
+  th:{sky:['#0a0e24','#1d2150','#4a3070'],style:'city',far:'#1a2040',mid:'#141a34',near:'#0e1226',ground:'#1a1d2e',gtop:'#ffcf6e',pf:'#2c3350',acc:'#ffcf6e',win:1,stars:60,wx:'dust',mult:'#b8b4e0',lamp:'255,214,130',cloud:['#2a2f5a','#1a1d3a'],mus:6,grass:'#2f3d5c',cast:'kaan',startMounted:1,race:1,rivals:3}},
+ {name:'Gölgelerden Kaçış',intro:[['YOL','Gizem kilitleri aşıp dışarı çıkar. Ama tamircinin gardiyanları her yerde dolaşıyor...'],['GİZEM','(fısıldayarak) Fenerlerine yakalanmamalıyım. Dolapların içine saklanabilirim. (E)'],['GİZEM','(kendi kendine) Yüksek platformlardan geçersem ışık beni görmez.']],mem:[],
+  end:[['GİZEM','(kendi kendine) Gardiyanları atlattım. Şimdi Kaan’ı bulmalıyım... ya da o beni.'],['YOL','Uzakta bir motor sesi duyulur.']],
+  puz:[{type:'wires',title:'Alarm Panosu',need:1,clue:'Alarm kablolarını eşleştir.'},{type:'pipe',title:'Işık Hattı',need:1,cols:4,rows:3,clue:'Boruları döndürerek enerjiyi kapıya ulaştır.'}],
+  th:{sky:['#05070f','#0e1730','#1d2b4a'],style:'dusk',far:'#101a30',mid:'#0c1426',near:'#080e1c',ground:'#161e2e',gtop:'#6f84a8',pf:'#26324a',acc:'#7f93b8',win:0,stars:70,wx:'fireflies',mult:'#9aa8c8',lamp:'255,200,130',cloud:['#101a30','#0a1224'],mus:3,grass:'#2a3a46',cast:'gizem',stealth:1}},
+ {name:'Birlikte Kaçış',intro:[['YOL','Tamirci yenildi ama mekân çöküyor! Kaan ve Gizem birlikte çıkışa koşmak zorunda.'],['KAAN','Q ile birbirimize geçeriz. Biri plakaya basarken diğeri yolu açar.'],['GİZEM','Beraberiz. Hadi, buradan çıkalım!']],mem:[],
+  end:[['GİZEM','Dışarı çıktık... Güneş doğuyor.'],['KAAN','Hadi eve dönelim. Dominar bizi bekliyor.']],
+  puz:[{type:'wires',title:'Ana Şalter',need:1,clue:'Şalter kablolarını eşleştir.'}],
+  th:{sky:['#07090f','#10151f','#1a2230'],style:'cell',far:'#161d2a',mid:'#10151f',near:'#0b0f17',ground:'#1c2430',gtop:'#9c8a7c',pf:'#3a3444',acc:'#c0a58e',win:0,stars:0,wx:'dust',mult:'#c0a8a0',lamp:'255,180,120',cloud:['#10151f','#0b0f17'],mus:3,grass:'#3a3d3c',cast:'duo',cells:1,coop:1,quake:1}},
+ {name:'Eve Dönüş',intro:[['YOL','Gün doğarken Kaan ve Gizem aynı motorda, aynı yolda...'],['GİZEM','Bu sefer acele etme Kaan. Ama sürerken de uyuyakalmak yok!'],['KAAN','Sen arkadayken uyumak mümkün mü? Sıkı tutun!']],mem:[],
+  end:[['GİZEM','Gebze’ye geldik. Şimdi çorba içiyoruz, söz verdin.'],['KAAN','Söz.']],
+  th:{sky:['#2b2f6a','#ff8a7a','#ffd79a'],style:'hills',far:'#9a6a8a',mid:'#7a5a7a',near:'#563f5c',ground:'#4a4658',gtop:'#ffe6b0',pf:'#6b5a70',acc:'#ffe6b0',win:0,sun:{x:240,y:150,r:30,c:'#fff0c0',g:'255,200,130'},stars:0,wx:'petals',mult:'#ffe6dc',lamp:'255,214,130',cloud:['#ffc8a0','#e89aa0'],mus:5,grass:'#8a9a5a',birds:1,cast:'duo',startMounted:1,race:1,rivals:0}}
+);
+const ORDER=[0,1,6,2,3,7,4,5,8,9],posOf=n=>ORDER.indexOf(n),nextCh=n=>ORDER[posOf(n)+1];
+const GIFTS=[{e:'🌅',n:'Gün Batımı Fotoğrafı'},{e:'🥤',n:'Gizem’in Soda Şişesi'},{e:'🎵',n:'Araba Turu Şarkısı'},{e:'🔑',n:'Gizem’in Anahtarlığı'},{e:'🌹',n:'Hastane Gülü'},{e:'📖',n:'Hatıra Defteri'},{e:'🏁',n:'Gece Yarışı Kupası'},{e:'🧸',n:'Kurtarılan Peluş'},{e:'🕯️',n:'Kaçış Feneri'},{e:'💖',n:'Gün Doğumu Kalbi'}];
+const UPG=[{k:'nit',n:'Nitro Tankı',d:'Nitro geç biter, hızlı dolar.',e:'⚡',cost:[8,14,22]},{k:'arm',n:'Zırh Plakası',d:'Her seviye +1 can.',e:'🛡️',cost:[10,16,24]},{k:'dj',n:'Süspansiyon',d:'Dominar havada ikinci kez zıplar.',e:'🦘',cost:[20]},{k:'gun',n:'Güçlü Mermi',d:'Silah +1 hasar verir.',e:'🔫',cost:[15]},{k:'car',n:'Süper Güç Motoru',d:'Araba uzun sürer, az bekler.',e:'🚗',cost:[12,20]}];
+const NITD=[.5,.38,.28,.2],NITR=[.18,.26,.34,.42],CART=[6,8,10],CARCD=[26,20,16];
 const LAYOUT=[
  {p:[[300,194,56],[700,170,60]],i:[]},
  {p:[[170,194,56],[300,168,54],[430,196,70],[560,176,60],[700,146,56],[840,190,76],[980,166,60],[1100,196,70]],i:[1,4,6]},
@@ -212,6 +235,7 @@ const MUS=[
 const keys={},touch={left:0,right:0,jump:0,nitro:0};
 const RD=()=>cast==='gizem'?actors[1]:actors[0];
 let chapter=0,active=0,mem=0,scene='title',locked=false,clock=0,cam=0,shake=0,flash=0,fade=0,fadeTarget=0,bars=0;
+let bolts=0,up={nit:0,arm:0,dj:0,gun:0,car:0},gifts=new Set(),bl=[],gift=null,guards=[],hides=[],hidden=0,rivals=[],boosts=[],garageOpen=false;
 let arena=null,plates=[],deco=[],L=1300,hp=5,MAXHP=5,nit=1,cpX=100,frag=0,fused=0,gaps=[],ramps=[],tun=[],springs=[],spikes=[],levers=[],solids=[],frags=[],cps=[],hints=[],PL=null,kx=1e9,ebul=[],cine=null,cast='duo',hasCar=false,carT=0,carCD=0,invul=0,shotCD=0,modal=false,puzSolved=new Set(),enemies=[],bullets=[],tam=null,ev={},puzCur=null;
 let actors=[],bike={x:130,y:GROUND,mounted:false,spin:0,face:1,parked:0},platforms=[],items=[],props=[],goal={x:1225,y:GROUND},parts=[],rings=[],clouds=[],birds=[],wxp=[],bg={},lights=[],jumpWasDown=false,lastCam=0,bolt=null,boltT=0,nextBolt=4,thunderQ=[],footN=0,saved=null,muted=false;
 const TH=()=>CH[chapter].th;
@@ -317,7 +341,13 @@ const PLAN=[
  {segs:[['flat',{e:1}],['tunnel'],['crates'],['gap'],['flat',{e:2,g:1}]],beats:[[.3,[['KAAN','Oğuz’un arabası... Süper güç sınırlı. Doğru anda kullanmalıyım. (C)']]],[.72,[['KAAN','Dayan Gizem, geliyorum.']]]]},
  {segs:[['flat',{e:2,g:1}],['gap'],['crates'],['tunnel',{f:2}],['puz'],['arena',{b:1,e:2}],['lever',{f:2}],['puz'],['arena',{b:1,g:2}],['final']],beats:[[.12,[['KAAN','Burası tamircinin mekânı... Gizem içeride.']]],[.5,[['TAMİRCİ','Buraya kadar geldin demek! Cesaretine hayranım ama içeri giremezsin!']]],[.82,[['GİZEM','(uzaktan) Kaan, dikkat et!']]]]}
 ];
-function genLevel(ch){const pl=PLAN[ch],Rr=rng(ch*53+9);let x=330;const G={tam:[],arena:null,plates:[],deco:[],nsX:0,plats:[],solids:[],gaps:[],ramps:[],tun:[],springs:[],spikes:[],levers:[],frags:[],cps:[],items:[],en:[],gun:[],boss:[],puz:[],hints:[]};
+PLAN.push(
+ {segs:[['road'],['gap'],['road'],['spikes'],['road'],['crates'],['gap'],['road'],['spikes'],['crates'],['gap'],['road'],['spikes'],['road'],['gap'],['crates'],['road']],kf:2,beats:[[.04,[['KAAN','Gaz kökte!']]],[.5,[['YARIŞÇI','(bağırarak) Beni geçemezsin!'],['KAAN','Bakalım.']]]],race:1},
+ {segs:[['flat'],['guard'],['dgap',{f:1}],['guard2'],['lever',{f:1}],['puz'],['guard'],['spring',{f:1}],['guard2'],['puz'],['guard'],['flat']],kf:2,beats:[[.12,[['GİZEM','(fısıldayarak) Ayak seslerini duyuyorum...']]],[.55,[['GİZEM','(kendi kendine) Yarısı geride kaldı. Yakalanmamalıyım.']]]]},
+ {segs:[['coop'],['cbridge',{f:1}],['cplate2'],['flat'],['cbridge'],['puz'],['spikes'],['cplate2'],['coop'],['flat']],kf:2,beats:[[.1,[['GİZEM','Bak, köprü yok! Biri plakaya bassın.']]],[.6,[['KAAN','Duvarlar çöküyor, devam!']]]]},
+ {segs:[['road'],['gap'],['road'],['crates'],['gap'],['road'],['spikes'],['gap'],['road'],['crates'],['gap'],['road'],['spikes'],['gap'],['road'],['crates'],['gap'],['road'],['spikes'],['road']],kf:2,beats:[[.1,[['GİZEM','Rüzgar saçımı dağıtıyor!'],['KAAN','Sıkı tut!']]],[.6,[['GİZEM','Şu gün doğumuna bak...'],['KAAN','Seninle her yol güzel.']]]],race:1}
+);
+function genLevel(ch){const pl=PLAN[ch],Rr=rng(ch*53+9);let x=330;const G={tam:[],arena:null,plates:[],deco:[],nsX:0,plats:[],solids:[],gaps:[],ramps:[],tun:[],springs:[],spikes:[],levers:[],frags:[],cps:[],items:[],en:[],gun:[],boss:[],puz:[],hints:[],boosts:[],guards:[],hides:[]};
  const plat=(px,py,w,mv)=>{const p={x:px,y:py,w,h:7,mv};G.plats.push(p);return p};
  const mvp=(cx,py,w,ax,sp,ph)=>plat(cx-w/2,py,w,{x0:cx-w/2,y0:py,ax,sp,ph});
  const crate=(cx,cy)=>G.solids.push({t:'crate',x:cx,y:cy,w:22,h:24,hp:2});
@@ -337,6 +367,11 @@ function genLevel(ch){const pl=PLAN[ch],Rr=rng(ch*53+9);let x=330;const G={tam:[
    case'cave':len=420;G.nsX=x0+210;G.deco.push({x1:x0+110,x2:x0+320});hint('Mağaranın içinde bir şey parlıyor... Yaklaş ve E ile incele.',20);if(o.f)fr(x0+360,GROUND-14);break;
    case'coop':len=420;G.tun.push({x1:x0+30,x2:x0+400});G.plates.push({x:x0+100,id:x0,on:0});G.solids.push({t:'door',id:x0,x:x0+250,y:GROUND-62,w:10,h:62,open:0});hint('Dar geçit! Biri plakaya bassın, diğeri Q ile kapıdan geçsin. (Kapı açık kalır.)');break;
    case'final':len=640;plat(x0+70,GROUND-46,64);plat(x0+500,GROUND-46,64);G.tam.push(x0+len/2+90);G.arena={x1:x0+10,x2:x0+len,lock:0};hint('Tamirci karşında! Motoruyla üstüne atılacak, uyarı çıkınca kenara kaç. Yorulunca vur!',30);break
+   case'road':len=o.l||320;G.boosts.push({x:x0+90},{x:x0+215});break;
+   case'guard':len=540;G.guards.push({x:x0+270,min:x0+140,max:x0+420});G.hides.push({x:x0+70},{x:x0+480});plat(x0+120,GROUND-62,46);plat(x0+205,GROUND-76,46);plat(x0+290,GROUND-62,46);plat(x0+375,GROUND-76,46);hint('Gardiyan! Fenerine yakalanma: dolaba gir (E) ya da yüksek platformlardan geç.');break;
+   case'guard2':len=680;G.guards.push({x:x0+250,min:x0+120,max:x0+330},{x:x0+500,min:x0+400,max:x0+600});G.hides.push({x:x0+60},{x:x0+360},{x:x0+640});hint('İki gardiyan! Dolaplar arasında zamanlayarak ilerle (E: sakla).');break;
+   case'cbridge':{len=560;G.gaps.push({x1:x0+110,x2:x0+330});G.plates.push({x:x0+50,id:x0,on:0});const b=plat(x0+110,GROUND,220);b.br=x0;b.on=0;G.levers.push({x:x0+360,y:GROUND,id:x0,on:0});hint('Köprü kapalı! Biri plakaya bassın (Q ile değiş). Diğeri karşıya geçip kolu çeksin (E).');if(o.f)fr(x0+395,GROUND-14);break}
+   case'cplate2':len=560;G.plates.push({x:x0+70,id:x0,on:0},{x:x0+170,id:x0,on:0});G.solids.push({t:'door',id:x0,x:x0+330,y:GROUND-130,w:10,h:130,open:0});hint('İki plaka, tek kapı! Birinde dur, Q ile geç, diğer plakaya bas.');break;
    case'puz':len=240;G.puz.push(x0+90);break;
    case'arena':len=560;plat(x0+60,GROUND-46,60);plat(x0+440,GROUND-46,60);break}
   const ne=o.e||0;if(['flat','arena','spikes','spring','climb'].includes(t))for(let i=0;i<ne;i++)G.en.push(x0+120+i*Math.floor((len-240)/Math.max(1,ne)));
@@ -355,14 +390,73 @@ function worldTick(dt){
  for(const p of platforms)if(p.mv){const ox=p.x,oy=p.y,m=p.mv;p.x=m.x0+Math.sin(clock*m.sp+m.ph)*m.ax;p.y=m.y0;p.dx=p.x-ox;p.dy=p.y-oy}
  for(const sp of springs)if(sp.t>0)sp.t--;
  const k=RD();
- for(const pl of plates){let on=0;for(const q of actors){if(q.x<-100)continue;if(q.grounded&&q.y+q.h>=GROUND-2&&Math.abs(q.x+5-(pl.x+8))<11)on=1}pl.on=on;const d=solids.find(s=>s.t==='door'&&s.id===pl.id);if(d){if(!d.lat){d.open=on;if(on&&actors.some(q=>q.x>d.x+16&&q.x<d.x+90&&q.x>-100))d.lat=1}else d.open=1}}
- if(k.nitro&&bike.mounted){nit=Math.max(0,nit-dt*.5);if(Math.floor(clock*60)%2===0)emit({x:bike.x-k.face*20,y:bike.y-7,vx:-k.face*(1+Math.random()),vy:(Math.random()-.5)*.6,life:.3,max:.3,col:Math.random()<.5?'#ffb347':'#fff3b0',size:3,add:1,shrink:.8})}else nit=Math.min(1,nit+dt*.18);
+ for(const pl of plates){let on=0;for(const q of actors){if(q.x<-100)continue;if(q.grounded&&q.y+q.h>=GROUND-2&&Math.abs(q.x+5-(pl.x+8))<11)on=1}pl.on=on}
+ for(const d of solids){if(d.t!=='door')continue;const ps=plates.filter(p=>p.id===d.id);if(!ps.length)continue;const all=ps.every(p=>p.on);if(d.lat){d.open=1;continue}d.open=all?1:0;
+  if(ps.length>1){if(all){d.hold=(d.hold||0)+1;if(d.hold>25){d.lat=1;sfx('collect')}}else d.hold=0}else if(all&&actors.some(q=>q.x>d.x+16&&q.x<d.x+90&&q.x>-100))d.lat=1}
+ for(const p of platforms)if(p.br){const pl=plates.find(q=>q.id===p.br),w=p.on;p.on=(p.lat||(pl&&pl.on))?1:0;if(p.on&&!w)sfx('mount')}
+ if(rivals.length){const px=RD().x;for(const r of rivals){const want=r.base+clamp((px-r.x)*.01,-.7,1.1);r.v=lerp(r.v||2.6,want,.05);r.x=Math.min(L-30,r.x+r.v);r.spin+=r.v*.3;let yo=0;for(const g of gaps)if(r.x>g.x1-50&&r.x<g.x2+30){const t=(r.x-(g.x1-50))/(g.x2-g.x1+80);yo=Math.sin(clamp(t,0,1)*Math.PI)*46}r.yo=yo;if(Math.floor(clock*60)%4===0)emit({x:r.x-18,y:GROUND-6,vx:-.6,vy:-.2,life:.4,max:.4,col:'#9aa4b2',size:2,shrink:1})}}
+ if(k.nitro&&bike.mounted){nit=Math.max(0,nit-dt*NITD[up.nit]);if(Math.floor(clock*60)%2===0)emit({x:bike.x-k.face*20,y:bike.y-7,vx:-k.face*(1+Math.random()),vy:(Math.random()-.5)*.6,life:.3,max:.3,col:Math.random()<.5?'#ffb347':'#fff3b0',size:3,add:1,shrink:.8})}else nit=Math.min(1,nit+dt*NITR[up.nit]);
  if(bike.call&&!bike.mounted){const dx=(k.x+5)-bike.x;bike.face=dx>0?1:-1;bike.x+=Math.sign(dx)*4.6;bike.spin+=Math.sign(dx)*1.4;if(Math.floor(clock*60)%3===0)emit({x:bike.x-bike.face*18,y:GROUND-6,vx:-bike.face*.6,vy:-.2,life:.4,max:.4,col:'#d9c7a8',size:2,shrink:1});
   if(Math.abs(dx)<26){bike.call=0;if(!inTun(k.x+5)&&k.grounded)mountBike()}}}
+
+function spawnPickups(){bl=[];gift=null;rivals=[];const th=TH(),Rb=rng(chapter*17+3);
+ const okx=x=>!inGapX(x)&&!inTun(x)&&!solids.some(q=>x>q.x-16&&x<q.x+q.w+16)&&!spikes.some(q=>x>q.x-12&&x<q.x+q.w+12)&&!ramps.some(r=>x>r.x-10&&x<r.x+54);
+ const step=th.race?90:130;for(let x=240;x<L-260;x+=step+Math.floor(Rb()*40))if(okx(x))bl.push({x,y:GROUND-14,got:0,ph:Rb()*6});
+ for(const p of platforms)if(!p.mv&&!p.br&&Rb()<.65)bl.push({x:p.x+p.w/2,y:p.y-12,got:0,ph:Rb()*6});
+ for(const g of gaps){const m=(g.x1+g.x2)/2;if(g.x2-g.x1<=200&&!th.race)continue;bl.push({x:m,y:GROUND-46,got:0,ph:1},{x:m-26,y:GROUND-36,got:0,ph:2},{x:m+26,y:GROUND-36,got:0,ph:3})}
+ if(!gifts.has(chapter)){let gx,gy;const hp2=platforms.filter(p=>!p.mv&&!p.br&&p.x>380&&p.x<L-420).sort((a,b)=>a.y-b.y)[0];
+  if(hp2&&!th.race){gx=hp2.x+hp2.w/2;gy=hp2.y-14}else{const gs=gaps.filter(g=>g.x1>400);const g=gs[Math.floor(gs.length/2)];if(g){gx=(g.x1+g.x2)/2;gy=GROUND-76}else{gx=L*.55;gy=GROUND-16}}
+  gift={x:gx,y:gy,got:0}}
+ for(let i=0;i<(th.rivals||0);i++)rivals.push({x:150+i*34,v:2.6,base:2.62+i*.1,col:['#d94f4f','#4fb0d9','#8fd94f'][i%3],spin:i,yo:0})}
+function pickupTick(a){const cx=a.x+5,cy=a.y+10,m=bike.mounted;
+ for(const b of bl)if(!b.got&&Math.abs(cx-b.x)<(m?20:14)&&Math.abs(cy-b.y)<(m?30:22)){b.got=1;bolts++;sfx('collect');for(let i=0;i<6;i++)emit({x:b.x,y:b.y,vx:(Math.random()-.5)*2,vy:(Math.random()-.5)*2,life:.35,max:.35,col:'#c7d2e0',size:2,add:1,shrink:.7})}
+ if(gift&&!gift.got&&Math.abs(cx-gift.x)<20&&Math.abs(cy-gift.y)<(m?36:26)){gift.got=1;gifts.add(chapter);sfx('goal');flash=.3;toast(`🎁 Hediye bulundu: ${GIFTS[chapter].n}`,3400);for(let i=0;i<24;i++)emit({x:gift.x,y:gift.y,vx:(Math.random()-.5)*3,vy:(Math.random()-.5)*3,life:.8,max:.8,col:i%2?'#ffb3d0':'#ffe08a',size:2,add:1,shrink:.6})}}
+function drawBolts(){for(const b of bl){if(b.got)continue;const y=Math.round(b.y+Math.sin(clock*3+b.ph)*2),x=Math.round(b.x);glow(x,y,12,'200,225,255',.8);R(x-4,y-4,9,9,OUT);R(x-3,y-1,7,3,'#8a96a8');R(x-1,y-3,3,7,'#8a96a8');R(x-2,y-2,5,5,'#c7d2e0');R(x-1,y-1,3,3,'#566274');R(x-2,y-2,2,1,'#fff')}
+ if(gift&&!gift.got){const y=Math.round(gift.y+Math.sin(clock*2.4)*3),x=Math.round(gift.x);lights.push({x,y,r:34,rgb:'255,160,200',a:.8});R(x-6,y-5,12,11,OUT);R(x-5,y-4,10,9,'#ff7aa8');R(x-5,y-4,10,2,'#ff9ec0');R(x-1,y-5,2,11,'#ffe08a');R(x-5,y,10,2,'#ffe08a');R(x-3,y-7,3,3,'#ffe08a');R(x+1,y-7,3,3,'#ffe08a');for(let i=0;i<3;i++){const an=clock*2+i*2.1;ctx.globalAlpha=.5+.5*Math.sin(clock*8+i);R(x+Math.cos(an)*12,y+Math.sin(an)*10,1,1,'#fff6c8')}ctx.globalAlpha=1}}
+function drawRival(r){const x=Math.round(r.x),y=Math.round(GROUND-(r.yo||0));ctx.fillStyle='rgba(0,0,0,.3)';ctx.fillRect(x-14,GROUND-1,28,2);
+ R(x-15,y-9,9,9,OUT);R(x+6,y-9,9,9,OUT);R(x-14,y-8,7,7,'#222');R(x+7,y-8,7,7,'#222');R(x-12,y-6,3,3,'#9aa4b2');R(x+9,y-6,3,3,'#9aa4b2');
+ R(x-10,y-15,22,7,r.col);R(x-10,y-15,22,2,'rgba(255,255,255,.35)');R(x+4,y-20,8,5,r.col);R(x-3,y-27,7,12,'#2b3342');R(x-2,y-33,6,6,'#d9a98a');R(x-3,y-34,8,3,r.col);lights.push({x:x+16,y:y-14,r:14,rgb:'255,243,176',a:.5})}
+function drawBridge(p){if(!p.on){ctx.globalAlpha=.35;for(let x=p.x;x<p.x+p.w;x+=10)R(x,p.y+1,5,2,'#e0c050');ctx.globalAlpha=1;return}
+ R(p.x,p.y,p.w,6,'#8b6446');R(p.x,p.y,p.w,2,'#c9a26a');for(let x=p.x+6;x<p.x+p.w;x+=12)R(x,p.y+2,1,4,'#5a3f2a');R(p.x,p.y-9,2,9,'#5a3f2a');R(p.x+p.w-2,p.y-9,2,9,'#5a3f2a');R(p.x,p.y-9,p.w,1,'#c9a26a');lights.push({x:p.x+p.w/2,y:p.y,r:60,rgb:'255,214,150',a:.35})}
+function canAfford(){return UPG.some(u=>up[u.k]<u.cost.length&&bolts>=u.cost[up[u.k]])}
+function applyUp(){const m=5+up.arm;if(m>MAXHP)hp+=m-MAXHP;MAXHP=m}
+let garageCb=null;
+function renderGarage(){el('gbolts').textContent=`⚙ Cıvata: ${bolts} · Cıvata topla, motoru güçlendir!`;const Ls=el('glist');Ls.innerHTML='';
+ for(const u of UPG){const lv=up[u.k],mx=u.cost.length,row=document.createElement('div');row.className='grow';
+  row.innerHTML=`<span class="gi">${u.e}</span><span class="gt"><b>${u.n}</b> <span class="gpips">${'●'.repeat(lv)}${'○'.repeat(mx-lv)}</span><small>${u.d}</small></span>`;
+  const b=mkb(lv>=mx?'TAM':`⚙ ${u.cost[lv]}`);if(lv>=mx||bolts<u.cost[lv])b.disabled=true;
+  b.onclick=()=>{if(up[u.k]>=mx||bolts<u.cost[up[u.k]])return;bolts-=u.cost[up[u.k]];up[u.k]++;applyUp();save();sfx('collect');renderGarage()};row.append(b);Ls.append(row)}}
+function openGarage(cb){if(garageOpen)return;garageOpen=true;modal=true;garageCb=cb||null;renderGarage();el('garage').style.display='grid'}
+function closeGarage(){if(!garageOpen)return;garageOpen=false;modal=false;el('garage').style.display='none';const cb=garageCb;garageCb=null;if(cb)cb()}
+function garageThen(cb){if(nextCh(chapter)!==undefined&&canAfford())openGarage(cb);else cb()}
+function advance(){const n=nextCh(chapter);if(n===undefined)ending();else startChapter(n)}
+function raceFinish(){const rank=1+rivals.filter(r=>r.x>goal.x).length,bonus=rivals.length?[10,6,3,2][Math.min(3,rank-1)]:8;bolts+=bonus;sfx('goal');flash=.5;shake=3;
+ toast(rivals.length?`Finiş! ${rank}. sırada bitirdin · +${bonus} cıvata`:`Eve vardınız! +${bonus} cıvata`,3600);
+ const en=CH[chapter].end;setTimeout(()=>say(en.length?en:[['YOL','Yol devam ediyor...']],()=>garageThen(advance)),900)}
+
+function guardTick(){if(!guards.length||scene!=='play'||D.on||modal||cine||locked)return;const g=actors[1];
+ for(const e of guards){e.ph+=.08;
+  if(e.pause>0){e.pause--;if(e.pause===35)e.face=-e.face}else{e.x+=e.dir*.5;e.face=e.dir;if(e.x>e.max){e.dir=-1;e.pause=70}if(e.x<e.min){e.dir=1;e.pause=70}}
+  const dx=(g.x+5)-(e.x+7),dy=(g.y+10)-(e.y+12),see=!hidden&&dx*e.face>0&&Math.abs(dx)<115&&Math.abs(dy)<26;
+  if(see){e.alert+=Math.abs(dx)<55?2.4:1.3;if(e.alert>6&&!e.pinged){e.pinged=1;sfx('err')}}else{e.alert=Math.max(0,e.alert-1.2);if(e.alert<2)e.pinged=0}
+  if(e.alert>=40){caught();return}}}
+function caught(){for(const e of guards)e.alert=0;hidden=0;toast('Yakalandın! Son kayıt noktasına döndün.',2200);sfx('alarm');shake=4;respawn(actors[1]);setBikeHud()}
+function drawGuard(e){const x=Math.round(e.x),y=Math.round(e.y),f=e.face,ex=x+7+f*5,ey=y+7;
+ const al=.14+Math.min(.3,e.alert/70);const gr=ctx.createLinearGradient(ex,0,ex+f*115,0);gr.addColorStop(0,e.alert>10?`rgba(255,110,90,${al+.15})`:`rgba(255,240,150,${al+.12})`);gr.addColorStop(1,e.alert>10?'rgba(255,110,90,0)':'rgba(255,240,150,0)');
+ ctx.fillStyle=gr;ctx.beginPath();ctx.moveTo(ex,ey);ctx.lineTo(ex+f*115,ey-28);ctx.lineTo(ex+f*115,ey+32);ctx.closePath();ctx.fill();
+ ctx.fillStyle='rgba(0,0,0,.3)';ctx.fillRect(x,GROUND-1,14,2);
+ const st=Math.sin(e.ph*2)*1.5;R(x+3,y+15,4,9,'#14171f');R(x+8,y+15+(e.pause>0?0:st>0?1:0),4,9,'#14171f');R(x+1,y+5,13,11,'#2a2f45');R(x+1,y+5,13,2,'#c0392b');R(x+3,y-1,9,7,'#d9a98a');R(x+2,y-3,11,4,'#14171f');R(x+(f>0?9:3),y+1,3,2,'#ff5a4a');
+ R(f>0?x+14:x-3,y+9,4,3,'#fff3b0');lights.push({x:ex+f*34,y:ey,r:38,rgb:e.alert>10?'255,110,90':'255,240,150',a:.3});
+ if(e.alert>4){R(x+6,y-16,3,7,'#ff5a4a');R(x+6,y-8,3,2,'#ff5a4a');R(x-1,y-20,16,2,'#222');R(x-1,y-20,Math.min(16,16*e.alert/40),2,'#ff5a4a')}}
+function drawHides(){for(const h of hides){R(h.x-1,GROUND-35,18,35,OUT);R(h.x,GROUND-34,16,34,'#2a3444');R(h.x,GROUND-34,16,2,'#4a586e');R(h.x+1,GROUND-32,14,30,'#1f2937');for(let i=0;i<4;i++)R(h.x+3,GROUND-28+i*5,10,1,'#0b1018');R(h.x+12,GROUND-18,2,4,'#e0c050');
+  if(hidden&&Math.abs(actors[1].x+5-h.x-8)<18){R(h.x+5,GROUND-26,2,1,'#fff');R(h.x+9,GROUND-26,2,1,'#fff');lights.push({x:h.x+8,y:GROUND-20,r:14,rgb:'255,180,200',a:.4})}}}
 function mountBike(){const k=RD();bike.mounted=true;bike.parked=0;k.x=bike.x-5;k.y=GROUND-k.h;k.vx=0;shake=Math.max(shake,2);sfx('mount');setBikeHud()}
 function worldPost(a){if(scene!=='play'||cine)return;const cx=a.x+5,cy=a.y+10,k=RD();
  if(arena){const t=enemies.find(e=>e.tam&&!e.dead);if(t&&cx>arena.x1+90)arena.lock=1;if(arena.lock&&t){a.x=clamp(a.x,arena.x1+60,arena.x2-24);if(bike.mounted&&a===k)bike.x=a.x+5}}
  if(bike.mounted&&a===k)for(const t of tun)if(k.x+5>t.x1-6&&k.x+5<t.x2){bike.mounted=false;bike.parked=1;bike.x=t.x1-20;bike.face=k.face;if(cast==='duo'){const g=actors[1];g.x=k.x-14*k.face;g.y=k.y;g.vx=g.vy=0}toast('Dar geçit! Motoru bıraktın, yürüyerek devam et.',2600);setBikeHud();puff(k,5);break}
+ pickupTick(a);
+ if(TH().race&&a===k&&bike.mounted){for(const b of boosts)if(cx>b.x&&cx<b.x+30&&a.grounded&&!(a.boostT>0)){a.boostT=45;sfx('nitro');shake=Math.max(shake,1);nit=Math.min(1,nit+.25)}
+  if(!ev.fin&&cx>goal.x){ev.fin=1;raceFinish()}}
  for(const f of frags)if(!f.got&&Math.abs(cx-f.x)<(bike.mounted?20:13)&&Math.abs(cy-f.y)<24){f.got=1;frag++;sfx('collect');toast(`Parça bulundu! (${frag})`,1800);for(let i=0;i<14;i++)emit({x:f.x,y:f.y,vx:(Math.random()-.5)*3,vy:(Math.random()-.5)*3,life:.6,max:.6,col:'#8fe0ff',size:2,add:1,shrink:.7})}
  for(const c of cps)if(!c.on&&cx>c.x){c.on=1;cpX=c.x;hp=MAXHP;toast('Kayıt noktası ✔ Can yenilendi',1800);sfx('swap')}
  for(const s of spikes)if(cx>s.x-2&&cx<s.x+s.w+2&&a.y+a.h>GROUND-8)hurtPlayer(a,s.x+s.w/2);
@@ -377,6 +471,9 @@ function drawLevelStuff(){const th=TH();
  for(const s of solids){if(s.dead)continue;if(s.t==='crate'){R(s.x,s.y,22,24,'#8b6446');R(s.x,s.y,22,2,'#c9a26a');R(s.x+1,s.y+1,2,22,'#5a3f2a');R(s.x+19,s.y+1,2,22,'#5a3f2a');for(let i=0;i<22;i++){R(s.x+i,s.y+2+Math.floor(i*.9),1,1,'#5a3f2a')}if(s.hp<2)R(s.x+8,s.y+8,6,1,'#2a1d14')}
   else if(s.t==='wall'){R(s.x,s.y,s.w,s.h,'#4a5568');R(s.x,s.y,s.w,3,'#7b8798');for(let y=s.y+8;y<s.y+s.h;y+=12){R(s.x,y,s.w,1,'#2d3748');R(s.x+((y/12|0)%2?5:14),y,1,12,'#2d3748')}R(s.x+s.w-3,s.y,3,s.h,'#2d3748')}
   else{const up=s.open?140:0;R(s.x,s.y-up,10,s.h,'#3a4558');for(let y=s.y-up+4;y<s.y-up+s.h;y+=8)R(s.x,y,10,2,'#e0c050');R(s.x+8,s.y-up,2,s.h,'#222a38');if(!s.open)lights.push({x:s.x+5,y:s.y+20,r:20,rgb:'255,100,90',a:.5})}}
+ drawHides();
+ for(const b of boosts){for(let i=0;i<3;i++){const c=(Math.floor(clock*8)+i)%3===0?'#fff3a0':'#ffcf3e';R(b.x+i*9,GROUND-2,7,2,c);R(b.x+i*9+2,GROUND-4,3,2,c)}lights.push({x:b.x+14,y:GROUND-4,r:22,rgb:'255,210,90',a:.5})}
+ for(const p of platforms)if(p.br)drawBridge(p);
  for(const l of levers){R(l.x-2,l.y-5,12,5,'#3a4558');const hx=l.on?l.x+9:l.x-1;R(l.x+3,l.y-12,2,8,'#aab2be');R(hx<l.x+3?l.x:l.x+5,l.y-14,4,3,l.on?'#8fe0b0':'#ff8a8a');lights.push({x:l.x+4,y:l.y-10,r:16,rgb:l.on?'140,255,180':'255,120,120',a:.6})}
  for(const f of frags){if(f.got)continue;const by=Math.round(Math.sin(clock*3+f.x)*2);glow(f.x,f.y+by,18,'120,220,255',.9);R(f.x-1,f.y-5+by,3,10,'#bfeaff');R(f.x-3,f.y-3+by,7,6,'#8fe0ff');R(f.x-2,f.y-4+by,2,2,'#fff')}
  for(const c of cps){R(c.x,GROUND-30,2,30,'#6b7482');R(c.x+2,GROUND-30,12,8,c.on?'#8fe0b0':'#e0c050');if(c.on)lights.push({x:c.x+8,y:GROUND-26,r:18,rgb:'140,255,180',a:.4})}
@@ -384,7 +481,8 @@ function drawLevelStuff(){const th=TH();
 function drawTunnelFront(){for(const t of tun)R(t.x1,GROUND-38,t.x2-t.x1,38,'rgba(4,7,14,.5)')}
 
 function makeLevel(){mem=0;active=0;cam=0;lastCam=0;parts.length=0;rings.length=0;jumpWasDown=false;actors=makeActors();bike={x:chapter===3?105:130,y:GROUND,mounted:false,spin:0,face:1,parked:1};
- const G=genLevel(chapter);PL=PLAN[chapter];L=G.L;platforms=G.plats;solids=G.solids;gaps=G.gaps;ramps=G.ramps;tun=G.tun;springs=G.springs;spikes=G.spikes;levers=G.levers;frags=G.frags;cps=G.cps;hints=G.hints;plates=G.plates;deco=G.deco;bike.g=0;if(G.nsX){bike.x=G.nsX;bike.parked=1}items=G.items;goal={x:G.goalX,y:GROUND};cpX=100;hp=MAXHP;frag=0;fused=0;nit=1;bike.call=0;kx=PL.kf?Math.floor(L*PL.kf):1e9;PL.bf=PL.beats.map(b=>0);
+ const G=genLevel(chapter);PL=PLAN[chapter];L=G.L;platforms=G.plats;solids=G.solids;gaps=G.gaps;ramps=G.ramps;tun=G.tun;springs=G.springs;spikes=G.spikes;levers=G.levers;frags=G.frags;cps=G.cps;hints=G.hints;plates=G.plates;deco=G.deco;bike.g=0;if(G.nsX){bike.x=G.nsX;bike.parked=1}items=G.items;goal={x:G.goalX,y:GROUND};MAXHP=5+up.arm;cpX=100;hp=MAXHP;frag=0;fused=0;nit=1;bike.call=0;kx=PL.kf?Math.floor(L*PL.kf):1e9;PL.bf=PL.beats.map(b=>0);
+ guards=G.guards.map(g=>({...g,y:GROUND-24,w:14,h:24,dir:Math.random()<.5?1:-1,face:1,alert:0,pause:0,ph:Math.random()*6}));hides=G.hides;boosts=G.boosts;hidden=0;spawnPickups();
  const Rr=rng(chapter*31+7),th=TH();props=[];
  for(let x=14;x<L;x+=10+Rr()*22){const t=Rr();if(inGapX(x))continue;props.push({t:t<.7?'tuft':t<.85?'flower':'rock',x,h:3+Math.floor(Rr()*3),v:Rr()})}
  const rel=(st,every,f)=>{for(let x=st;x<L-200;x+=every)if(!inGapX(x)&&!inGapX(x+10)&&!inTun(x))f(x)};
@@ -394,13 +492,15 @@ function makeLevel(){mem=0;active=0;cam=0;lastCam=0;parts.length=0;rings.length=
  if(chapter===3){rel(120,520,x=>props.push({t:'lamp',x,dim:1}));G.puz.forEach((px,i)=>props.push({t:'puz',x:px,i}))}
  if(chapter===4){props.push({t:'bed',x:60});rel(300,460,x=>props.push({t:'lamp',x}))}
  if(chapter===5){rel(200,520,x=>props.push({t:'lamp',x,dim:1}));G.puz.forEach((px,i)=>props.push({t:'puz',x:px,i}))}
+ if(chapter===6||chapter===9)rel(200,300,x=>props.push({t:'lamp',x}));
+ if(chapter===7||chapter===8){rel(160,420,x=>props.push({t:'lamp',x,dim:1}));G.puz.forEach((px,i)=>props.push({t:'puz',x:px,i}))}
  props.sort((a,b)=>(a.t==='tuft'||a.t==='flower'||a.t==='rock'?0:1)-(b.t==='tuft'||b.t==='flower'||b.t==='rock'?0:1));
  buildBackground();wxp=[];const wx=th.wx,n=wx==='storm'?230:wx==='rain'?150:wx==='fireflies'?26:wx==='petals'?36:wx==='dust'?30:0;
  for(let i=0;i<n;i++)wxp.push(newWx(wx,true));
  nextBolt=3+Math.random()*3;bolt=null;flash=0;
- el('chapter').textContent=`${chapter+1} / 6 — ${CH[chapter].name}`;el('memories').textContent=items.length?`0 / ${items.length}`:'—';el('who').textContent='KAAN';
+ el('chapter').textContent=`${posOf(chapter)+1} / ${ORDER.length} — ${CH[chapter].name}`;el('memories').textContent=items.length?`0 / ${items.length}`:'—';el('who').textContent='KAAN';
  cast=th.cast;ev={};puzSolved=new Set();enemies=[];bullets=[];tam=null;carT=0;carCD=0;invul=0;shotCD=0;modal=false;
- if(chapter>=5)hasCar=true;else if(chapter<4)hasCar=false;
+ {const pp=posOf(chapter);if(pp>=posOf(5))hasCar=true;else if(pp<posOf(4))hasCar=false}
  {const k=actors[0],g=actors[1],t=actors[2];
   if(cast==='gizem'){k.x=-300;active=1;g.x=100;g.face=1;el('who').textContent='GİZEM'}
   else if(cast==='kaan'){if(th.npc!==undefined){g.kind=th.npc;g.name=KINDN[th.npc];g.vx=g.vy=0;g.grounded=true;g.y=GROUND-g.h;
@@ -417,7 +517,7 @@ function newWx(t,init){const o={x:Math.random()*(W+60),y:init?Math.random()*H:-1
  else if(t==='fireflies'){o.y=100+Math.random()*130;o.x=Math.random()*W}
  return o}
 function mkEnemy(x,boss,gun,tam){const w=tam?30:gun?14:boss?38:20,h=tam?44:gun?29:boss?40:22,H0=tam?26:gun?3:boss?12:1;return{x,y:GROUND-h,w,h,hp:H0,mhp:H0,boss,gun,tam,dir:Math.random()<.5?1:-1,min:gun?x:x-(tam?240:boss?200:70),max:gun?x:x+(tam?240:boss?200:70),ph:Math.random()*6,flash:0,hit:0,dead:0,cd:60+Math.random()*60}}
-function setBikeHud(){el('bikeStatus').textContent=cast==='gizem'?(bike.g?(bike.mounted?'🔵 GİZEM: NS200 SÜRÜŞTE':'🔵 NS200: PARKTA'):'🔒 GİZEM: TUTSAK'):bike.mounted?(cast==='duo'?'🔴 KAAN + GİZEM: ARTÇILI SÜRÜŞ':'🔴 KAAN: SÜRÜŞTE'):'🔴 DOMINAR: PARKTA'}
+function setBikeHud(){el('bikeStatus').textContent=cast==='gizem'?(bike.g?(bike.mounted?'🔵 GİZEM: NS200 SÜRÜŞTE':'🔵 NS200: PARKTA'):(TH().stealth?(hidden?'🫥 SAKLANDIN':'👣 GİZLİCE İLERLE'):'🔒 GİZEM: TUTSAK')):bike.mounted?(cast==='duo'?'🔴 KAAN + GİZEM: ARTÇILI SÜRÜŞ':'🔴 KAAN: SÜRÜŞTE'):TH().coop?'👫 KAAN + GİZEM: BERABER':'🔴 DOMINAR: PARKTA'}
 function toast(m,ms=1800){const t=el('toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),ms)}
 
 /* ================= DİYALOG ================= */
@@ -443,18 +543,18 @@ function inputNow(){const l=keys.ArrowLeft||keys.KeyA||touch.left,r=keys.ArrowRi
 function phys(a,inp,riding){
  if(a.on&&a.grounded){a.x+=a.on.dx||0;a.y+=a.on.dy||0}
  const nitroNow=riding&&a===RD()&&(keys.ShiftLeft||keys.ShiftRight||touch.nitro)&&nit>.08&&Math.abs(a.vx)>.3;if(nitroNow&&!a.nwas)sfx('nitro');a.nwas=nitroNow;a.nitro=nitroNow;
- const speed=(riding?2.75:1.55)*(carT>0&&a===actors[0]?1.35:1)*(nitroNow?1.55:1),acc=a.grounded?(riding?.07:.2):(riding?.05:.11),dir=(inp.r?1:0)-(inp.l?1:0);
- if(a.dcd>0)a.dcd--;
+ const speed=(riding?2.75:1.55)*(carT>0&&a===actors[0]?1.35:1)*(nitroNow?1.55:1)*(a.boostT>0?1.4:1)*(inp.brake?.3:1),acc=a.grounded?(riding?.07:.2):(riding?.05:.11),dir=(inp.r?1:0)-(inp.l?1:0);
+ if(a.dcd>0)a.dcd--;if(a.boostT>0)a.boostT--;
  if(a.dash>0){a.dash--;a.vx=a.face*5.4;if(a.dash%2===0)emit({x:a.x+5-a.face*6,y:a.y+10+(Math.random()-.5)*10,vx:-a.face*.4,vy:0,life:.3,max:.3,col:'#ffb3d0',size:3,add:1,shrink:.8})}else a.vx+=(dir*speed-a.vx)*acc;if(!dir&&Math.abs(a.vx)<.05)a.vx=0;if(dir)a.face=dir;
  if(inp.jp)a.buf=7;else if(a.buf>0)a.buf--;
  if(a.grounded){a.coyote=6;a.jumps=0;a.dused=0}else{if(a.coyote>0)a.coyote--;if(a.coyote===0&&a.jumps===0)a.jumps=1}
- const maxJ=riding?1:2;
+ const maxJ=riding?(up.dj?2:1):2;
  if(a.buf>0){if(a.coyote>0&&a.jumps===0){a.vy=riding?-4.5:-4.9;a.jumps=1;a.coyote=0;a.buf=0;a.sx=.8;a.sy=1.22;a.grounded=false;sfx('jump');puff(a,4)}
   else if(!a.grounded&&a.jumps<maxJ){a.vy=-4.5;a.jumps++;a.buf=0;a.sx=.85;a.sy=1.18;sfx('jump2');for(let i=0;i<6;i++)emit({x:a.x+5,y:a.y+a.h,vx:(Math.random()-.5)*1.6,vy:Math.random()*.3,life:.35,max:.35,col:'#fff2d8',size:2,shrink:1})}}
  if(!inp.jh&&a.vy<-2.3)a.vy=-2.3;
  a.vy=Math.min(7,a.vy+(a.vy>0?.3:.24));if(a.dash>0)a.vy=0;
  const prevX=a.x,prevB=a.y+a.h,wasG=a.grounded,impact=a.vy;a.x+=a.vx;a.y+=a.vy;a.x=clamp(a.x,0,L-a.w-12);a.grounded=false;a.on=null;
- for(const p of platforms){if(a.vy>=0&&a.x+a.w>p.x&&a.x<p.x+p.w&&prevB<=p.y+(p.mv?3:0)+.5&&a.y+a.h>=p.y){a.y=p.y-a.h;a.vy=0;a.grounded=true;a.on=p}}
+ for(const p of platforms){if(p.br&&!p.on)continue;if(a.vy>=0&&a.x+a.w>p.x&&a.x<p.x+p.w&&prevB<=p.y+(p.mv?3:0)+.5&&a.y+a.h>=p.y){a.y=p.y-a.h;a.vy=0;a.grounded=true;a.on=p}}
  for(const s of solids){if(s.dead||s.open)continue;if(a.x+a.w>s.x&&a.x<s.x+s.w&&a.y+a.h>s.y&&a.y<s.y+s.h){if(nitroNow&&s.t==='crate'){breakCrate(s);continue}if(prevB<=s.y+1&&a.vy>=0){a.y=s.y-a.h;a.vy=0;a.grounded=true}else if(prevX+a.w<=s.x+1){a.x=s.x-a.w;a.vx=0}else if(prevX>=s.x+s.w-1){a.x=s.x+s.w;a.vx=0}else if(a.vy<0){a.y=s.y+s.h;a.vy=0}}}
  const cx0=a.x+5;if(a.y+a.h>=GROUND&&!gaps.some(g=>cx0>g.x1&&cx0<g.x2)){a.y=GROUND-a.h;a.vy=0;a.grounded=true}
  if(a.grounded&&!a.on){for(const sp of springs)if(cx0>sp.x&&cx0<sp.x+16&&a.y+a.h>=GROUND-1){a.vy=-8.6;a.grounded=false;sp.t=10;sfx('jump2');a.sy=.7}
@@ -477,22 +577,24 @@ function nearestTarget(){const a=actors[active],cx=a.x+5,cy=a.y+a.h/2;
  for(const it of items)if(!it.got&&Math.abs(cx-it.x)<22&&Math.abs(cy-it.y)<34)return{t:'item',it,x:it.x,y:it.y};
  for(const lv of levers)if(Math.abs(cx-lv.x-4)<22&&Math.abs(cy-lv.y)<44)return{t:'lever',lv,x:lv.x+4,y:lv.y-18};
  for(const pz of props)if(pz.t==='puz'&&!puzSolved.has(pz.t+pz.x)&&Math.abs(cx-pz.x-8)<24)return{t:'puz',pz,x:pz.x+8,y:GROUND-28};
- if(Math.abs(cx-goal.x)<34)return{t:'goal',x:goal.x,y:GROUND-(chapter===5?34:30)};
+ if(TH().stealth&&cast==='gizem'&&(hidden||a.grounded)){const h=hides.find(h=>Math.abs(cx-h.x-8)<18);if(h)return{t:'hide',h,x:h.x+8,y:GROUND-44}}
+ if(!TH().race&&Math.abs(cx-goal.x)<34)return{t:'goal',x:goal.x,y:GROUND-(chapter===5?34:30)};
  if(cast==='gizem'&&!bike.g&&chapter===3&&Math.abs(cx-bike.x)<36)return{t:'ns',x:bike.x,y:bike.y-42}
- if(((cast!=='gizem'&&active===0)||(cast==='gizem'&&bike.g))&&(bike.mounted||Math.abs(cx-bike.x)<40))return{t:'bike',x:bike.x,y:bike.y-(bike.mounted?36:26),m:1};
+ if(!TH().race&&!TH().coop&&((cast!=='gizem'&&active===0)||(cast==='gizem'&&bike.g))&&(bike.mounted||Math.abs(cx-bike.x)<40))return{t:'bike',x:bike.x,y:bike.y-(bike.mounted?36:26),m:1};
  return null}
-function gateOK(){const th=TH();if(th.puz&&puzSolved.size<th.puz.length)return false;if((th.boss||chapter===5)&&enemies.some(e=>!e.dead&&e.boss))return false;return true}
+function gateOK(){const th=TH(),pz=CH[chapter].puz;if(pz&&puzSolved.size<pz.length)return false;if((th.boss||chapter===5)&&enemies.some(e=>!e.dead&&e.boss))return false;return true}
 function interact(){if(D.on){nextLine();return}if(cine){nextShot();return}if(locked||scene!=='play'||modal)return;
  const tg=nearestTarget();
  if(tg&&tg.t==='item'){tg.it.got=true;mem++;el('memories').textContent=`${mem} / ${items.length}`;el('memories').classList.remove('pulse');void el('memories').offsetWidth;el('memories').classList.add('pulse');sfx('collect');
   const idx=items.indexOf(tg.it),m=CH[chapter].mem[idx];for(let i=0;i<26;i++){const an=Math.random()*6.28,sp=.6+Math.random()*1.8;emit({x:tg.it.x,y:tg.it.y,vx:Math.cos(an)*sp,vy:Math.sin(an)*sp-.4,g:.02,life:.9,max:.9,col:i%2?'#ff8eaa':'#ffe5a6',size:2,add:1,shrink:.8})}
   rings.push({x:tg.it.x,y:tg.it.y,r:2,life:.6});flash=Math.max(flash,.25);toast('Anı: '+m.t,3000);const ck=(MEMKEY[chapter]||[])[idx];if(CINE[ck])playCine(CINE[ck]);else say(m.l);return}
  if(tg&&tg.t==='ns'){bike.g=1;sfx('collect');flash=.5;shake=3;say([['GİZEM','Bu... benim NS200’üm! Tamirci buraya saklamış.'],['GİZEM','Artık yürümek zorunda değilim. M ile bin; Shift: nitro, G: atılış (motordan inince).']],setBikeHud);return}
- if(tg&&tg.t==='lever'){const lv=tg.lv;lv.on=lv.on?0:1;const d=solids.find(q=>q.t==='door'&&q.id===lv.id);if(d)d.open=lv.on;sfx('collect');shake=2;toast(lv.on?'Kapı açıldı!':'Kapı kapandı.',1500);return}
+ if(tg&&tg.t==='lever'){const lv=tg.lv;lv.on=lv.on?0:1;const d=solids.find(q=>q.t==='door'&&q.id===lv.id);if(d)d.open=lv.on;const br=platforms.find(q=>q.br===lv.id);if(br)br.lat=lv.on;sfx('collect');shake=2;toast(br?(lv.on?'Köprü sabitlendi!':'Köprü çözüldü.'):(lv.on?'Kapı açıldı!':'Kapı kapandı.'),1500);return}
+ if(tg&&tg.t==='hide'){hidden=hidden?0:1;actors[1].vx=0;sfx('swap');setBikeHud();toast(hidden?'Saklandın! Gardiyanlar seni göremez. (E: çık)':'Dolaptan çıktın.',1500);return}
  if(tg&&tg.t==='puz'){openPuzzle(tg.pz);return}
  if(tg&&tg.t==='goal'){if(!gateOK()){toast(chapter===3?'Kapı kilitli: parçaları topla, üç bulmacayı da çöz.':'Önce koruyucuları yen ve mühürleri çöz.',2600);sfx('err');return}
   sfx('goal');if(chapter===5){finale();return}
-  const en=CH[chapter].end;say(en.length?en:[['YOL','Yol devam ediyor...']],()=>startChapter(chapter+1));return}
+  const en=CH[chapter].end;say(en.length?en:[['YOL','Yol devam ediyor...']],()=>garageThen(advance));return}
  if(tg&&tg.t==='bike'){toggleBike();return}
  say([[actors[active].name,'Bir sonraki ipucu ileride olmalı.']])}
 let puzT=[];
@@ -541,8 +643,8 @@ const PZ={
   play()}};
 function openPuzzle(pz){const q=CH[chapter].puz[pz.i],need=q.need||0;if(frag-fused<need){toast(`Bulmaca için ${need} parça gerek (şimdi ${frag-fused}). Haritada parlayan parçaları topla!`,3200);sfx('err');return}modal=true;puzCur=pz;puzT=[];el('puz').style.display='grid';el('puz').querySelector('h2').textContent=q.title;const o=el('po');o.innerHTML='';PZ[q.type](q,o);sfx('swap')}
 function closePuzzle(){modal=false;puzT.forEach(clearTimeout);puzT=[];el('puz').style.display='none'}
-function finale(){playCine(CINE.fin,()=>{const t=actors[2];t.x=-300;actors[1].wave=0;ending()})}
-function toggleBike(){if(scene!=='play'||D.on||locked||modal)return;if(cast==='gizem'&&!bike.g){toast('Gizem’in motoru burada yok. Mağarayı ara!');sfx('err');return}
+function finale(){playCine(CINE.fin,()=>{const t=actors[2];t.x=-300;actors[1].wave=0;garageThen(()=>startChapter(8))})}
+function toggleBike(){if(TH().race||TH().coop)return;if(scene!=='play'||D.on||locked||modal)return;if(cast==='gizem'&&!bike.g){toast('Gizem’in motoru burada yok. Mağarayı ara!');sfx('err');return}
  if(active!==0&&cast!=='gizem'){toast('Dominar’ı yalnızca Kaan kullanabilir.');sfx('err');return}
  const k=RD();
  if(bike.mounted){bike.mounted=false;bike.parked=1;bike.x=k.x+5;bike.y=k.y+k.h;bike.face=k.face;if(cast==='duo'){const g=actors[1];g.x=k.x-14*k.face;g.y=k.y;g.vx=g.vy=0}toast('Dominar’dan indiniz.');setBikeHud();puff(k,5);return}
@@ -551,10 +653,12 @@ function toggleBike(){if(scene!=='play'||D.on||locked||modal)return;if(cast==='g
 function swap(){if(scene!=='play'||D.on||locked||modal)return;if(cast!=='duo'){toast('Şu an karakter değiştirilemez.');sfx('err');return}if(bike.mounted)toggleBike();active=1-active;el('who').textContent=actors[active].name;toast(actors[active].name+' kontrol ediliyor',1200);sfx('swap');const a=actors[active];for(let i=0;i<8;i++)emit({x:a.x+5,y:a.y+8,vx:Math.cos(i)*1.2,vy:Math.sin(i)*1.2,life:.4,max:.4,col:'#ffd36e',size:2,add:1,shrink:1})}
 function ending(){scene='ending';locked=true;try{localStorage.removeItem(STORE)}catch(e){}
  for(let i=0;i<40;i++)wxp.push({x:Math.random()*W,y:-Math.random()*H,ph:Math.random()*6,s:Math.random(),vy:.4+Math.random()*.6,vx:0,heart:1});
- setTimeout(()=>{el('overlay').style.display='grid';el('card').innerHTML=`<h2>Yeniden Kavuşma ❤️</h2><p>Gizem koşarak Kaan’a sarılıyor. Tamirci artık yok.</p><p>Gizem: “Biliyordum, gelecektin.”</p><p>Kaan: “Hatırladıkça seni bulmak kolaydı. Ömer haklıydı: Hatırla, Kaan, hatırla.”</p><p><strong>Ömer, Oğuz, Gizem ve Kaan... Dört kişilik hikâyenin yeni bir başlangıcı.</strong></p><p class="small">Mutlu son. Oynadığın için teşekkürler!</p><button id="again">Yeniden oyna</button>`;el('again').onclick=()=>{try{localStorage.removeItem(STORE)}catch(e){}location.reload()}},2600)}
-function save(){try{localStorage.setItem(STORE,JSON.stringify({chapter}))}catch(e){}}
-function load(){try{const s=JSON.parse(localStorage.getItem(STORE)||'null');return s&&Number.isInteger(s.chapter)?clamp(s.chapter,0,5):null}catch(e){return null}}
-function startChapter(n){locked=true;fadeTarget=1;setTimeout(()=>{chapter=n;save();makeLevel();setMusic(TH().mus);el('tsub').textContent=`BÖLÜM ${n+1} / 6`;el('tname').textContent=CH[n].name.toUpperCase();el('title').classList.add('on');
+ setTimeout(()=>{el('overlay').style.display='grid';const gl=GIFTS.map((g,i)=>gifts.has(i)?`<span title="${g.n}">${g.e}</span>`:'<span style="opacity:.25">🎁</span>').join(' '),gn=gifts.size,gm=gn>=GIFTS.length?'Hepsini buldun! Gizem sandığı açınca gözleri doldu: “Bunların hepsini benim için mi topladın?”':gn>=6?'Gizem hediyelere tek tek bakıp gülümsedi. “Eksik kalanları bir sonraki yolculukta bulalım.”':'Gizem sandığa baktı: “Yolda daha çok şey varmış, değil mi? Tekrar çıkalım mı?”';
+ el('card').innerHTML=`<h2>Eve Dönüş ❤️</h2><p>Güneş doğarken Kaan ve Gizem aynı motorda, aynı yolda... Bu kez kimse araya girmiyor.</p><p>Gizem: “Biliyordum, gelecektin.”</p><p>Kaan: “Hatırladıkça seni bulmak kolaydı. Ömer haklıydı: Hatırla, Kaan, hatırla.”</p><p><strong>Ömer, Oğuz, Gizem ve Kaan... Dört kişilik hikâyenin yeni bir başlangıcı.</strong></p><p><strong>Hediye Sandığı (${gn}/${GIFTS.length})</strong><br><span style="font-size:20px">${gl}</span></p><p class="small">${gm}</p><p class="small">Mutlu son. Oynadığın için teşekkürler!</p><button id="again">Yeniden oyna</button>`;el('again').onclick=()=>{try{localStorage.removeItem(STORE)}catch(e){}location.reload()}},2600)}
+function save(){try{localStorage.setItem(STORE,JSON.stringify({chapter,bolts,up,gifts:[...gifts]}))}catch(e){}}
+function resetProg(){bolts=0;up={nit:0,arm:0,dj:0,gun:0,car:0};gifts=new Set()}
+function load(){try{const s=JSON.parse(localStorage.getItem(STORE)||'null');if(!(s&&Number.isInteger(s.chapter)&&ORDER.includes(s.chapter)))return null;bolts=Math.max(0,s.bolts|0);if(s.up)for(const u of UPG)up[u.k]=clamp((s.up[u.k]|0),0,u.cost.length);gifts=new Set((s.gifts||[]).filter(n=>Number.isInteger(n)&&n>=0&&n<GIFTS.length));return s.chapter}catch(e){return null}}
+function startChapter(n){locked=true;fadeTarget=1;setTimeout(()=>{chapter=n;save();makeLevel();setMusic(TH().mus);el('tsub').textContent=`BÖLÜM ${posOf(n)+1} / ${ORDER.length}`;el('tname').textContent=CH[n].name.toUpperCase();el('title').classList.add('on');
   setTimeout(()=>{el('title').classList.remove('on');fadeTarget=0;setTimeout(()=>{locked=false;const done=()=>{if(TH().carGift){hasCar=true;carCD=0;toast('Süper güç kazandın! C tuşu: Oğuz’un arabası',3400);sfx('goal')}};if(CINE[CH[n].cin])playCine(CINE[CH[n].cin],done);else say(CH[n].intro,done)},700)},2300)},650)}
 
 /* ================= GÜNCELLEME ================= */
@@ -565,6 +669,9 @@ function tick(dt){clock+=dt;
  bars+=(((D.on||cine)?1:0)-bars)*.12;
  const playing=scene==='play'&&!locked&&!D.on&&!modal&&!cine&&!(chapter===0&&tam);
  const inp=playing?inputNow():(inputNow(),{l:false,r:false,jh:false,jp:false});
+ if(playing&&TH().race&&bike.mounted){inp.brake=inp.l;inp.r=true;inp.l=false;inp.jh=true}
+ if(hidden||(playing&&TH().stealth&&hidden))inp.l=inp.r=inp.jh=inp.jp=false;
+ if(TH().quake&&playing&&Math.random()<.004){shake=Math.max(shake,3.5);sfx('thunder');for(let i=0;i<10;i++)emit({x:cam+Math.random()*W,y:20+Math.random()*30,vx:0,vy:1,g:.1,life:.8,max:.8,col:'#8a7a70',size:2,shrink:.4})}
  const a=actors[active],o=actors[1-active],riding=bike.mounted&&RD()===actors[active];
  worldTick(dt);phys(a,inp,riding);worldPost(a);
  if(bike.mounted){const k=RD(),g=actors[1];bike.x=k.x+5;bike.y=k.y+k.h;bike.face=k.face;bike.spin+=k.vx*.3;if(cast==='duo'){g.x=k.x;g.y=k.y;g.vx=k.vx;g.vy=0;g.grounded=true;g.face=k.face}
@@ -573,9 +680,9 @@ function tick(dt){clock+=dt;
  else if(cast!=='duo'){for(const q of actors){q.blink-=dt;if(q.blink<-.12)q.blink=2.5+Math.random()*3}}
  else{if(playing||scene==='title'){const ai=playing&&!holdPlate(o)?aiInput(o,a):{l:false,r:false,jh:false,jp:false};phys(o,ai,false)}else phys(o,{l:false,r:false,jh:false,jp:false},false)}
  if(playing){events();if(PL)PL.beats.forEach((b,i)=>{if(!PL.bf[i]&&k0x()>b[0]*L&&!D.on&&!cine&&!tam){PL.bf[i]=1;say(b[1])}})}
- tamTick();enemyTick(dt);
- {const hs=el('hpStatus'),ht='CAN '+'♥'.repeat(Math.max(0,hp))+'♡'.repeat(Math.max(0,MAXHP-hp))+(CH[chapter].puz?` · PARÇA ${frag-fused}`:'')+(bike.mounted?` · NİTRO ${'▮'.repeat(Math.round(nit*5))}`:'')+(active===1&&cast!=='kaan'?(actors[1].dused||actors[1].dcd>0?' · ATILIŞ ⏳':' · ATILIŞ (G)'):'');if(hs.textContent!==ht)hs.textContent=ht}
- {const cs=el('carStatus'),tx=!hasCar?'':(carT>0?`🚗 SÜPER GÜÇ: ${carT.toFixed(0)}sn`:carCD>0?`🚗 BEKLEME: ${Math.ceil(carCD)}sn`:'🚗 SÜPER GÜÇ: HAZIR (C)');if(cs.textContent!==tx)cs.textContent=tx}
+ tamTick();enemyTick(dt);guardTick();
+ {const hs=el('hpStatus'),ht='CAN '+'♥'.repeat(Math.max(0,hp))+'♡'.repeat(Math.max(0,MAXHP-hp))+(CH[chapter].puz?` · PARÇA ${frag-fused}`:'')+(bike.mounted?` · NİTRO ${'▮'.repeat(Math.round(nit*5))}`:'')+(active===1&&cast!=='kaan'?(actors[1].dused||actors[1].dcd>0?' · ATILIŞ ⏳':' · ATILIŞ (G)'):'')+(TH().race&&rivals.length?` · SIRA ${1+rivals.filter(r=>r.x>RD().x).length}/${rivals.length+1}`:'')+` · ⚙ ${bolts} · 🎁 ${gifts.size}`;if(hs.textContent!==ht)hs.textContent=ht}
+ {const cs=el('carStatus'),tx=(!hasCar||cast!=='kaan')?'':(carT>0?`🚗 SÜPER GÜÇ: ${carT.toFixed(0)}sn`:carCD>0?`🚗 BEKLEME: ${Math.ceil(carCD)}sn`:'🚗 SÜPER GÜÇ: HAZIR (C)');if(cs.textContent!==tx)cs.textContent=tx}
  carT=Math.max(0,carT-dt);carCD=Math.max(0,carCD-dt);shotCD=Math.max(0,shotCD-1);if(invul>0)invul--;
  // kamera
  const tgt=a.x+5-W*.42+(riding?a.face*34:a.face*12);cam=lerp(cam,clamp(tgt,0,L-W),riding?.07:.09);
@@ -707,7 +814,7 @@ function drawProp(p){const th=TH(),sway=th.wx==='storm'?Math.sin(clock*7+p.x)*1.
  case'bed':R(p.x,GROUND-12,44,4,'#e8eef5');R(p.x,GROUND-8,44,8,'#9db4c9');R(p.x-2,GROUND-22,3,22,'#cfd6df');R(p.x+42,GROUND-16,3,16,'#cfd6df');R(p.x+4,GROUND-16,14,4,'#fff');break;
  case'puz':{const ok=puzSolved.has('puz'+p.x);R(p.x,GROUND-30,16,30,'#252f3f');R(p.x+2,GROUND-28,12,12,ok?'#2c6b4a':'#3a3320');R(p.x+4,GROUND-26,8,8,ok?'#8fe0b0':'#ffd36e');R(p.x+4,GROUND-12,8,2,'#556176');lights.push({x:p.x+8,y:GROUND-22,r:22,rgb:ok?'140,255,180':'255,210,110',a:.6+.2*Math.sin(clock*3)});break}
  case'puddle':{R(p.x,GROUND,p.w,2,'rgba(150,185,220,.45)');R(p.x+2,GROUND,p.w-4,1,'rgba(220,235,255,.5)');const r=Math.floor((clock*3+p.x)%6);if(r<3)R(p.x+p.w/2-r,GROUND,r*2,1,'rgba(255,255,255,.5)');break}}}
-function drawPlatform(p){const th=TH();
+function drawPlatform(p){if(p.br)return;const th=TH();
  ctx.fillStyle='rgba(0,0,0,.18)';ctx.fillRect(Math.round(p.x+2),Math.round(p.y+p.h),p.w-2,3);
  R(p.x,p.y,p.w,p.h,th.pf);R(p.x,p.y,p.w,3,th.acc);R(p.x,p.y+3,p.w,1,'rgba(255,255,255,.22)');R(p.x,p.y+p.h-2,p.w,2,'rgba(0,0,0,.3)');R(p.x,p.y,1,p.h,'rgba(0,0,0,.25)');R(p.x+p.w-1,p.y,1,p.h,'rgba(0,0,0,.25)');
  for(let x=p.x+9;x<p.x+p.w-2;x+=12){R(x,p.y+4,1,p.h-6,'rgba(0,0,0,.22)')}
@@ -720,6 +827,7 @@ function drawItem(it){if(it.got)return;const by=Math.round(Math.sin(clock*3+it.p
  for(let i=0;i<3;i++){const an=clock*2+i*2.1,sx=x+Math.cos(an)*11,sy=y+Math.sin(an)*8;ctx.globalAlpha=.5+.5*Math.sin(clock*8+i);R(sx,sy,1,1,'#fff6c8');R(sx-1,sy,3,1,'#ffe5a6');R(sx,sy-1,1,3,'#ffe5a6')}ctx.globalAlpha=1}
 function drawGoal(){const x=goal.x;
  if(chapter===2)return;
+ if(TH().race){const x=goal.x;for(let i=0;i<10;i++)R(x-25+i*5,GROUND-4,5,4,i%2?'#fff':'#111');R(x-28,GROUND-72,4,72,'#8a96a8');R(x+24,GROUND-72,4,72,'#8a96a8');for(let i=0;i<10;i++)for(let j=0;j<2;j++)R(x-24+i*5,GROUND-72+j*5,5,5,(i+j)%2?'#fff':'#111');lights.push({x:x,y:GROUND-60,r:50,rgb:'255,255,255',a:.5});return}
  if(TH().cells){const ok=gateOK();R(x-14,GROUND-52,30,52,'#2a3444');R(x-12,GROUND-50,26,50,'#1a212d');for(let i=0;i<5;i++)R(x-12+i*6,GROUND-50,2,50,'#556176');R(x+8,GROUND-26,5,8,ok?'#8fe0b0':'#e07a7a');lights.push({x:x+10,y:GROUND-22,r:20,rgb:ok?'140,255,180':'255,120,120',a:.7});return}
  if(chapter===5){R(x-14,GROUND-3,28,3,'rgba(255,227,168,.25)');lights.push({x:x,y:GROUND-14,r:36,rgb:'255,200,170',a:.5});return}
  R(x,GROUND-34,3,34,'#6b4a3a');R(x-12,GROUND-38,26,10,'#8b6446');R(x-12,GROUND-38,26,2,'#a67f58');R(x+10,GROUND-36,6,6,'#8b6446');R(x-9,GROUND-34,16,1,'#3a2a24');R(x-9,GROUND-31,10,1,'#3a2a24');
@@ -729,13 +837,13 @@ function prompt(t){const x=Math.round(t.x),y=Math.round(t.y-14+Math.sin(clock*5)
  const G=t.m?['10101','11111','11011','10001','10001']:['111','100','110','100','111'];const gw=G[0].length;G.forEach((row,j)=>[...row].forEach((c,i)=>{if(c==='1')ctx.fillRect(x-Math.floor(gw/2)+i,y+3+j,1,1)}))}
 function drawWorld(){
  ctx.drawImage(bg.ground,0,GROUND);
- props.forEach(drawProp);platforms.forEach(drawPlatform);drawLevelStuff();items.forEach(drawItem);
+ props.forEach(drawProp);platforms.forEach(drawPlatform);drawLevelStuff();items.forEach(drawItem);drawBolts();
  drawGoal();
  // park halindeki motor / bölüm 4 sığınak
- enemies.forEach(drawEnemy);if(tam)drawTam();
- if(!bike.mounted&&(cast!=='gizem'||chapter===3))drawBike();
+ enemies.forEach(drawEnemy);rivals.forEach(drawRival);guards.forEach(drawGuard);if(tam)drawTam();
+ if(!bike.mounted&&!TH().coop&&(cast!=='gizem'||chapter===3))drawBike();
  const order=actors.map((a,i)=>[a,i]).sort((p,q)=>(p[1]===active?1:0)-(q[1]===active?1:0));
- for(const[a,i]of order){if(a.x<-100)continue;if(bike.mounted&&(i===0||(i===1&&(cast==='duo'||cast==='gizem'))))continue;if(i===0&&invul>0&&Math.floor(invul/4)%2)continue;drawPerson(a,i===active)}
+ for(const[a,i]of order){if(a.x<-100)continue;if(i===1&&hidden)continue;if(bike.mounted&&(i===0||(i===1&&(cast==='duo'||cast==='gizem'))))continue;if(i===0&&invul>0&&Math.floor(invul/4)%2)continue;drawPerson(a,i===active)}
  if(bike.mounted)drawBike();drawTunnelFront();
  for(const b of ebul){R(b.x-2,b.y-1,5,3,'#ff7a5a');lights.push({x:b.x,y:b.y,r:9,rgb:'255,100,70',a:.8})}
  for(const b of bullets){R(b.x-3,b.y,6,2,'#fff3b0');R(b.x-5,b.y,2,2,'#ffb347');lights.push({x:b.x,y:b.y,r:10,rgb:'255,220,120',a:.8})}
@@ -792,12 +900,12 @@ function shoot(){if(scene!=='play'||locked||D.on||modal||cast==='gizem'||chapter
  if(shotCD>0)return;shotCD=14;bullets.push({x:bike.x+k.face*20,y:bike.y-17,vx:k.face*5.8,life:60});sfx('shoot');for(let i=0;i<4;i++)emit({x:bike.x+k.face*22,y:bike.y-17,vx:k.face*(1+Math.random()),vy:(Math.random()-.5)*.8,life:.15,max:.15,col:'#ffe08a',size:2,add:1})}
 function useCar(){if(scene!=='play'||locked||D.on||modal||cast!=='kaan')return;if(!hasCar){toast('Henüz arabanın anahtarı yok.',1600);sfx('err');return}
  if(carT>0)return;if(carCD>0){toast(`Süper güç hazır değil (${Math.ceil(carCD)} sn)`,1400);sfx('err');return}
- const k=actors[0];carT=6;carCD=26;bike.mounted=true;bike.parked=0;bike.x=k.x+5;bike.y=k.y+k.h;sfx('car');flash=.5;shake=3;toast('SÜPER GÜÇ: Oğuz’un arabası!',1800);setBikeHud()}
+ const k=actors[0];carT=CART[up.car];carCD=CARCD[up.car];bike.mounted=true;bike.parked=0;bike.x=k.x+5;bike.y=k.y+k.h;sfx('car');flash=.5;shake=3;toast('SÜPER GÜÇ: Oğuz’un arabası!',1800);setBikeHud()}
 function killEnemy(e){e.dead=1;sfx('pop');const c=e.boss?'#ff6a6a':'#c27bd8';for(let i=0;i<(e.boss?40:14);i++)emit({x:e.x+e.w/2,y:e.y+e.h/2,vx:(Math.random()-.5)*4,vy:-Math.random()*3,g:.1,life:.7,max:.7,col:i%2?c:'#ffe08a',size:2,add:1,shrink:.7});if(window.__buzz)__buzz(e.boss?120:20);if(e.tam){shake=9;flash=1;sfx('thunder');arena=null;toast('Tamirci yenildi! Kapıya git, Gizem’i kurtar (E).',4200);setTimeout(()=>say([['TAMİRCİ','Olamaz... Bunca emek... Peki. Anahtar sende artık. Gizem’i al ve git.'],['KAAN','Bu bir yarış değildi. Ben sadece onu geri istedim.']]),900)}else if(e.boss){shake=6;toast('Koruyucu yenildi!',1600)}}
 function hurtPlayer(k,fromX,fall){if(fall){hp--;toast('Düştün! Kayıt noktasına dönüyorsun.',1500);if(hp<=0)hp=MAXHP;respawn(k);return}
  if(carT>0||invul>0||scene!=='play')return;hp--;invul=80;if(window.__buzz)__buzz(60);k.vy=-3;k.vx=(k.x<fromX?-3:3);shake=3;sfx('hurt');if(hp<=0){hp=MAXHP;toast('Bayıldın! Kayıt noktasından devam.',1800);respawn(k)}else toast('Hasar aldın!',900)}
 function enemyTick(dt){if(modal||D.on||cine||locked||scene!=='play')return;const k=actors[0];
- for(let i=bullets.length-1;i>=0;i--){const b=bullets[i];b.x+=b.vx;b.life--;if(!b.fx)for(const e of enemies){if(!e.dead&&b.x>e.x-4&&b.x<e.x+e.w+4&&b.y>e.y-6&&b.y<e.y+e.h+4){e.hp-=(e.boss&&e.st==='rest')?2:1;e.flash=6;b.life=0;for(let j=0;j<4;j++)emit({x:b.x,y:b.y,vx:(Math.random()-.5)*2,vy:(Math.random()-.5)*2,life:.2,max:.2,col:'#fff3b0',size:2,add:1});if(e.hp<=0)killEnemy(e);break}}if(b.life<=0)bullets.splice(i,1)}
+ for(let i=bullets.length-1;i>=0;i--){const b=bullets[i];b.x+=b.vx;b.life--;if(!b.fx)for(const e of enemies){if(!e.dead&&b.x>e.x-4&&b.x<e.x+e.w+4&&b.y>e.y-6&&b.y<e.y+e.h+4){e.hp-=((e.boss&&e.st==='rest')?2:1)+(up.gun?1:0);e.flash=6;b.life=0;for(let j=0;j<4;j++)emit({x:b.x,y:b.y,vx:(Math.random()-.5)*2,vy:(Math.random()-.5)*2,life:.2,max:.2,col:'#fff3b0',size:2,add:1});if(e.hp<=0)killEnemy(e);break}}if(b.life<=0)bullets.splice(i,1)}
  for(const b of bullets)for(const c of solids)if(c.t==='crate'&&!c.dead&&b.life>0&&!b.fx&&b.x>c.x&&b.x<c.x+c.w&&b.y>c.y&&b.y<c.y+c.h){c.hp--;b.life=0;if(c.hp<=0)breakCrate(c);else{sfx('err');shake=1}}
  const bx0=bike.mounted?bike.x-16:k.x,bx1=bike.mounted?bike.x+16:k.x+k.w,by0=bike.mounted?k.y-8:k.y,by1=k.y+k.h;
  for(let i=ebul.length-1;i>=0;i--){const b=ebul[i];b.x+=b.vx;b.life--;if(cast!=='gizem'&&b.x>bx0-2&&b.x<bx1+2&&b.y>by0&&b.y<by1){if(carT<=0)hurtPlayer(k,b.x);for(let j=0;j<5;j++)emit({x:b.x,y:b.y,vx:(Math.random()-.5)*2,vy:(Math.random()-.5)*2,life:.25,max:.25,col:'#ff7a5a',size:2,add:1});b.life=0}if(b.life<=0)ebul.splice(i,1)}
@@ -954,7 +1062,8 @@ function frame(ts){if(!last)last=ts;let dt=Math.min(.1,(ts-last)/1000);last=ts;a
 window.addEventListener('keydown',e=>{keys[e.code]=true;if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code))e.preventDefault();if(e.repeat)return;
  if(e.code==='KeyE'||e.code==='Enter'){if(scene==='title'&&el('overlay').style.display!=='none')return;interact()}
  if(cine&&e.code==='Escape'){skipCine();return}
- if(modal){if(e.code==='Escape')closePuzzle();return}
+ if(e.code==='KeyB'){if(garageOpen)closeGarage();else if(scene==='play'&&!locked&&!D.on&&!modal&&!cine)openGarage();return}
+ if(modal){if(e.code==='Escape'){if(garageOpen)closeGarage();else closePuzzle()}return}
  if(e.code==='KeyQ')swap();if(e.code==='KeyG')gizemDash();if(e.code==='KeyF')shoot();if(e.code==='KeyC')useCar();if(e.code==='KeyM')toggleBike();if(e.code==='KeyS'){audioInit();setMute(!muted)}});
 window.addEventListener('keyup',e=>{keys[e.code]=false});
 window.addEventListener('blur',()=>{for(const k in keys)keys[k]=false;touch.left=touch.right=touch.jump=0});
@@ -970,11 +1079,11 @@ el('dialogue').addEventListener('pointerdown',()=>{if(D.on)nextLine()});canvas.a
 el('pclose').onclick=closePuzzle;bindBtn('fbtn',{tap:()=>shoot(),rep:150});bindBtn('cbtn',{tap:()=>useCar()});
 el('mute').onclick=()=>{audioInit();setMute(!muted)};
 function begin(n){audioInit();el('overlay').style.display='none';scene='play';startChapter(n)}
-el('start').onclick=()=>begin(0);
+el('start').onclick=()=>{resetProg();begin(0)};el('gclose').onclick=closeGarage;el('garBtn').onclick=()=>{if(garageOpen)closeGarage();else if(scene==='play'&&!locked&&!D.on&&!modal&&!cine)openGarage()};
 saved=load();if(saved!==null)el('continue').style.display='inline-block';
 el('continue').onclick=()=>begin(saved??0);
 el('restart').onclick=()=>{if(scene==='play'&&!locked&&!D.on)startChapter(chapter)};
-el('reset').onclick=()=>{try{localStorage.removeItem(STORE)}catch(e){}saved=null;D.on=false;D.q=[];el('dialogue').style.display='none';chapter=0;makeLevel();setMusic(-1);clearTimeout(musTimer);el('overlay').style.display='grid';scene='title';locked=false;fade=0;fadeTarget=0;el('continue').style.display='none'};
+el('reset').onclick=()=>{try{localStorage.removeItem(STORE)}catch(e){}saved=null;resetProg();D.on=false;D.q=[];el('dialogue').style.display='none';chapter=0;makeLevel();setMusic(-1);clearTimeout(musTimer);el('overlay').style.display='grid';scene='title';locked=false;fade=0;fadeTarget=0;el('continue').style.display='none'};
 setMute(muted);
 makeLevel();requestAnimationFrame(frame);
 
