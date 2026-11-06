@@ -1,6 +1,11 @@
 <!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"></head><body>
 <title>İki Kişilik Bir Yol</title>
 <meta name="claude:viewport-fit-sides" content="cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="İki Kişilik Bir Yol">
+<meta name="theme-color" content="#05080e">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -28,8 +33,8 @@ canvas#game{display:block;width:100%;height:100%;image-rendering:pixelated;image
 .touch button{width:40px;height:40px;min-width:0;padding:0;font-size:14px;touch-action:none;opacity:.6;background:#1c2f44;border-width:2px;box-shadow:2px 2px 0 #060b13;border-radius:8px;-webkit-touch-callout:none}
 .touch button:active{opacity:1;background:#466784}
 body.mob{--s:1}
-@media(orientation:landscape) and (max-height:520px){body.mob{--s:.84}}
-@media(orientation:portrait){body.mob{--s:.78}}
+@media(orientation:landscape) and (max-height:520px){body.mob{--s:.8}}
+@media(orientation:portrait){body.mob{--s:.76}}
 .joy{display:none}
 body.mob .touch .tl{display:none}
 body.mob .touch .joy{display:block;position:fixed;left:max(18px,env(safe-area-inset-left,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));width:calc(136px*var(--s));height:calc(136px*var(--s));border-radius:50%;background:radial-gradient(circle,#ffffff14 0%,#ffffff0a 60%,#ffffff22 100%);border:3px solid #ffffff59;touch-action:none;pointer-events:auto}
@@ -37,18 +42,35 @@ body.mob .joy::before,body.mob .joy::after{content:'';position:absolute;top:50%;
 body.mob .joy::before{left:9px;border-right:10px solid #fff;border-left:0}
 body.mob .joy::after{right:9px;border-left:10px solid #fff;border-right:0}
 body.mob .joy .knob{position:absolute;left:50%;top:50%;width:46%;height:46%;margin:-23% 0 0 -23%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffffffcc,#9fb4ca99);border:2px solid #fff;box-shadow:0 3px 8px #0008;pointer-events:none}
-body.mob .touch .tr{display:block;position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));width:calc(240px*var(--s));height:calc(230px*var(--s))}
+body.mob .touch .tr{display:block;position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));width:calc(268px*var(--s));height:calc(258px*var(--s))}
 body.mob .touch .tr button{position:absolute;border-radius:50%;opacity:.82;background:#1c2f44d9;border:2px solid #ffffffaa;box-shadow:0 3px 8px #0007}
 body.mob .touch #jump{background:radial-gradient(circle at 35% 30%,#4fd08a,#1f7a4d);border:3px solid #fff;opacity:.92;grid-row:auto;min-height:0}
 body.mob .touch #jump .ic{width:56%;height:56%}
-body.mob .touch #jump{right:calc(0.0px*var(--s));bottom:calc(0.0px*var(--s));width:calc(84px*var(--s));height:calc(84px*var(--s))}
-body.mob .touch #fbtn{right:calc(19.0px*var(--s));bottom:calc(117.0px*var(--s));width:calc(46px*var(--s));height:calc(46px*var(--s))}
-body.mob .touch #nbtn{right:calc(68.0px*var(--s));bottom:calc(103.9px*var(--s));width:calc(46px*var(--s));height:calc(46px*var(--s))}
-body.mob .touch #gbtn{right:calc(103.9px*var(--s));bottom:calc(68.0px*var(--s));width:calc(46px*var(--s));height:calc(46px*var(--s))}
-body.mob .touch #interact{right:calc(117.0px*var(--s));bottom:calc(19.0px*var(--s));width:calc(46px*var(--s));height:calc(46px*var(--s))}
-body.mob .touch #cbtn{right:calc(77.4px*var(--s));bottom:calc(176.0px*var(--s));width:calc(42px*var(--s));height:calc(42px*var(--s))}
-body.mob .touch #mbtn{right:calc(147.4px*var(--s));bottom:calc(127.1px*var(--s));width:calc(42px*var(--s));height:calc(42px*var(--s))}
-body.mob .touch #swap{right:calc(183.5px*var(--s));bottom:calc(49.7px*var(--s));width:calc(42px*var(--s));height:calc(42px*var(--s))}
+body.mob .touch #jump{right:calc(0.0px*var(--s));bottom:calc(0.0px*var(--s));width:calc(88px*var(--s));height:calc(88px*var(--s))}
+body.mob .touch #fbtn{right:calc(15.0px*var(--s));bottom:calc(129.0px*var(--s));width:calc(58px*var(--s));height:calc(58px*var(--s))}
+body.mob .touch #nbtn{right:calc(72.0px*var(--s));bottom:calc(113.7px*var(--s));width:calc(58px*var(--s));height:calc(58px*var(--s))}
+body.mob .touch #gbtn{right:calc(113.7px*var(--s));bottom:calc(72.0px*var(--s));width:calc(58px*var(--s));height:calc(58px*var(--s))}
+body.mob .touch #interact{right:calc(129.0px*var(--s));bottom:calc(15.0px*var(--s));width:calc(58px*var(--s));height:calc(58px*var(--s))}
+body.mob .touch #cbtn{right:calc(82.7px*var(--s));bottom:calc(197.4px*var(--s));width:calc(54px*var(--s));height:calc(54px*var(--s))}
+body.mob .touch #mbtn{right:calc(164.1px*var(--s));bottom:calc(140.4px*var(--s));width:calc(54px*var(--s));height:calc(54px*var(--s))}
+body.mob .touch #swap{right:calc(206.1px*var(--s));bottom:calc(50.3px*var(--s));width:calc(54px*var(--s));height:calc(54px*var(--s))}
+
+.touch .tx{display:none}
+body.mob .touch .tr button{flex-direction:column;gap:calc(1px*var(--s))}
+body.mob .touch .tr button .ic{width:44%;height:44%}
+body.mob .touch #jump .ic{width:46%;height:46%}
+body.mob .touch .tx{display:block;font-size:calc(9.5px*var(--s));font-weight:700;letter-spacing:.3px;line-height:1;text-shadow:0 1px 2px #000;color:#fff2d8;font-family:var(--mono)}
+body.mob .touch .tr button.off{opacity:.28;filter:grayscale(.8)}
+body.mob .touch .tr button.glow{opacity:1;border-color:#ffd36e;box-shadow:0 0 0 3px #ffd36e66,0 0 16px #ffd36e99;animation:gl .9s ease-in-out infinite}
+@keyframes gl{50%{box-shadow:0 0 0 6px #ffd36e33,0 0 22px #ffd36eaa}}
+.help{position:fixed;inset:0;z-index:60;background:#050a12f2;display:none;overflow:auto;padding:14px;-webkit-overflow-scrolling:touch}.help.on{display:block}
+.help h3{font-family:var(--px);font-size:13px;color:var(--gold);text-align:center;margin:6px 0 12px;line-height:1.5}
+.help .rows{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px;max-width:900px;margin:0 auto 14px}
+.help .row{display:flex;gap:10px;align-items:center;padding:8px 10px;background:#13233a;border:2px solid #34465c}
+.help .bi{flex:none;width:44px;height:44px;border-radius:50%;border:2px solid #fff;background:#1c2f44;display:grid;place-items:center;color:#fff2d8}.help .bi svg{width:56%;height:56%}
+.help .row b{display:block;color:var(--gold);font-size:12px;margin-bottom:2px}.help .row span{font-size:11px;line-height:1.45;color:#dbe7f2}
+.help .ok{display:block;margin:0 auto 10px;padding:12px 28px;font-size:14px;position:sticky;bottom:8px;background:#2f8f5f;border-color:#fff}
+@media(max-height:520px){.help{padding:8px 12px}.help h3{margin:0 0 8px;font-size:11px}.help .rows{grid-template-columns:repeat(4,1fr);gap:6px}.help .row{padding:6px;gap:7px}.help .row span{font-size:9px;line-height:1.35}.help .row b{font-size:10px}.help .bi{width:32px;height:32px}}
 body.ui-hide .touch{opacity:0;pointer-events:none;visibility:hidden}
 .touch .ic{display:none;width:62%;height:62%}.touch .ic svg{width:100%;height:100%;display:block}
 body.mob .touch .lt{display:none}body.mob .touch .ic{display:block}body.mob .touch button{display:flex;align-items:center;justify-content:center;color:#fff2d8}
@@ -99,8 +121,9 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 <div class="overlay" id="overlay"><div class="card" id="card"><h2>İki Kişilik Bir Yol</h2><p>Günümüz. Kaan ve Gizem motorla yolda ilerliyor. Her şey yolunda gibi... ta ki kötü kalpli bir tamirci araya girene kadar.</p><p><em>“Hatırla, Kaan, hatırla!”</em></p><p>Dominar’ı sür, küçük kalplerle hatıraları aç, yaratıkları vur. Gizem’i bul ve hikâyenin sonuna ulaş.</p><button id="start">Yolculuğa başla</button><button id="continue" style="display:none">Kaldığın yerden devam et</button><p class="small">A/D veya ←/→ hareket · W/↑/Space çift zıpla · E etkileşim · Q karakter değiştir · M motor · F ateş · C süper güç · S ses</p></div></div>
 </div>
 
-<div class="ctl"><button id="modeBtn" aria-label="Mobil kontroller" title="Mobil kontroller">📱</button><button id="fsBtn" aria-label="Tam ekran" title="Tam ekran">⛶</button><button id="menuBtn" aria-label="Menü" title="Menü">☰</button><div class="menu" id="menu"><div class="keys">A / D veya ← / →: hareket<br>W / ↑ / Space: çift zıpla<br>E: konuş / hatıra al · Q: karakter değiştir<br>M: motora bin / in / çağır · F: ateş<br>C: süper güç · Shift: nitro · G: Gizem atılışı<br>S: ses</div><button id="mute">Ses: açık</button><button id="restart">Bölümü baştan al</button><button id="reset">Kaydı sil</button></div></div>
-<div class="touch"><div class="tg tl"><button id="left" aria-label="Sol"><span class="lt">◀</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-8 7 8 7z" fill="currentColor"/></svg></span></button><button id="right" aria-label="Sağ"><span class="lt">▶</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l8 7-8 7z" fill="currentColor"/></svg></span></button></div><div class="joy" id="joy"><div class="knob"></div></div><div class="tg tr"><button id="jump" aria-label="Zıpla"><span class="lt">⬆</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V5M5 11l7-7 7 7"/></svg></span></button><button id="interact"><span class="lt">E</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-6l-5 4v-4H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M8 10.5h.01M12 10.5h.01M16 10.5h.01" stroke-width="3"/></svg></span></button><button id="swap"><span class="lt">Q</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></span></button><button id="mbtn"><span class="lt">M</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-6h5l3 6M10 10L8.5 7H6M14 10l1-3h3"/></svg></span></button><button id="fbtn"><span class="lt">F</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6.5"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg></span></button><button id="cbtn"><span class="lt">C</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16v-3l2-4.5h10l3.5 4.5H21v3z"/><circle cx="7.5" cy="17" r="2" fill="currentColor"/><circle cx="16.5" cy="17" r="2" fill="currentColor"/></svg></span></button><button id="nbtn"><span class="lt">⚡</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c.6 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3.5 2.4-4.6.1 1.8.9 2.8 1.8 3C10.5 8 10.5 5 12 2z" fill="currentColor"/></svg></span></button><button id="gbtn"><span class="lt">G</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h7M2 12h10M4 16h7M14 6l7 6-7 6z" /></svg></span></button></div></div>
+<div class="help" id="help"></div>
+<div class="ctl"><button id="helpBtn" aria-label="Tuşlar ne işe yarar?" title="Tuşlar ne işe yarar?">❓</button><button id="modeBtn" aria-label="Mobil kontroller" title="Mobil kontroller">📱</button><button id="fsBtn" aria-label="Tam ekran" title="Tam ekran">⛶</button><button id="menuBtn" aria-label="Menü" title="Menü">☰</button><div class="menu" id="menu"><div class="keys">A / D veya ← / →: hareket<br>W / ↑ / Space: çift zıpla<br>E: konuş / hatıra al · Q: karakter değiştir<br>M: motora bin / in / çağır · F: ateş<br>C: süper güç · Shift: nitro · G: Gizem atılışı<br>S: ses</div><button id="mute">Ses: açık</button><button id="restart">Bölümü baştan al</button><button id="reset">Kaydı sil</button></div></div>
+<div class="touch"><div class="tg tl"><button id="left" aria-label="Sol"><span class="lt">◀</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-8 7 8 7z" fill="currentColor"/></svg></span></button><button id="right" aria-label="Sağ"><span class="lt">▶</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l8 7-8 7z" fill="currentColor"/></svg></span></button></div><div class="joy" id="joy"><div class="knob"></div></div><div class="tg tr"><button id="jump" aria-label="Zıpla"><span class="lt">⬆</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V5M5 11l7-7 7 7"/></svg></span><span class="tx">ZIPLA</span></button><button id="interact"><span class="lt">E</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-6l-5 4v-4H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M8 10.5h.01M12 10.5h.01M16 10.5h.01" stroke-width="3"/></svg></span><span class="tx">ETKİLEŞ</span></button><button id="swap"><span class="lt">Q</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></span><span class="tx">DEĞİŞ</span></button><button id="mbtn"><span class="lt">M</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-6h5l3 6M10 10L8.5 7H6M14 10l1-3h3"/></svg></span><span class="tx">MOTOR</span></button><button id="fbtn"><span class="lt">F</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6.5"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg></span><span class="tx">ATEŞ</span></button><button id="cbtn"><span class="lt">C</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16v-3l2-4.5h10l3.5 4.5H21v3z"/><circle cx="7.5" cy="17" r="2" fill="currentColor"/><circle cx="16.5" cy="17" r="2" fill="currentColor"/></svg></span><span class="tx">ARABA</span></button><button id="nbtn"><span class="lt">⚡</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c.6 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3.5 2.4-4.6.1 1.8.9 2.8 1.8 3C10.5 8 10.5 5 12 2z" fill="currentColor"/></svg></span><span class="tx">NİTRO</span></button><button id="gbtn"><span class="lt">G</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h7M2 12h10M4 16h7M14 6l7 6-7 6z" /></svg></span><span class="tx">ATILIŞ</span></button></div></div>
 </div>
 </div>
 <script>
@@ -918,9 +941,15 @@ makeLevel();requestAnimationFrame(frame);
 (function(){const B=document.body,KEY='ikiKisilikMob';let mob=null;try{const v=localStorage.getItem(KEY);if(v!==null)mob=v==='1'}catch(e){}
  if(mob===null)mob=!!(window.matchMedia&&matchMedia('(pointer:coarse)').matches);
  const apply=()=>{B.classList.toggle('mob',mob);el('modeBtn').classList.toggle('on',mob)};apply();
- const fs=()=>{try{if(document.fullscreenElement){document.exitFullscreen()}else{const r=document.documentElement.requestFullscreen?document.documentElement.requestFullscreen():null;if(r&&r.then)r.then(()=>{try{screen.orientation.lock('landscape').catch(()=>{})}catch(e){}}).catch(()=>{})}}catch(e){}};
- el('modeBtn').onclick=()=>{mob=!mob;try{localStorage.setItem(KEY,mob?'1':'0')}catch(e){}apply();toast(mob?'Mobil kontroller açık':'Masaüstü kontroller',1400);if(mob){try{const r=document.documentElement.requestFullscreen&&!document.fullscreenElement?document.documentElement.requestFullscreen():null;if(r&&r.then)r.then(()=>{try{screen.orientation.lock('landscape').catch(()=>{})}catch(e){}}).catch(()=>{})}catch(e){}}};
- el('fsBtn').onclick=fs;el('menuBtn').onclick=()=>el('menu').classList.toggle('on');
+ const DE=document.documentElement,isFs=()=>document.fullscreenElement||document.webkitFullscreenElement,ios=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+ const reqFs=()=>{const f=DE.requestFullscreen||DE.webkitRequestFullscreen||DE.msRequestFullscreen;if(!f)return null;try{const r=f.call(DE);return r&&r.then?r:Promise.resolve()}catch(e){return Promise.reject(e)}};
+ const lockLand=()=>{try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock('landscape').catch(()=>{})}catch(e){}};
+ const fsFail=()=>toast(ios?'iPhone tam ekranı desteklemiyor. Paylaş → “Ana Ekrana Ekle” ile ekle, oradan aç: tam ekran olur.':'Tarayıcı tam ekranı engelledi. Oyunu doğrudan sayfada aç (iframe içinde değil).',5200);
+ const fs=(quiet)=>{if(isFs()){try{(document.exitFullscreen||document.webkitExitFullscreen).call(document)}catch(e){}return}const r=reqFs();if(!r){if(!quiet)fsFail();return}r.then(lockLand).catch(()=>{if(!quiet)fsFail()})};
+ const fsSync=()=>el('fsBtn').classList.toggle('on',!!isFs());document.addEventListener('fullscreenchange',fsSync);document.addEventListener('webkitfullscreenchange',fsSync);
+ if(window.matchMedia&&(matchMedia('(display-mode:standalone)').matches||matchMedia('(display-mode:fullscreen)').matches||navigator.standalone))el('fsBtn').style.display='none';
+ el('modeBtn').onclick=()=>{mob=!mob;try{localStorage.setItem(KEY,mob?'1':'0')}catch(e){}apply();toast(mob?'Mobil kontroller açık':'Masaüstü kontroller',1400);if(mob)fs(true)};
+ el('fsBtn').onclick=()=>fs(false);el('menuBtn').onclick=()=>el('menu').classList.toggle('on');
  document.addEventListener('pointerup',e=>{const b=e.target.closest&&e.target.closest('button');if(b&&b.closest('.touch,.ctl'))setTimeout(()=>b.blur(),0)});
  B.classList.add('ui-hide');
 
@@ -929,6 +958,18 @@ makeLevel();requestAnimationFrame(frame);
   j.addEventListener('pointermove',e=>{if(e.pointerId===pid)upd(e)});
   const end=e=>{if(e.pointerId!==pid)return;pid=null;kn.style.transform='';touch.left=touch.right=0};j.addEventListener('pointerup',end);j.addEventListener('pointercancel',end)}
  setInterval(()=>{const ov=el('overlay').style.display!=='none';const hide=ov||D.on||modal||!!cine||scene!=='play'||locked||el('title').classList.contains('on');if(B.classList.contains('ui-hide')!==hide)B.classList.toggle('ui-hide',hide)},100);
+
+ {const H=[['jump','ZIPLA','Zıplar. Havadayken tekrar bas: çift zıplama (motorda tek zıplama). Motorla rampadan çıkarken basılı tut.'],['interact','ETKİLEŞ','Yakındaki hatıra, bulmaca, kol, kapı ya da motoru kullanır. Parlıyorsa yakınında bir şey var demek. Yazısı da ne yapacağını söyler.'],['mbtn','MOTOR','Motora bin / in. Motor uzaktaysa yanına çağırır (dar geçitte olmaz).'],['fbtn','ATEŞ','Motordayken ateş eder: yaratıkları ve kasaları vurur.'],['nbtn','NİTRO','Motordayken basılı tut: hızlanır, kasaları kırar, boşlukları daha uzağa atlar.'],['cbtn','ARABA','Oğuz’un arabası: kısa süre hiçbir şey sana zarar vermez (hastaneden sonra açılır).'],['gbtn','ATILIŞ','Gizem’in havada ileri doğru atılışı. Geniş boşlukları geçmek için.'],['swap','DEĞİŞ','Kaan ve Gizem arasında geçiş yapar (sadece ikisi birlikteyken).']];
+  const hp=el('help');const build=()=>{let h='<h3>TUŞLAR NE İŞE YARAR?</h3><div class="rows"><div class="row"><div class="bi" style="font-size:22px">◉</div><div><b>JOYSTICK (sol alt)</b><span>Sola / sağa kaydır: yürü ya da motorla sür.</span></div></div>';
+   for(const [id,t,d] of H){const ic=document.querySelector('#'+id+' .ic');h+=`<div class="row"><div class="bi">${ic?ic.innerHTML:''}</div><div><b>${t}</b><span>${d}</span></div></div>`}
+   hp.innerHTML=h+'</div><button class="ok" id="helpOk">Anladım</button>'+'<p style="text-align:center;font-size:10px;color:#8fa3b8;margin:0">Bu pencereyi sağ üstteki ❓ ile tekrar açabilirsin.</p>';el('helpOk').onclick=()=>hp.classList.remove('on')};
+  const open=()=>{build();hp.classList.add('on')};el('helpBtn').onclick=()=>hp.classList.contains('on')?hp.classList.remove('on'):open();
+  let seen=false;try{seen=localStorage.getItem('ikiKisilikHelp')==='1'}catch(e){}
+  setInterval(()=>{const hide=B.classList.contains('ui-hide');if(!hide){if(mob&&!seen){seen=true;try{localStorage.setItem('ikiKisilikHelp','1')}catch(e){}open()}
+   const on=(id,f)=>{const b=el(id);b.classList.toggle('off',!f)};const gz=cast==='gizem'||(cast==='duo'&&active===1);
+   on('swap',cast==='duo');on('fbtn',bike.mounted&&cast==='kaan'&&chapter>0);on('nbtn',bike.mounted);on('cbtn',hasCar&&cast==='kaan');on('gbtn',gz&&!(bike.mounted&&RD()===actors[active]));
+   const tg=nearestTarget(),ie=el('interact'),lab={item:'HATIRA',puz:'BULMACA',lever:'KOL',goal:'KAPI',bike:'MOTOR',ns:'MOTORU AL'};ie.classList.toggle('glow',!!tg&&tg.t!=='bike');ie.classList.toggle('off',!tg);const tx=ie.querySelector('.tx'),nt=tg?(lab[tg.t]||'ETKİLEŞ'):'ETKİLEŞ';if(tx.textContent!==nt)tx.textContent=nt;
+   const mb=el('mbtn'),mt=mb.querySelector('.tx'),k=RD(),near=k&&Math.abs(k.x+5-bike.x)<45,m=bike.mounted?'İN':(cast==='gizem'&&!bike.g)?'MOTOR':(near?'BİN':'ÇAĞIR');if(mt.textContent!==m)mt.textContent=m;mb.classList.toggle('off',cast==='gizem'&&!bike.g)}},150)}
  document.addEventListener('contextmenu',e=>{if(e.target.closest&&e.target.closest('.touch,.ctl'))e.preventDefault()});
  document.addEventListener('dblclick',e=>{if(e.target.closest&&e.target.closest('.touch'))e.preventDefault()});
 })();
