@@ -1,0 +1,17 @@
+{
+  "name": "İki Kişilik Bir Yol",
+  "short_name": "İki Kişilik Yol",
+  "description": "Kaan ve Gizem'in motorlu pixel-art macerası.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "any",
+  "background_color": "#05080e",
+  "theme_color": "#05080e",
+  "lang": "tr",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}

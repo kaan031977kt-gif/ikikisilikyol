@@ -1,6 +1,24 @@
-<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"></head><body>
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="description" content="Kaan ve Gizem'in motorlu pixel-art macerası. Hatıraları aç, bulmacaları çöz, yaratıkları vur ve Gizem'i bul.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="İki Kişilik Bir Yol">
+<meta property="og:description" content="Kaan ve Gizem'in motorlu pixel-art macerası. Hatıraları aç, bulmacaları çöz, yaratıkları vur ve Gizem'i bul.">
+<meta property="og:image" content="https://kaan031977kt-gif.github.io/ikikisilikyol/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://kaan031977kt-gif.github.io/ikikisilikyol/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="İki Kişilik Bir Yol">
+<meta name="twitter:description" content="Kaan ve Gizem'in motorlu pixel-art macerası. Hatıraları aç, bulmacaları çöz, yaratıkları vur ve Gizem'i bul.">
+<meta name="twitter:image" content="https://kaan031977kt-gif.github.io/ikikisilikyol/cover.png">
 <title>İki Kişilik Bir Yol</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -14,7 +32,9 @@
 :root{color-scheme:dark;--cream:#fff2d8;--gold:#ffd36e;--pink:#ff9eb6;--panel:#172538;--line:#4b627a;--ink:#0b1320;--mute:#aebfd0;--blue:#8fc1ff;
 --px:'Press Start 2P',ui-monospace,SFMono-Regular,Consolas,monospace;--mono:ui-monospace,SFMono-Regular,Consolas,Menlo,monospace}
 *{box-sizing:border-box}
-html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+html,body{height:100%;overflow:hidden;overscroll-behavior:none;touch-action:none}
+.help,.menu{touch-action:pan-y}
+body.mob .touch button.prs,.touch button.prs{transform:scale(.92);opacity:1;background:#466784}
 body{margin:0;padding:0;background:#05080e;color:var(--cream);font-family:var(--mono);-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
 .shell{position:fixed;inset:0}
 .frame{position:absolute;left:50%;top:50%;width:min(100vw,calc(100dvh*16/9));aspect-ratio:16/9;transform:translate(-50%,-50%);background:#0c131d;overflow:hidden;box-shadow:0 0 0 1px #1c2a3b}
@@ -109,6 +129,8 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .puz{overflow:auto}
 @media(prefers-reduced-motion:reduce){.dialogue,.hint{animation:none}#title{transition:none}}
 </style>
+</head>
+<body>
 
 <div class="shell">
 <div class="frame" id="frame">
@@ -122,7 +144,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 </div>
 
 <div class="help" id="help"></div>
-<div class="ctl"><button id="helpBtn" aria-label="Tuşlar ne işe yarar?" title="Tuşlar ne işe yarar?">❓</button><button id="modeBtn" aria-label="Mobil kontroller" title="Mobil kontroller">📱</button><button id="fsBtn" aria-label="Tam ekran" title="Tam ekran">⛶</button><button id="menuBtn" aria-label="Menü" title="Menü">☰</button><div class="menu" id="menu"><div class="keys">A / D veya ← / →: hareket<br>W / ↑ / Space: çift zıpla<br>E: konuş / hatıra al · Q: karakter değiştir<br>M: motora bin / in / çağır · F: ateş<br>C: süper güç · Shift: nitro · G: Gizem atılışı<br>S: ses</div><button id="mute">Ses: açık</button><button id="restart">Bölümü baştan al</button><button id="reset">Kaydı sil</button></div></div>
+<div class="ctl"><button id="helpBtn" aria-label="Tuşlar ne işe yarar?" title="Tuşlar ne işe yarar?">❓</button><button id="modeBtn" aria-label="Mobil kontroller" title="Mobil kontroller">📱</button><button id="fsBtn" aria-label="Tam ekran" title="Tam ekran">⛶</button><button id="menuBtn" aria-label="Menü" title="Menü">☰</button><div class="menu" id="menu"><div class="keys">A / D veya ← / →: hareket<br>W / ↑ / Space: çift zıpla<br>E: konuş / hatıra al · Q: karakter değiştir<br>M: motora bin / in / çağır · F: ateş<br>C: süper güç · Shift: nitro · G: Gizem atılışı<br>S: ses</div><button id="installBtn" style="display:none">📲 Uygulama olarak yükle</button><button id="mute">Ses: açık</button><button id="restart">Bölümü baştan al</button><button id="reset">Kaydı sil</button></div></div>
 <div class="touch"><div class="tg tl"><button id="left" aria-label="Sol"><span class="lt">◀</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-8 7 8 7z" fill="currentColor"/></svg></span></button><button id="right" aria-label="Sağ"><span class="lt">▶</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l8 7-8 7z" fill="currentColor"/></svg></span></button></div><div class="joy" id="joy"><div class="knob"></div></div><div class="tg tr"><button id="jump" aria-label="Zıpla"><span class="lt">⬆</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V5M5 11l7-7 7 7"/></svg></span><span class="tx">ZIPLA</span></button><button id="interact"><span class="lt">E</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-6l-5 4v-4H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M8 10.5h.01M12 10.5h.01M16 10.5h.01" stroke-width="3"/></svg></span><span class="tx">ETKİLEŞ</span></button><button id="swap"><span class="lt">Q</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></span><span class="tx">DEĞİŞ</span></button><button id="mbtn"><span class="lt">M</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-6h5l3 6M10 10L8.5 7H6M14 10l1-3h3"/></svg></span><span class="tx">MOTOR</span></button><button id="fbtn"><span class="lt">F</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6.5"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg></span><span class="tx">ATEŞ</span></button><button id="cbtn"><span class="lt">C</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16v-3l2-4.5h10l3.5 4.5H21v3z"/><circle cx="7.5" cy="17" r="2" fill="currentColor"/><circle cx="16.5" cy="17" r="2" fill="currentColor"/></svg></span><span class="tx">ARABA</span></button><button id="nbtn"><span class="lt">⚡</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c.6 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3.5 2.4-4.6.1 1.8.9 2.8 1.8 3C10.5 8 10.5 5 12 2z" fill="currentColor"/></svg></span><span class="tx">NİTRO</span></button><button id="gbtn"><span class="lt">G</span><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h7M2 12h10M4 16h7M14 6l7 6-7 6z" /></svg></span><span class="tx">ATILIŞ</span></button></div></div>
 </div>
 </div>
@@ -182,14 +204,15 @@ const LAYOUT=[
 const MUS=[
  {bpm:84,ch:[[57,'m'],[53,'M'],[60,'M'],[55,'M']]},{bpm:100,ch:[[50,'M'],[55,'M'],[57,'m'],[53,'M']]},
  {bpm:72,ch:[[52,'m'],[48,'M'],[55,'M'],[50,'M']]},{bpm:58,ch:[[45,'m'],[41,'M'],[43,'M'],[45,'m']]},
- {bpm:76,ch:[[53,'M'],[57,'m'],[50,'m'],[58,'M']]},{bpm:88,ch:[[48,'M'],[55,'M'],[57,'m'],[53,'M']]}
+ {bpm:76,ch:[[53,'M'],[57,'m'],[50,'m'],[58,'M']]},{bpm:88,ch:[[48,'M'],[55,'M'],[57,'m'],[53,'M']]},
+ {bpm:132,ch:[[45,'m'],[41,'M'],[43,'M'],[40,'m']]},{bpm:60,ch:[[57,'M'],[53,'M'],[50,'m'],[55,'M']]}
 ];
 
 /* ================= DURUM ================= */
 const keys={},touch={left:0,right:0,jump:0,nitro:0};
 const RD=()=>cast==='gizem'?actors[1]:actors[0];
 let chapter=0,active=0,mem=0,scene='title',locked=false,clock=0,cam=0,shake=0,flash=0,fade=0,fadeTarget=0,bars=0;
-let plates=[],deco=[],L=1300,hp=5,MAXHP=5,nit=1,cpX=100,frag=0,fused=0,gaps=[],ramps=[],tun=[],springs=[],spikes=[],levers=[],solids=[],frags=[],cps=[],hints=[],PL=null,kx=1e9,ebul=[],cine=null,cast='duo',hasCar=false,carT=0,carCD=0,invul=0,shotCD=0,modal=false,puzSolved=new Set(),enemies=[],bullets=[],tam=null,ev={},puzCur=null;
+let arena=null,plates=[],deco=[],L=1300,hp=5,MAXHP=5,nit=1,cpX=100,frag=0,fused=0,gaps=[],ramps=[],tun=[],springs=[],spikes=[],levers=[],solids=[],frags=[],cps=[],hints=[],PL=null,kx=1e9,ebul=[],cine=null,cast='duo',hasCar=false,carT=0,carCD=0,invul=0,shotCD=0,modal=false,puzSolved=new Set(),enemies=[],bullets=[],tam=null,ev={},puzCur=null;
 let actors=[],bike={x:130,y:GROUND,mounted:false,spin:0,face:1,parked:0},platforms=[],items=[],props=[],goal={x:1225,y:GROUND},parts=[],rings=[],clouds=[],birds=[],wxp=[],bg={},lights=[],jumpWasDown=false,lastCam=0,bolt=null,boltT=0,nextBolt=4,thunderQ=[],footN=0,saved=null,muted=false;
 const TH=()=>CH[chapter].th;
 
@@ -207,9 +230,9 @@ function audioInit(){if(AC){if(AC.state==='suspended')AC.resume();return}
  }catch(e){AC=null}}
 function tone(f,dur,type='square',vol=.12,slide=0,delay=0){if(!AC)return;const t=AC.currentTime+delay,o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(20,f+slide),t+dur);g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g);g.connect(sfxGain);o.start(t);o.stop(t+dur+.02)}
 function nburst(dur,vol,f,delay=0,type='lowpass'){if(!AC)return;const t=AC.currentTime+delay,s=AC.createBufferSource();s.buffer=noiseBuf;const fl=AC.createBiquadFilter();fl.type=type;fl.frequency.value=f;const g=AC.createGain();g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0001,t+dur);s.connect(fl);fl.connect(g);g.connect(sfxGain);s.start(t,Math.random());s.stop(t+dur+.02)}
-const SFX={jump:()=>tone(300,.14,'square',.07,380),jump2:()=>tone(430,.14,'square',.07,420),land:()=>nburst(.09,.22,500),step:()=>nburst(.04,.05,1500),
+const SFX={jump:()=>tone(300*(.93+Math.random()*.14),.14,'square',.07,380),jump2:()=>tone(430*(.93+Math.random()*.14),.14,'square',.07,420),hurt:()=>{tone(230,.22,'sawtooth',.1,-170);nburst(.14,.22,800)},roar:()=>{tone(95,.55,'sawtooth',.14,-45);nburst(.5,.3,320)},alarm:()=>{tone(720,.1,'square',.07);tone(540,.1,'square',.07,0,.11)},nitro:()=>{nburst(.35,.22,2200,0,'bandpass');tone(140,.35,'sawtooth',.05,320)},land:()=>nburst(.09,.22,500),step:()=>nburst(.04,.05,1500),
  collect:()=>[660,830,990,1320].forEach((f,i)=>tone(f,.28,'triangle',.11,0,i*.07)),talk:()=>tone(520+Math.random()*140,.04,'square',.03),swap:()=>{tone(500,.08,'square',.06,300);tone(760,.1,'square',.06,0,.07)},
- mount:()=>{nburst(.35,.25,300);tone(80,.4,'sawtooth',.08,120)},thunder:d=>{nburst(1.8,.7,260,d);nburst(.5,.4,900,d)},goal:()=>[523,659,784,1047].forEach((f,i)=>tone(f,.4,'triangle',.1,0,i*.09)),err:()=>tone(180,.12,'square',.07,-60),shoot:()=>{tone(900,.08,'sawtooth',.08,-700);nburst(.06,.15,2500)},pop:()=>{tone(260,.15,'square',.08,-160);nburst(.1,.2,900)},car:()=>{[110,165,220].forEach((f,i)=>tone(f,.4,'sawtooth',.07,60,i*.05))}};
+ mount:()=>{nburst(.35,.25,300);tone(80,.4,'sawtooth',.08,120)},thunder:d=>{nburst(1.8,.7,260,d);nburst(.5,.4,900,d)},goal:()=>[523,659,784,1047].forEach((f,i)=>tone(f,.4,'triangle',.1,0,i*.09)),err:()=>tone(180,.12,'square',.07,-60),shoot:()=>{tone(900*(.9+Math.random()*.2),.08,'sawtooth',.08,-700);nburst(.06,.15,2500)},pop:()=>{tone(260,.15,'square',.08,-160);nburst(.1,.2,900)},car:()=>{[110,165,220].forEach((f,i)=>tone(f,.4,'sawtooth',.07,60,i*.05))}};
 const sfx=n=>{if(AC&&!muted)try{SFX[n]&&SFX[n]()}catch(e){}};
 const mtof=m=>440*Math.pow(2,(m-69)/12);
 function note(f,t0,dur,type,vol,att){const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(0,t0);g.gain.linearRampToValueAtTime(vol,t0+att);g.gain.exponentialRampToValueAtTime(.0001,t0+dur);o.connect(g);g.connect(musicGain);o.start(t0);o.stop(t0+dur+.05)}
@@ -292,9 +315,9 @@ const PLAN=[
  {segs:[['flat',{e:1}],['gap'],['flat',{h:1,e:2}],['crates'],['gap',{h:1}],['flat',{h:1,e:2,g:1}],['spikes'],['flat']],beats:[]},
  {segs:[['flat'],['lever',{f:1}],['dgap',{f:1}],['puz'],['cave',{f:1}],['gap',{f:1,h:1}],['climb',{f:1}],['spikes'],['puz'],['tunnel',{f:1}],['moving',{f:1}],['spring',{f:1,h:1}],['puz']],beats:[[.3,[['GİZEM','(kendi kendine) Şu mağaranın içinde bir parıltı var... Sanki bir motor? Bakmalıyım.']]],[.2,[['GİZEM','(kendi kendine) Bir kapı, bir kol... Mutlaka bir çıkış yolu var.']]],[.5,[['GİZEM','(kendi kendine) Şu kırık parçalar bir şey anlatıyor... Birleştirirsem belki yolu açar.']]],[.82,[['TAMİRCİ','(uzaktan) Hâlâ buradasın demek! Bu kadar kolay çıkılmıyor!']]]]},
  {segs:[['flat',{e:1}],['tunnel'],['crates'],['gap'],['flat',{e:2,g:1}]],beats:[[.3,[['KAAN','Oğuz’un arabası... Süper güç sınırlı. Doğru anda kullanmalıyım. (C)']]],[.72,[['KAAN','Dayan Gizem, geliyorum.']]]]},
- {segs:[['flat',{e:2,g:1}],['gap'],['crates'],['tunnel',{f:2}],['puz'],['arena',{b:1,e:2}],['lever',{f:2}],['puz'],['arena',{b:1,g:2}],['flat']],beats:[[.12,[['KAAN','Burası tamircinin mekânı... Gizem içeride.']]],[.5,[['TAMİRCİ','Buraya kadar geldin demek! Cesaretine hayranım ama içeri giremezsin!']]],[.82,[['GİZEM','(uzaktan) Kaan, dikkat et!']]]]}
+ {segs:[['flat',{e:2,g:1}],['gap'],['crates'],['tunnel',{f:2}],['puz'],['arena',{b:1,e:2}],['lever',{f:2}],['puz'],['arena',{b:1,g:2}],['final']],beats:[[.12,[['KAAN','Burası tamircinin mekânı... Gizem içeride.']]],[.5,[['TAMİRCİ','Buraya kadar geldin demek! Cesaretine hayranım ama içeri giremezsin!']]],[.82,[['GİZEM','(uzaktan) Kaan, dikkat et!']]]]}
 ];
-function genLevel(ch){const pl=PLAN[ch],Rr=rng(ch*53+9);let x=330;const G={plates:[],deco:[],nsX:0,plats:[],solids:[],gaps:[],ramps:[],tun:[],springs:[],spikes:[],levers:[],frags:[],cps:[],items:[],en:[],gun:[],boss:[],puz:[],hints:[]};
+function genLevel(ch){const pl=PLAN[ch],Rr=rng(ch*53+9);let x=330;const G={tam:[],arena:null,plates:[],deco:[],nsX:0,plats:[],solids:[],gaps:[],ramps:[],tun:[],springs:[],spikes:[],levers:[],frags:[],cps:[],items:[],en:[],gun:[],boss:[],puz:[],hints:[]};
  const plat=(px,py,w,mv)=>{const p={x:px,y:py,w,h:7,mv};G.plats.push(p);return p};
  const mvp=(cx,py,w,ax,sp,ph)=>plat(cx-w/2,py,w,{x0:cx-w/2,y0:py,ax,sp,ph});
  const crate=(cx,cy)=>G.solids.push({t:'crate',x:cx,y:cy,w:22,h:24,hp:2});
@@ -313,6 +336,7 @@ function genLevel(ch){const pl=PLAN[ch],Rr=rng(ch*53+9);let x=330;const G={plate
    case'dgap':len=420;G.gaps.push({x1:x0+110,x2:x0+250});hint('Geniş boşluk! Çift zıpla, havada G ile atıl (Gizem’in özel yeteneği).');if(o.f)fr(x0+320,GROUND-14);break;
    case'cave':len=420;G.nsX=x0+210;G.deco.push({x1:x0+110,x2:x0+320});hint('Mağaranın içinde bir şey parlıyor... Yaklaş ve E ile incele.',20);if(o.f)fr(x0+360,GROUND-14);break;
    case'coop':len=420;G.tun.push({x1:x0+30,x2:x0+400});G.plates.push({x:x0+100,id:x0,on:0});G.solids.push({t:'door',id:x0,x:x0+250,y:GROUND-62,w:10,h:62,open:0});hint('Dar geçit! Biri plakaya bassın, diğeri Q ile kapıdan geçsin. (Kapı açık kalır.)');break;
+   case'final':len=640;plat(x0+70,GROUND-46,64);plat(x0+500,GROUND-46,64);G.tam.push(x0+len/2+90);G.arena={x1:x0+10,x2:x0+len,lock:0};hint('Tamirci karşında! Motoruyla üstüne atılacak, uyarı çıkınca kenara kaç. Yorulunca vur!',30);break
    case'puz':len=240;G.puz.push(x0+90);break;
    case'arena':len=560;plat(x0+60,GROUND-46,60);plat(x0+440,GROUND-46,60);break}
   const ne=o.e||0;if(['flat','arena','spikes','spring','climb'].includes(t))for(let i=0;i<ne;i++)G.en.push(x0+120+i*Math.floor((len-240)/Math.max(1,ne)));
@@ -337,6 +361,7 @@ function worldTick(dt){
   if(Math.abs(dx)<26){bike.call=0;if(!inTun(k.x+5)&&k.grounded)mountBike()}}}
 function mountBike(){const k=RD();bike.mounted=true;bike.parked=0;k.x=bike.x-5;k.y=GROUND-k.h;k.vx=0;shake=Math.max(shake,2);sfx('mount');setBikeHud()}
 function worldPost(a){if(scene!=='play'||cine)return;const cx=a.x+5,cy=a.y+10,k=RD();
+ if(arena){const t=enemies.find(e=>e.tam&&!e.dead);if(t&&cx>arena.x1+90)arena.lock=1;if(arena.lock&&t){a.x=clamp(a.x,arena.x1+60,arena.x2-24);if(bike.mounted&&a===k)bike.x=a.x+5}}
  if(bike.mounted&&a===k)for(const t of tun)if(k.x+5>t.x1-6&&k.x+5<t.x2){bike.mounted=false;bike.parked=1;bike.x=t.x1-20;bike.face=k.face;if(cast==='duo'){const g=actors[1];g.x=k.x-14*k.face;g.y=k.y;g.vx=g.vy=0}toast('Dar geçit! Motoru bıraktın, yürüyerek devam et.',2600);setBikeHud();puff(k,5);break}
  for(const f of frags)if(!f.got&&Math.abs(cx-f.x)<(bike.mounted?20:13)&&Math.abs(cy-f.y)<24){f.got=1;frag++;sfx('collect');toast(`Parça bulundu! (${frag})`,1800);for(let i=0;i<14;i++)emit({x:f.x,y:f.y,vx:(Math.random()-.5)*3,vy:(Math.random()-.5)*3,life:.6,max:.6,col:'#8fe0ff',size:2,add:1,shrink:.7})}
  for(const c of cps)if(!c.on&&cx>c.x){c.on=1;cpX=c.x;hp=MAXHP;toast('Kayıt noktası ✔ Can yenilendi',1800);sfx('swap')}
@@ -381,7 +406,7 @@ function makeLevel(){mem=0;active=0;cam=0;lastCam=0;parts.length=0;rings.length=
   else if(cast==='kaan'){if(th.npc!==undefined){g.kind=th.npc;g.name=KINDN[th.npc];g.vx=g.vy=0;g.grounded=true;g.y=GROUND-g.h;
      if(chapter===1){g.x=62;g.face=1}else if(chapter===4){g.x=128;g.face=-1}else{g.x=goal.x-5;g.face=-1;g.wave=1;t.x=goal.x+13;t.face=-1;t.y=GROUND-t.h}}else g.x=-300}
   if(th.startMounted){bike.mounted=true;bike.parked=0;k.x=100;bike.x=105;g.x=cast==='duo'?100:g.x}
-  for(const x of G.en)enemies.push(mkEnemy(x,0));for(const x of G.boss)enemies.push(mkEnemy(x,1));for(const x of G.gun)enemies.push(mkEnemy(x,0,1));ebul=[]}
+  for(const x of G.en)enemies.push(mkEnemy(x,0));for(const x of G.boss)enemies.push(mkEnemy(x,1));for(const x of G.tam)enemies.push(mkEnemy(x,1,0,1));arena=G.arena;for(const x of G.gun)enemies.push(mkEnemy(x,0,1));ebul=[]}
  if(th.cells)clouds=[];
  setBikeHud();applyAmbience()}
 function newWx(t,init){const o={x:Math.random()*(W+60),y:init?Math.random()*H:-10,ph:Math.random()*6,s:Math.random()};
@@ -391,7 +416,7 @@ function newWx(t,init){const o={x:Math.random()*(W+60),y:init?Math.random()*H:-1
  else if(t==='dust'){o.y=init?60+Math.random()*180:60+Math.random()*180;o.vy=-.03;o.vx=-.1-Math.random()*.1}
  else if(t==='fireflies'){o.y=100+Math.random()*130;o.x=Math.random()*W}
  return o}
-function mkEnemy(x,boss,gun){const w=gun?14:boss?38:20,h=gun?29:boss?40:22;return{x,y:GROUND-h,w,h,hp:gun?3:boss?12:1,mhp:gun?3:boss?12:1,boss,gun,dir:Math.random()<.5?1:-1,min:gun?x:x-(boss?200:70),max:gun?x:x+(boss?200:70),ph:Math.random()*6,flash:0,hit:0,dead:0,cd:60+Math.random()*60}}
+function mkEnemy(x,boss,gun,tam){const w=tam?30:gun?14:boss?38:20,h=tam?44:gun?29:boss?40:22,H0=tam?26:gun?3:boss?12:1;return{x,y:GROUND-h,w,h,hp:H0,mhp:H0,boss,gun,tam,dir:Math.random()<.5?1:-1,min:gun?x:x-(tam?240:boss?200:70),max:gun?x:x+(tam?240:boss?200:70),ph:Math.random()*6,flash:0,hit:0,dead:0,cd:60+Math.random()*60}}
 function setBikeHud(){el('bikeStatus').textContent=cast==='gizem'?(bike.g?(bike.mounted?'🔵 GİZEM: NS200 SÜRÜŞTE':'🔵 NS200: PARKTA'):'🔒 GİZEM: TUTSAK'):bike.mounted?(cast==='duo'?'🔴 KAAN + GİZEM: ARTÇILI SÜRÜŞ':'🔴 KAAN: SÜRÜŞTE'):'🔴 DOMINAR: PARKTA'}
 function toast(m,ms=1800){const t=el('toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),ms)}
 
@@ -417,7 +442,7 @@ function typeTick(dt){if(!D.on||!D.full||D.shown>=D.full.length)return;const bef
 function inputNow(){const l=keys.ArrowLeft||keys.KeyA||touch.left,r=keys.ArrowRight||keys.KeyD||touch.right,jh=!!(keys.ArrowUp||keys.KeyW||keys.Space||touch.jump);const jp=jh&&!jumpWasDown;jumpWasDown=jh;return{l:!!l,r:!!r,jh,jp}}
 function phys(a,inp,riding){
  if(a.on&&a.grounded){a.x+=a.on.dx||0;a.y+=a.on.dy||0}
- const nitroNow=riding&&a===RD()&&(keys.ShiftLeft||keys.ShiftRight||touch.nitro)&&nit>.08&&Math.abs(a.vx)>.3;a.nitro=nitroNow;
+ const nitroNow=riding&&a===RD()&&(keys.ShiftLeft||keys.ShiftRight||touch.nitro)&&nit>.08&&Math.abs(a.vx)>.3;if(nitroNow&&!a.nwas)sfx('nitro');a.nwas=nitroNow;a.nitro=nitroNow;
  const speed=(riding?2.75:1.55)*(carT>0&&a===actors[0]?1.35:1)*(nitroNow?1.55:1),acc=a.grounded?(riding?.07:.2):(riding?.05:.11),dir=(inp.r?1:0)-(inp.l?1:0);
  if(a.dcd>0)a.dcd--;
  if(a.dash>0){a.dash--;a.vx=a.face*5.4;if(a.dash%2===0)emit({x:a.x+5-a.face*6,y:a.y+10+(Math.random()-.5)*10,vx:-a.face*.4,vy:0,life:.3,max:.3,col:'#ffb3d0',size:3,add:1,shrink:.8})}else a.vx+=(dir*speed-a.vx)*acc;if(!dir&&Math.abs(a.vx)<.05)a.vx=0;if(dir)a.face=dir;
@@ -456,7 +481,7 @@ function nearestTarget(){const a=actors[active],cx=a.x+5,cy=a.y+a.h/2;
  if(cast==='gizem'&&!bike.g&&chapter===3&&Math.abs(cx-bike.x)<36)return{t:'ns',x:bike.x,y:bike.y-42}
  if(((cast!=='gizem'&&active===0)||(cast==='gizem'&&bike.g))&&(bike.mounted||Math.abs(cx-bike.x)<40))return{t:'bike',x:bike.x,y:bike.y-(bike.mounted?36:26),m:1};
  return null}
-function gateOK(){const th=TH();if(th.puz&&puzSolved.size<th.puz.length)return false;if(th.boss&&enemies.some(e=>!e.dead&&e.boss))return false;return true}
+function gateOK(){const th=TH();if(th.puz&&puzSolved.size<th.puz.length)return false;if((th.boss||chapter===5)&&enemies.some(e=>!e.dead&&e.boss))return false;return true}
 function interact(){if(D.on){nextLine();return}if(cine){nextShot();return}if(locked||scene!=='play'||modal)return;
  const tg=nearestTarget();
  if(tg&&tg.t==='item'){tg.it.got=true;mem++;el('memories').textContent=`${mem} / ${items.length}`;el('memories').classList.remove('pulse');void el('memories').offsetWidth;el('memories').classList.add('pulse');sfx('collect');
@@ -533,8 +558,9 @@ function startChapter(n){locked=true;fadeTarget=1;setTimeout(()=>{chapter=n;save
   setTimeout(()=>{el('title').classList.remove('on');fadeTarget=0;setTimeout(()=>{locked=false;const done=()=>{if(TH().carGift){hasCar=true;carCD=0;toast('Süper güç kazandın! C tuşu: Oğuz’un arabası',3400);sfx('goal')}};if(CINE[CH[n].cin])playCine(CINE[CH[n].cin],done);else say(CH[n].intro,done)},700)},2300)},650)}
 
 /* ================= GÜNCELLEME ================= */
-const k0x=()=>actors[0]?actors[0].x:0;
-function tick(dt){clock+=dt;if(cine)cineTick(dt);
+let bossMus=null;const k0x=()=>actors[0]?actors[0].x:0;
+function tick(dt){clock+=dt;
+ if(scene==='play'&&!cine){const bn=enemies.some(e=>e.boss&&!e.dead&&Math.abs(e.x-(cam+W/2))<W*.75);if(bn&&!bossMus){bossMus={prev:musIdx};setMusic(6)}else if(!bn&&bossMus){setMusic(bossMus.prev);bossMus=null}}if(cine)cineTick(dt);
  fade+=clamp(fadeTarget-fade,-dt*1.8,dt*1.8);typeTick(dt);
  bars+=(((D.on||cine)?1:0)-bars)*.12;
  const playing=scene==='play'&&!locked&&!D.on&&!modal&&!cine&&!(chapter===0&&tam);
@@ -767,9 +793,9 @@ function shoot(){if(scene!=='play'||locked||D.on||modal||cast==='gizem'||chapter
 function useCar(){if(scene!=='play'||locked||D.on||modal||cast!=='kaan')return;if(!hasCar){toast('Henüz arabanın anahtarı yok.',1600);sfx('err');return}
  if(carT>0)return;if(carCD>0){toast(`Süper güç hazır değil (${Math.ceil(carCD)} sn)`,1400);sfx('err');return}
  const k=actors[0];carT=6;carCD=26;bike.mounted=true;bike.parked=0;bike.x=k.x+5;bike.y=k.y+k.h;sfx('car');flash=.5;shake=3;toast('SÜPER GÜÇ: Oğuz’un arabası!',1800);setBikeHud()}
-function killEnemy(e){e.dead=1;sfx('pop');const c=e.boss?'#ff6a6a':'#c27bd8';for(let i=0;i<(e.boss?40:14);i++)emit({x:e.x+e.w/2,y:e.y+e.h/2,vx:(Math.random()-.5)*4,vy:-Math.random()*3,g:.1,life:.7,max:.7,col:i%2?c:'#ffe08a',size:2,add:1,shrink:.7});if(e.boss){shake=6;toast('Koruyucu yenildi!',1600)}}
+function killEnemy(e){e.dead=1;sfx('pop');const c=e.boss?'#ff6a6a':'#c27bd8';for(let i=0;i<(e.boss?40:14);i++)emit({x:e.x+e.w/2,y:e.y+e.h/2,vx:(Math.random()-.5)*4,vy:-Math.random()*3,g:.1,life:.7,max:.7,col:i%2?c:'#ffe08a',size:2,add:1,shrink:.7});if(window.__buzz)__buzz(e.boss?120:20);if(e.tam){shake=9;flash=1;sfx('thunder');arena=null;toast('Tamirci yenildi! Kapıya git, Gizem’i kurtar (E).',4200);setTimeout(()=>say([['TAMİRCİ','Olamaz... Bunca emek... Peki. Anahtar sende artık. Gizem’i al ve git.'],['KAAN','Bu bir yarış değildi. Ben sadece onu geri istedim.']]),900)}else if(e.boss){shake=6;toast('Koruyucu yenildi!',1600)}}
 function hurtPlayer(k,fromX,fall){if(fall){hp--;toast('Düştün! Kayıt noktasına dönüyorsun.',1500);if(hp<=0)hp=MAXHP;respawn(k);return}
- if(carT>0||invul>0||scene!=='play')return;hp--;invul=80;k.vy=-3;k.vx=(k.x<fromX?-3:3);shake=3;sfx('err');if(hp<=0){hp=MAXHP;toast('Bayıldın! Kayıt noktasından devam.',1800);respawn(k)}else toast('Hasar aldın!',900)}
+ if(carT>0||invul>0||scene!=='play')return;hp--;invul=80;if(window.__buzz)__buzz(60);k.vy=-3;k.vx=(k.x<fromX?-3:3);shake=3;sfx('hurt');if(hp<=0){hp=MAXHP;toast('Bayıldın! Kayıt noktasından devam.',1800);respawn(k)}else toast('Hasar aldın!',900)}
 function enemyTick(dt){if(modal||D.on||cine||locked||scene!=='play')return;const k=actors[0];
  for(let i=bullets.length-1;i>=0;i--){const b=bullets[i];b.x+=b.vx;b.life--;if(!b.fx)for(const e of enemies){if(!e.dead&&b.x>e.x-4&&b.x<e.x+e.w+4&&b.y>e.y-6&&b.y<e.y+e.h+4){e.hp-=(e.boss&&e.st==='rest')?2:1;e.flash=6;b.life=0;for(let j=0;j<4;j++)emit({x:b.x,y:b.y,vx:(Math.random()-.5)*2,vy:(Math.random()-.5)*2,life:.2,max:.2,col:'#fff3b0',size:2,add:1});if(e.hp<=0)killEnemy(e);break}}if(b.life<=0)bullets.splice(i,1)}
  for(const b of bullets)for(const c of solids)if(c.t==='crate'&&!c.dead&&b.life>0&&!b.fx&&b.x>c.x&&b.x<c.x+c.w&&b.y>c.y&&b.y<c.y+c.h){c.hp--;b.life=0;if(c.hp<=0)breakCrate(c);else{sfx('err');shake=1}}
@@ -784,21 +810,29 @@ function enemyTick(dt){if(modal||D.on||cine||locked||scene!=='play')return;const
   if(bx1>e.x&&bx0<e.x+e.w&&by1>e.y&&by0<e.y+e.h){
    if(carT>0){if(e.hit<=0){e.hp-=2;e.hit=20;e.flash=6;if(!e.gun)e.x+=(k.x<e.x?1:-1)*8;shake=Math.max(shake,2);if(e.hp<=0)killEnemy(e)}}
    else hurtPlayer(k,e.x)}}}
-function bossAI(e,k){const ph=e.hp>8?1:e.hp>4?2:3;if(e.ph3!==ph){if(e.ph3){shake=5;flash=.5;sfx('thunder');toast(ph===2?'Koruyucu öfkelendi! Atılışlarına dikkat.':'Koruyucu son aşamada! Ateş ediyor.',2200);e.st='rest';e.t=0}e.ph3=ph}
+function bossAI(e,k){const ph=e.hp>e.mhp*2/3?1:e.hp>e.mhp/3?2:3;if(e.ph3!==ph){if(e.ph3){shake=5;flash=.5;sfx('roar');if(window.__buzz)__buzz(90);toast(ph===2?'Koruyucu öfkelendi! Atılışlarına dikkat.':'Koruyucu son aşamada! Ateş ediyor.',2200);e.st='rest';e.t=0}e.ph3=ph}
  e.st=e.st||'walk';e.t=(e.t||0)+1;const near=Math.abs(k.x-e.x),toK=k.x<e.x?-1:1;
  if(e.st==='walk'){e.x+=e.dir*(.45+ph*.15);if(e.x>e.max)e.dir=-1;if(e.x<e.min)e.dir=1;if(near<230)e.dir=toK;
-  if(ph>=2&&e.t>130-ph*25&&near<300){e.st='tele';e.t=0;e.dir=toK}
+  if(e.tam&&ph===1&&e.t%95===0&&near<340){ebul.push({x:e.x+e.w/2+e.dir*18,y:e.y+18,vx:e.dir*2.2,life:220});sfx('shoot')}
+  if(e.tam&&ph===3&&e.t%260===0&&enemies.filter(q=>!q.dead&&!q.boss&&!q.gun).length<2){enemies.push(mkEnemy(clamp(e.x+e.dir*70,e.min,e.max),0));sfx('pop')}
+  if(ph>=2&&e.t>130-ph*25&&near<300){e.st='tele';e.t=0;e.dir=toK;sfx('alarm')}
   if(ph===3&&e.t%110===0&&near<320){for(const yy of[10,26])ebul.push({x:e.x+e.w/2+e.dir*20,y:e.y+yy,vx:e.dir*2.4,life:200});sfx('shoot')}}
  else if(e.st==='tele'){if(e.t>34){e.st='charge';e.t=0}}
  else if(e.st==='charge'){e.x+=e.dir*(3.4+ph*.5);shake=Math.max(shake,1);if(e.t>42||e.x>e.max+30||e.x<e.min-30){e.st='rest';e.t=0;sfx('err')}}
  else if(e.st==='rest'){if(e.t>55){e.st='walk';e.t=0}}
  e.x=clamp(e.x,e.min-30,e.max+30)}
-function drawBossBar(){const b=enemies.find(e=>e.boss&&!e.dead&&Math.abs(e.x-(cam+W/2))<W*.9);if(!b||scene!=='play')return;const w=200,x=(W-w)/2,y=32,ph=b.ph3||1;R(x-2,y-2,w+4,12,'#05080e');R(x,y,w,8,'#2a1218');R(x,y,Math.max(0,Math.round(w*b.hp/b.mhp)),8,ph===3?'#ff3b4a':ph===2?'#ff8a4a':'#e05a6a');for(const t of[4/12,8/12])R(x+Math.round(w*t),y,1,8,'#05080e');ctx.font='7px monospace';const tx='KORUYUCU · AŞAMA '+ph+'/3'+(b.st==='rest'?' · YORGUN: VUR!':'');ctx.fillStyle='#05080e';ctx.fillText(tx,x+1,y+20);ctx.fillStyle='#ffe5a6';ctx.fillText(tx,x,y+19)}
+function drawBossBar(){const b=enemies.find(e=>e.boss&&!e.dead&&Math.abs(e.x-(cam+W/2))<W*.9);if(!b||scene!=='play')return;const w=200,x=(W-w)/2,y=32,ph=b.ph3||1;R(x-2,y-2,w+4,12,'#05080e');R(x,y,w,8,'#2a1218');R(x,y,Math.max(0,Math.round(w*b.hp/b.mhp)),8,ph===3?'#ff3b4a':ph===2?'#ff8a4a':'#e05a6a');for(const t of[1/3,2/3])R(x+Math.round(w*t),y,1,8,'#05080e');ctx.font='7px monospace';const tx=(b.tam?'TAMİRCİ':'KORUYUCU')+' · AŞAMA '+ph+'/3'+(b.st==='rest'?' · YORGUN: VUR!':'');ctx.fillStyle='#05080e';ctx.fillText(tx,x+1,y+20);ctx.fillStyle='#ffe5a6';ctx.fillText(tx,x,y+19)}
 function enemyParts(e){const P=[],A=(x,y,w,h,c,n)=>P.push([x,y,w,h,c,n]),c=e.boss?(e.flash?'#fff':'#a82a3a'):(e.flash?'#fff':'#8a3fa0'),d=e.boss?'#6e1a28':'#5f2a70',sq=Math.sin(e.ph)*.8;
  A(-6,-9,12,8+Math.round(sq),c);A(-5,-11,10,2,c);A(-7,-6,1,4,d);A(6,-6,1,4,d);A(-5,-1,4,1+Math.round(-sq),d);A(1,-1,4,1+Math.round(-sq),d);A(-5,-12,2,2,d);A(3,-12,2,2,d);
  A(-4,-8,4,4,'#fff');A(1,-8,4,4,'#fff');A(-3,-7,2,2,'#1b1620');A(2,-7,2,2,'#1b1620');A(-4,-9,5,1,d);A(1,-9,5,1,d);return P}
+function drawTamBoss(e){const f={kind:4,vx:0,vy:0,grounded:true,walkT:clock*4,blink:2,wave:0},cx=e.x+e.w/2,by=e.y+e.h,ride=e.st==='charge'||e.st==='tele';
+ if(ride){const P=[],A=(x,y,w,h,c,n)=>P.push([x,y,w,h,c,n]),ring=(c2,cy,r,c)=>{for(let dy=-r;dy<=r;dy++){const hw=Math.round(Math.sqrt(r*r-dy*dy));A(c2-hw,cy+dy,hw*2+1,1,c)}};ring(-12,-6,5,'#14181f');ring(-12,-6,2,'#6b7482');ring(12,-6,5,'#14181f');ring(12,-6,2,'#6b7482');A(-14,-12,26,5,'#2a2f3a');A(-2,-15,12,4,'#3a4150');A(9,-14,3,8,'#9aa4b2');A(-17,-9,8,2,'#6b7482');drawParts(P,cx,by,2,2,e.dir);drawParts(personParts(f),cx-4*e.dir,by-14,2.2,2.2,e.dir);glow(cx+e.dir*30,by-24,28,'255,243,176',.5)}
+ else drawParts(personParts(f),cx,by,2.2,2.2,e.dir);
+ if(e.st==='tele'){glow(cx,e.y+10,36,'255,60,60',.7);R(cx-1,e.y-26,3,9,'#ff4a4a');R(cx-1,e.y-15,3,3,'#ff4a4a')}
+ if(e.flash)glow(cx,e.y+e.h/2,32,'255,255,255',.8)}
 function drawEnemy(e){if(e.dead>20)return;const a=e.dead?Math.max(0,1-e.dead/20):1;ctx.globalAlpha=a;
  ctx.fillStyle='rgba(0,0,0,.25)';ctx.fillRect(Math.round(e.x),GROUND-1,e.w,2);
+ if(e.tam){drawTamBoss(e);ctx.globalAlpha=1;return}
  if(e.gun){const f={kind:5,vx:0,vy:0,grounded:true,walkT:0,blink:2,wave:0};const P=personParts(f);P.push([5,-12,9,2,'#2b2f36'],[12,-13,2,3,'#2b2f36']);if(e.flash)P.forEach(q=>{if(typeof q[4]==='string')q[4]='#fff'});
   drawParts(P,e.x+e.w/2,e.y+e.h,1.4,1.4,e.dir);if(e.cd<24&&!e.dead){const gx=e.x+e.w/2+e.dir*20,gy=e.y+16;glow(gx,gy,10,'255,80,60',.9);R(gx-1,gy-1,2,2,'#ff5a4a')}
   R(e.x-2,e.y-6,e.w+4,3,'#05080e');R(e.x-1,e.y-5,Math.max(0,Math.round((e.w+2)*e.hp/e.mhp)),1,'#ff5a6a')}
@@ -856,14 +890,15 @@ function cfg(n,sh){const T=clock;
  if(n==='rain'&&sh&&sh.phone){glow(sh.phone[0],sh.phone[1],26,'160,210,255',.8+.2*Math.sin(T*10));R(sh.phone[0]-2,sh.phone[1]-3,4,6,'#bfe0ff')}
  if(n==='ride')for(let i=0;i<3;i++)R(((i*77-T*420)%W+W)%W,CY+16+i*8,60,1,'rgba(255,255,255,.35)')}
 function ring2(cx,cy){for(let dy=-12;dy<=12;dy++){const hw=Math.round(Math.sqrt(144-dy*dy));R(cx-hw,cy+dy,hw*2+1,1,'#14181f')}for(let dy=-6;dy<=6;dy++){const hw=Math.round(Math.sqrt(36-dy*dy));R(cx-hw,cy+dy,hw*2+1,1,'#aab2be')}}
-function playCine(shots,cb){cine={shots,i:-1,cb,t:0,flash:0};toast('E: ilerle · Esc: atla',2000);nextShot(true)}
-function nextShot(first){if(!cine)return;cine.i++;if(cine.i>=cine.shots.length){const cb=cine.cb;cine=null;D.on=false;D.q=[];el('dialogue').style.display='none';if(cb)cb();return}
+let cineMus=null;function cineEnd(){if(cineMus){setMusic(cineMus.prev);cineMus=null}}
+function playCine(shots,cb){if(!cineMus&&musIdx!==7){cineMus={prev:musIdx};setMusic(7)}cine={shots,i:-1,cb,t:0,flash:0};toast('E: ilerle · Esc: atla',2000);nextShot(true)}
+function nextShot(first){if(!cine)return;cine.i++;if(cine.i>=cine.shots.length){const cb=cine.cb;cine=null;cineEnd();D.on=false;D.q=[];el('dialogue').style.display='none';if(cb)cb();return}
  const sh=cine.shots[cine.i];cine.t=0;cine.sh=sh;fade=first?1:.85;fadeTarget=0;
  cine.ch=(sh.ch||[]).map(c=>({kind:c.k,x0:c.x,x1:c.x1!==undefined?c.x1:c.x,x:c.x,y:c.y!==undefined?c.y:CY,face:c.f||1,pose:c.p||'idle',vx:0,vy:0,grounded:true,walkT:0,blink:c.closed?-.05:2,closed:c.closed,wave:c.w?1:0,shake:c.sh,tint:c.t}));
  if(sh.fx==='flash'){cine.flash=1;sfx('shoot');shake=5}
  if(sh.fx==='hit'){cine.flash=1;sfx('thunder');shake=8}
  if(sh.lines)say(sh.lines,()=>{if(cine)nextShot()})}
-function skipCine(){if(!cine)return;const cb=cine.cb;cine=null;D.on=false;D.q=[];el('dialogue').style.display='none';fade=.6;fadeTarget=0;if(cb)cb()}
+function skipCine(){if(!cine)return;const cb=cine.cb;cine=null;cineEnd();D.on=false;D.q=[];el('dialogue').style.display='none';fade=.6;fadeTarget=0;if(cb)cb()}
 function cineTick(dt){if(!cine||!cine.sh)return;const sh=cine.sh;cine.t+=dt;cine.flash=Math.max(0,cine.flash-dt*2);const dur=sh.d||3.2,p=clamp(cine.t/dur,0,1),e=p*p*(3-2*p);
  for(const c of cine.ch){const nx=lerp(c.x0,c.x1,e),mv=Math.abs(c.x1-c.x0)>1&&p<1;c.vx=mv?(c.x1>c.x0?1.3:-1.3):0;if(mv)c.face=c.x1>c.x0?1:-1;c.x=nx+(c.shake?Math.sin(clock*40)*.8:0);if(mv)c.walkT+=.28;c.blink-=c.closed?0:dt;if(!c.closed&&c.blink<-.12)c.blink=2.5+Math.random()*3}
  if(!sh.lines&&cine.t>=dur)nextShot()}
@@ -924,10 +959,15 @@ window.addEventListener('keydown',e=>{keys[e.code]=true;if(['ArrowUp','ArrowDown
 window.addEventListener('keyup',e=>{keys[e.code]=false});
 window.addEventListener('blur',()=>{for(const k in keys)keys[k]=false;touch.left=touch.right=touch.jump=0});
 function bindHold(id,key){const b=el(id);b.addEventListener('pointerdown',e=>{e.preventDefault();touch[key]=1});['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,()=>touch[key]=0))}
-bindHold('left','left');bindHold('right','right');bindHold('jump','jump');bindHold('nbtn','nitro');el('gbtn').onclick=gizemDash;
-el('interact').onclick=interact;el('swap').onclick=swap;el('mbtn').onclick=toggleBike;
+const buzz=ms=>{try{if(navigator.vibrate)navigator.vibrate(ms)}catch(e){}};window.__buzz=buzz;
+function bindBtn(id,o){const b=el(id);let tm=null;const stop=()=>{b.classList.remove('prs');if(o.hold)touch[o.hold]=0;if(tm){clearInterval(tm);tm=null}};
+ b.addEventListener('pointerdown',e=>{e.preventDefault();try{b.setPointerCapture(e.pointerId)}catch(x){}b.classList.add('prs');if(o.hold)touch[o.hold]=1;if(o.tap){o.tap();if(o.rep){clearInterval(tm);tm=setInterval(o.tap,o.rep)}}buzz(8)});
+ ['pointerup','pointercancel','lostpointercapture'].forEach(ev=>b.addEventListener(ev,stop));
+ b.addEventListener('click',e=>{if(e.detail===0&&o.tap)o.tap()});b.addEventListener('contextmenu',e=>e.preventDefault())}
+bindBtn('left',{hold:'left'});bindBtn('right',{hold:'right'});bindBtn('jump',{hold:'jump'});bindBtn('nbtn',{hold:'nitro'});bindBtn('gbtn',{tap:()=>gizemDash()});
+bindBtn('interact',{tap:()=>interact()});bindBtn('swap',{tap:()=>swap()});bindBtn('mbtn',{tap:()=>toggleBike()});
 el('dialogue').addEventListener('pointerdown',()=>{if(D.on)nextLine()});canvas.addEventListener('pointerdown',()=>{if(D.on)nextLine()});
-el('pclose').onclick=closePuzzle;el('fbtn').onclick=shoot;el('cbtn').onclick=useCar;
+el('pclose').onclick=closePuzzle;bindBtn('fbtn',{tap:()=>shoot(),rep:150});bindBtn('cbtn',{tap:()=>useCar()});
 el('mute').onclick=()=>{audioInit();setMute(!muted)};
 function begin(n){audioInit();el('overlay').style.display='none';scene='play';startChapter(n)}
 el('start').onclick=()=>begin(0);
@@ -970,9 +1010,16 @@ makeLevel();requestAnimationFrame(frame);
    on('swap',cast==='duo');on('fbtn',bike.mounted&&cast==='kaan'&&chapter>0);on('nbtn',bike.mounted);on('cbtn',hasCar&&cast==='kaan');on('gbtn',gz&&!(bike.mounted&&RD()===actors[active]));
    const tg=nearestTarget(),ie=el('interact'),lab={item:'HATIRA',puz:'BULMACA',lever:'KOL',goal:'KAPI',bike:'MOTOR',ns:'MOTORU AL'};ie.classList.toggle('glow',!!tg&&tg.t!=='bike');ie.classList.toggle('off',!tg);const tx=ie.querySelector('.tx'),nt=tg?(lab[tg.t]||'ETKİLEŞ'):'ETKİLEŞ';if(tx.textContent!==nt)tx.textContent=nt;
    const mb=el('mbtn'),mt=mb.querySelector('.tx'),k=RD(),near=k&&Math.abs(k.x+5-bike.x)<45,m=bike.mounted?'İN':(cast==='gizem'&&!bike.g)?'MOTOR':(near?'BİN':'ÇAĞIR');if(mt.textContent!==m)mt.textContent=m;mb.classList.toggle('off',cast==='gizem'&&!bike.g)}},150)}
+
+ {let dp=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;el('installBtn').style.display='block'});
+  el('installBtn').onclick=()=>{if(!dp)return;dp.prompt();dp.userChoice.finally(()=>{dp=null;el('installBtn').style.display='none'})};
+  window.addEventListener('appinstalled',()=>{el('installBtn').style.display='none'});
+  try{if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
  document.addEventListener('contextmenu',e=>{if(e.target.closest&&e.target.closest('.touch,.ctl'))e.preventDefault()});
  document.addEventListener('dblclick',e=>{if(e.target.closest&&e.target.closest('.touch'))e.preventDefault()});
 })();
 })();
 </script>
-</body></html>
+
+</body>
+</html>
