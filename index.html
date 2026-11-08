@@ -41,7 +41,7 @@ body{margin:0;padding:0;background:#05080e;color:var(--cream);font-family:var(--
 @media(orientation:portrait){.frame{top:0;transform:translateX(-50%)}}
 canvas#game{display:block;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges;background:#192d46}
 .hud{position:absolute;left:1.2%;top:1.6%;z-index:3;display:flex;flex-direction:column;gap:2px;padding:5px 8px;background:#0b1320b8;border:1px solid #435a7299;font-size:clamp(7px,1.25vw,11px);line-height:1.35;pointer-events:none;max-width:44%}
-.hud b{color:var(--gold)}.hud span:empty{display:none}
+.hud b{color:var(--gold)}#chapter{pointer-events:auto;cursor:pointer}.hud span:empty{display:none}
 .ctl{position:fixed;right:max(8px,env(safe-area-inset-right,0px));top:max(8px,env(safe-area-inset-top,0px));z-index:30;display:flex;gap:6px;align-items:flex-start}
 .ctl>button{width:38px;height:38px;padding:0;font-size:18px;line-height:1;background:#0b1320cc;border-width:2px}
 .ctl>button.on{background:#466784;border-color:var(--gold)}
@@ -140,6 +140,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 <div class="hud"><span>BÖLÜM: <b id="chapter">1 / 6 — Başlangıç Noktası</b></span><span>HATIRA: <b id="memories">0 / 3</b></span><span>OYUNCU: <b id="who">KAAN</b></span><span id="hpStatus"></span><span id="carStatus"></span><span id="bikeStatus">🔴 DOMINAR: PARKTA</span></div>
 <div id="toast"></div>
 <div id="puz" class="puz" style="display:none"><div class="card"><h2>Bulmaca</h2><p id="pq"></p><div id="po" class="po"></div><p class="small">Esc: vazgeç</p><button id="pclose">Vazgeç</button></div></div>
+<div id="cheat" class="puz" style="display:none;z-index:60"><div class="card"><h2>🎞️ Anı Menüsü</h2><p class="small">Bir anıyı izle ya da bir bölüme atla.</p><div id="clist"></div><button id="cclose">Kapat</button></div></div>
 <div id="garage" class="puz" style="display:none"><div class="card"><h2>🔧 Garaj</h2><p id="gbolts" class="small"></p><div id="glist"></div><button id="gclose">Devam</button></div></div>
 <div class="dialogue" id="dialogue"><canvas id="portrait" width="24" height="24"></canvas><div class="dtext"><div class="speaker" id="speaker"></div><p class="line" id="line"></p></div><div class="hint">▼ E / ENTER / dokun</div></div>
 <div id="title"><small id="tsub"></small><i></i><h2 id="tname"></h2><i></i></div>
@@ -184,7 +185,8 @@ const CH=[
  {name:'Gizem’in Tutsaklığı',cin:'capt',intro:[['YOL','Sahne Gizem’in gözünden devam eder. Karanlık, soğuk bir mekân...'],['TAMİRCİ','Kaan mı? O seni çoktan unuttu. Kimse gelmeyecek, boşuna bekleme.'],['GİZEM','(kendi kendine) Yalan söylüyor... Kaan beni bırakmaz. Buradan kendi başıma çıkmalıyım.'],['YOL','Tamirci uzaklaşır. Gizem kaçmak için üç bulmacayı çözmeli. İşaretlere yaklaş ve E’ye bas.']],
   mem:[
    {t:'Kurs Masası',l:[['HATIRA','Gizem bir kursta yalnız başına oturuyor. Ayrı bir masada Ömer ve arkadaşları kart oynuyor.'],['ÖMER','Gizem! Gel bizim masaya, birlikte oynayalım!'],['HATIRA','Gizem gülümseyerek katılır; hep beraber neşeyle kart oynarlar.']]},
-   {t:'Terk Edilmiş Villa Sürüşü',l:[['HATIRA','Gizem, Ömer ve Kaan’la buluşmak için terk edilmiş villaya doğru siyah motoruyla tek başına harika bir sürüş yapıyor.'],['GİZEM','(kendi kendine) Yine yolda uyuyakaldım, çok yorgunum... Ama rüzgâr o kadar güzel ki!']]}],
+   {t:'Terk Edilmiş Villa Sürüşü',l:[['HATIRA','Gizem, Ömer ve Kaan’la buluşmak için terk edilmiş villaya doğru siyah motoruyla tek başına harika bir sürüş yapıyor.'],['GİZEM','(kendi kendine) Yine yolda uyuyakaldım, çok yorgunum... Ama rüzgâr o kadar güzel ki!']]},
+   {t:'Go-Kart Pisti',l:[['HATIRA','Oğuz, Ömer, Kaan ve Gizem go-kart pistine gider. Oğuz ile Ömer drift atar, Kaan ise freni bulamaz.'],['GİZEM','Ne yapıyorsun Kaan?! Beni öldürme gibi bir niyetin mi var?!'],['KAAN','(ağlayarak) Valla çok özür dilerim...']]}],
   end:[['YOL','Gizem son kilidi de açar ve karanlık mekândan kaçmayı başarır.'],['GİZEM','Özgürüm... Bu kadar kolay pes etmeyeceğim.']],
   puz:[{type:'jig',title:'Kırık Fotoğraf',need:2,pic:'heart',clue:'Parçaları yer değiştirerek fotoğrafı tamamla. İki parçaya sırayla tıkla, yerleri değişsin.'},{type:'pipe',title:'Güç Hattı',need:2,cols:4,rows:3,clue:'Boruları döndürerek soldaki kaynaktan sağdaki kapıya enerjiyi ulaştır. Parçaya tıkla: döner.'},{type:'wires',title:'Kablo Panosu',need:2}],
   th:{sky:['#07090f','#10151f','#1a2230'],style:'cell',far:'#161d2a',mid:'#10151f',near:'#0b0f17',ground:'#1c2430',gtop:'#7c8aa0',pf:'#2a3444',acc:'#8a98ae',win:0,stars:0,wx:'dust',mult:'#a0a8c0',lamp:'255,200,130',cloud:['#10151f','#0b0f17'],mus:3,grass:'#2f3d3c',cast:'gizem',cells:1}},
@@ -337,7 +339,7 @@ const PLAN=[
  {segs:[['flat'],['coop'],['gap'],['flat'],['spring'],['coop'],['flat'],['flat']],kf:.8,beats:[[.14,[['GİZEM','Şu gün batımına bak, Kaan. Hiç acele etmeden uzun bir yola çıkmak istiyorum.'],['KAAN','Seninle her yol kısa gelir.']]],[.38,[['GİZEM','Gebze’de çorba içelim mi? Çok acıktım.'],['KAAN','Önce yolda uyuyakalma da!'],['GİZEM','Uyumuyorum ya!']]]]},
  {segs:[['flat',{e:2}],['crates'],['flat',{h:1,e:2}],['tunnel',{h:1}],['gap',{h:1}],['flat',{g:1,e:2}]],beats:[[.42,[['KAAN','Hatırla, Kaan... Ömer haklıydı. Her hatıra Gizem’e giden bir iz.']]],[.74,[['KAAN','Tamircinin izi bu bölgede. Yaratıklar bir şeyi koruyor olmalı.']]]]},
  {segs:[['flat',{e:1}],['gap'],['flat',{h:1,e:2}],['crates'],['gap',{h:1}],['flat',{h:1,e:2,g:1}],['spikes'],['flat']],beats:[]},
- {segs:[['flat'],['lever',{f:1}],['dgap',{f:1}],['puz'],['cave',{f:1}],['gap',{f:1,h:1}],['climb',{f:1}],['spikes'],['puz'],['tunnel',{f:1}],['moving',{f:1}],['spring',{f:1,h:1}],['puz']],beats:[[.3,[['GİZEM','(kendi kendine) Şu mağaranın içinde bir parıltı var... Sanki bir motor? Bakmalıyım.']]],[.2,[['GİZEM','(kendi kendine) Bir kapı, bir kol... Mutlaka bir çıkış yolu var.']]],[.5,[['GİZEM','(kendi kendine) Şu kırık parçalar bir şey anlatıyor... Birleştirirsem belki yolu açar.']]],[.82,[['TAMİRCİ','(uzaktan) Hâlâ buradasın demek! Bu kadar kolay çıkılmıyor!']]]]},
+ {segs:[['flat'],['lever',{f:1}],['dgap',{f:1}],['puz'],['cave',{f:1}],['gap',{f:1,h:1}],['climb',{f:1}],['spikes'],['puz'],['tunnel',{f:1}],['moving',{f:1}],['spring',{f:1,h:1}],['puz',{h:1}]],beats:[[.3,[['GİZEM','(kendi kendine) Şu mağaranın içinde bir parıltı var... Sanki bir motor? Bakmalıyım.']]],[.2,[['GİZEM','(kendi kendine) Bir kapı, bir kol... Mutlaka bir çıkış yolu var.']]],[.5,[['GİZEM','(kendi kendine) Şu kırık parçalar bir şey anlatıyor... Birleştirirsem belki yolu açar.']]],[.82,[['TAMİRCİ','(uzaktan) Hâlâ buradasın demek! Bu kadar kolay çıkılmıyor!']]]]},
  {segs:[['flat',{e:1}],['tunnel'],['crates'],['gap'],['flat',{e:2,g:1}]],beats:[[.3,[['KAAN','Oğuz’un arabası... Süper güç sınırlı. Doğru anda kullanmalıyım. (C)']]],[.72,[['KAAN','Dayan Gizem, geliyorum.']]]]},
  {segs:[['flat',{e:2,g:1}],['gap'],['crates'],['tunnel',{f:2}],['puz'],['arena',{b:1,e:2}],['lever',{f:2}],['puz'],['arena',{b:1,g:2}],['final']],beats:[[.12,[['KAAN','Burası tamircinin mekânı... Gizem içeride.']]],[.5,[['TAMİRCİ','Buraya kadar geldin demek! Cesaretine hayranım ama içeri giremezsin!']]],[.82,[['GİZEM','(uzaktan) Kaan, dikkat et!']]]]}
 ];
@@ -355,7 +357,7 @@ function genLevel(ch){const pl=PLAN[ch],Rr=rng(ch*53+9);let x=330;const G={tam:[
  pl.segs.forEach(([t,o])=>{o=o||{};const x0=x,s0=G.plats.length;let len=400;const hint=(h,dx)=>G.hints.push({x:x0+(dx||10),l:h});
   switch(t){
    case'flat':for(let i=0;i<3;i++)plat(x0+40+i*120+Math.floor(Rr()*26),GROUND-(38+(i%2)*32+Math.floor(Rr()*10)),48+Math.floor(Rr()*20));break;
-   case'gap':len=500;G.ramps.push({x:x0+100});G.gaps.push({x1:x0+160,x2:x0+280});plat(x0+372,GROUND-44,52);if(o.f)fr(x0+398,GROUND-60);hint('Boşluk! Yalnızca Dominar rampadan hızla çıkıp zıplayarak geçebilir (Shift: nitro). Uzaktaysa M ile çağır.');break;
+   case'gap':len=500;G.ramps.push({x:x0+100});G.gaps.push({x1:x0+160,x2:x0+280});plat(x0+372,GROUND-44,52);if(o.f)fr(x0+398,GROUND-60);hint('Boşluk! Yalnızca Dominar rampadan hızla çıkıp zıplayarak geçebilir (Shift: nitro). M ile çağır.');break;
    case'tunnel':len=360;G.tun.push({x1:x0+60,x2:x0+300});hint('Dar geçit! Motor sığmaz; yürüyerek geç, sonra M ile Dominar’ı çağır.');for(let i=0;i<(o.f||0);i++)fr(x0+120+i*90,GROUND-14);break;
    case'crates':len=320;for(let r=0;r<4;r++){crate(x0+170,GROUND-24*(r+1));crate(x0+192,GROUND-24*(r+1))}hint('Kasalar yolu kapatmış! F ile ateş et ya da Shift ile nitro basıp çarp.',30);break;
    case'climb':len=440;plat(x0+30,GROUND-40,44);plat(x0+100,GROUND-82,44);plat(x0+170,GROUND-124,44);plat(x0+250,GROUND-124,80);G.solids.push({t:'wall',x:x0+215,y:GROUND-112,w:24,h:112});hint('Taş duvar! Motor geçemez; yürüyerek platformlardan tırman (çift zıpla), sonra M ile Dominar’ı çağır.');if(o.f)fr(x0+290,GROUND-140);break;
@@ -396,7 +398,7 @@ function worldTick(dt){
  for(const p of platforms)if(p.br){const pl=plates.find(q=>q.id===p.br),w=p.on;p.on=(p.lat||(pl&&pl.on))?1:0;if(p.on&&!w)sfx('mount')}
  if(rivals.length){const px=RD().x;for(const r of rivals){const want=r.base+clamp((px-r.x)*.01,-.7,1.1);r.v=lerp(r.v||2.6,want,.05);r.x=Math.min(L-30,r.x+r.v);r.spin+=r.v*.3;let yo=0;for(const g of gaps)if(r.x>g.x1-50&&r.x<g.x2+30){const t=(r.x-(g.x1-50))/(g.x2-g.x1+80);yo=Math.sin(clamp(t,0,1)*Math.PI)*46}r.yo=yo;if(Math.floor(clock*60)%4===0)emit({x:r.x-18,y:GROUND-6,vx:-.6,vy:-.2,life:.4,max:.4,col:'#9aa4b2',size:2,shrink:1})}}
  if(k.nitro&&bike.mounted){nit=Math.max(0,nit-dt*NITD[up.nit]);if(Math.floor(clock*60)%2===0)emit({x:bike.x-k.face*20,y:bike.y-7,vx:-k.face*(1+Math.random()),vy:(Math.random()-.5)*.6,life:.3,max:.3,col:Math.random()<.5?'#ffb347':'#fff3b0',size:3,add:1,shrink:.8})}else nit=Math.min(1,nit+dt*NITR[up.nit]);
- if(bike.call&&!bike.mounted){const dx=(k.x+5)-bike.x;bike.face=dx>0?1:-1;bike.x+=Math.sign(dx)*4.6;bike.spin+=Math.sign(dx)*1.4;if(Math.floor(clock*60)%3===0)emit({x:bike.x-bike.face*18,y:GROUND-6,vx:-bike.face*.6,vy:-.2,life:.4,max:.4,col:'#d9c7a8',size:2,shrink:1});
+ if(bike.call&&!bike.mounted){const dx=(k.x+5)-bike.x;bike.face=dx>0?1:-1;bike.x+=Math.sign(dx)*(4.6+Math.min(9,Math.abs(dx)/110));bike.spin+=Math.sign(dx)*1.4;if(Math.floor(clock*60)%3===0)emit({x:bike.x-bike.face*18,y:GROUND-6,vx:-bike.face*.6,vy:-.2,life:.4,max:.4,col:'#d9c7a8',size:2,shrink:1});
   if(Math.abs(dx)<26){bike.call=0;if(!inTun(k.x+5)&&k.grounded)mountBike()}}}
 
 function spawnPickups(){bl=[];gift=null;rivals=[];const th=TH(),Rb=rng(chapter*17+3);
@@ -432,7 +434,7 @@ function garageThen(cb){if(nextCh(chapter)!==undefined&&canAfford())openGarage(c
 function advance(){const n=nextCh(chapter);if(n===undefined)ending();else startChapter(n)}
 function raceFinish(){const rank=1+rivals.filter(r=>r.x>goal.x).length,bonus=rivals.length?[10,6,3,2][Math.min(3,rank-1)]:8;bolts+=bonus;sfx('goal');flash=.5;shake=3;
  toast(rivals.length?`Finiş! ${rank}. sırada bitirdin · +${bonus} cıvata`:`Eve vardınız! +${bonus} cıvata`,3600);
- const en=CH[chapter].end;setTimeout(()=>say(en.length?en:[['YOL','Yol devam ediyor...']],()=>garageThen(advance)),900)}
+ const en=CH[chapter].end;setTimeout(()=>say(en.length?en:[['YOL','Yol devam ediyor...']],()=>{if(chapter===9){toast('❤️ Son Kalp Anısı',2600);playCine(CINE.last,()=>ending())}else garageThen(advance)}),900)}
 
 function guardTick(){if(!guards.length||scene!=='play'||D.on||modal||cine||locked)return;const g=actors[1];
  for(const e of guards){e.ph+=.08;
@@ -450,6 +452,22 @@ function drawGuard(e){const x=Math.round(e.x),y=Math.round(e.y),f=e.face,ex=x+7+
  if(e.alert>4){R(x+6,y-16,3,7,'#ff5a4a');R(x+6,y-8,3,2,'#ff5a4a');R(x-1,y-20,16,2,'#222');R(x-1,y-20,Math.min(16,16*e.alert/40),2,'#ff5a4a')}}
 function drawHides(){for(const h of hides){R(h.x-1,GROUND-35,18,35,OUT);R(h.x,GROUND-34,16,34,'#2a3444');R(h.x,GROUND-34,16,2,'#4a586e');R(h.x+1,GROUND-32,14,30,'#1f2937');for(let i=0;i<4;i++)R(h.x+3,GROUND-28+i*5,10,1,'#0b1018');R(h.x+12,GROUND-18,2,4,'#e0c050');
   if(hidden&&Math.abs(actors[1].x+5-h.x-8)<18){R(h.x+5,GROUND-26,2,1,'#fff');R(h.x+9,GROUND-26,2,1,'#fff');lights.push({x:h.x+8,y:GROUND-20,r:14,rgb:'255,180,200',a:.4})}}}
+
+let cheatOpen=false;
+function openCheat(){if(cheatOpen||cine||garageOpen)return;if(scene==='title'){audioInit();el('overlay').style.display='none';scene='play'}if(scene!=='play')return;cheatOpen=true;modal=true;const Ls=el('clist');Ls.innerHTML='';
+ const add=(t,fn)=>{const b=mkb(t);b.style.cssText='display:block;width:100%;margin:3px 0;text-align:left;font-size:11px';b.onclick=fn;Ls.append(b)};
+ const h=t=>{const d=document.createElement('div');d.textContent=t;d.style.cssText='margin:8px 0 2px;color:var(--gold);font-size:11px';Ls.append(d)};
+ h('ANILAR');
+ for(const ch in MEMKEY)MEMKEY[ch].forEach((k,i)=>add('❤ '+((CH[ch].mem[i]||{}).t||k),()=>playMem(k)));
+ add('❤ Son Kalp Anısı (kafe)',()=>playMem('last'));
+ h('SAHNELER');
+ [['capt','Gizem’in Tutsaklığı'],['hosp','Hastane Uyanışı'],['crash','Kaza'],['fin','Yeniden Kavuşma']].forEach(([k,n])=>add('🎬 '+n,()=>playMem(k)));
+ h('BÖLÜMLERE ATLA');
+ ORDER.forEach((id,i)=>add(`▶ ${i+1}. ${CH[id].name}`,()=>{closeCheat();startChapter(id)}));
+ el('cheat').style.display='grid'}
+function closeCheat(){if(!cheatOpen)return;cheatOpen=false;modal=false;el('cheat').style.display='none'}
+function playMem(k){el('cheat').style.display='none';modal=false;playCine(CINE[k],()=>{if(cheatOpen){el('cheat').style.display='grid';modal=true}})}
+let codeBuf='',tapN=0,tapT=0;
 function mountBike(){const k=RD();bike.mounted=true;bike.parked=0;k.x=bike.x-5;k.y=GROUND-k.h;k.vx=0;shake=Math.max(shake,2);sfx('mount');setBikeHud()}
 function worldPost(a){if(scene!=='play'||cine)return;const cx=a.x+5,cy=a.y+10,k=RD();
  if(arena){const t=enemies.find(e=>e.tam&&!e.dead);if(t&&cx>arena.x1+90)arena.lock=1;if(arena.lock&&t){a.x=clamp(a.x,arena.x1+60,arena.x2-24);if(bike.mounted&&a===k)bike.x=a.x+5}}
@@ -551,14 +569,15 @@ function phys(a,inp,riding){
  const maxJ=riding?(up.dj?2:1):2;
  if(a.buf>0){if(a.coyote>0&&a.jumps===0){a.vy=riding?-4.5:-4.9;a.jumps=1;a.coyote=0;a.buf=0;a.sx=.8;a.sy=1.22;a.grounded=false;sfx('jump');puff(a,4)}
   else if(!a.grounded&&a.jumps<maxJ){a.vy=-4.5;a.jumps++;a.buf=0;a.sx=.85;a.sy=1.18;sfx('jump2');for(let i=0;i<6;i++)emit({x:a.x+5,y:a.y+a.h,vx:(Math.random()-.5)*1.6,vy:Math.random()*.3,life:.35,max:.35,col:'#fff2d8',size:2,shrink:1})}}
- if(!inp.jh&&a.vy<-2.3)a.vy=-2.3;
+ if(!inp.jh&&!a.rampJ&&a.vy<-2.3)a.vy=-2.3;
+ if(a.grounded)a.rampJ=0;
  a.vy=Math.min(7,a.vy+(a.vy>0?.3:.24));if(a.dash>0)a.vy=0;
  const prevX=a.x,prevB=a.y+a.h,wasG=a.grounded,impact=a.vy;a.x+=a.vx;a.y+=a.vy;a.x=clamp(a.x,0,L-a.w-12);a.grounded=false;a.on=null;
  for(const p of platforms){if(p.br&&!p.on)continue;if(a.vy>=0&&a.x+a.w>p.x&&a.x<p.x+p.w&&prevB<=p.y+(p.mv?3:0)+.5&&a.y+a.h>=p.y){a.y=p.y-a.h;a.vy=0;a.grounded=true;a.on=p}}
  for(const s of solids){if(s.dead||s.open)continue;if(a.x+a.w>s.x&&a.x<s.x+s.w&&a.y+a.h>s.y&&a.y<s.y+s.h){if(nitroNow&&s.t==='crate'){breakCrate(s);continue}if(prevB<=s.y+1&&a.vy>=0){a.y=s.y-a.h;a.vy=0;a.grounded=true}else if(prevX+a.w<=s.x+1){a.x=s.x-a.w;a.vx=0}else if(prevX>=s.x+s.w-1){a.x=s.x+s.w;a.vx=0}else if(a.vy<0){a.y=s.y+s.h;a.vy=0}}}
  const cx0=a.x+5;if(a.y+a.h>=GROUND&&!gaps.some(g=>cx0>g.x1&&cx0<g.x2)){a.y=GROUND-a.h;a.vy=0;a.grounded=true}
  if(a.grounded&&!a.on){for(const sp of springs)if(cx0>sp.x&&cx0<sp.x+16&&a.y+a.h>=GROUND-1){a.vy=-8.6;a.grounded=false;sp.t=10;sfx('jump2');a.sy=.7}
-  if(riding&&a===RD()&&Math.abs(a.vx)>1.7)for(const r of ramps)if(cx0>r.x&&cx0<r.x+44){a.vy=nitroNow?-9.2:-8;a.grounded=false;a.jumps=1;sfx('jump2');shake=Math.max(shake,1.5);for(let i=0;i<8;i++)emit({x:cx0,y:a.y+a.h,vx:(Math.random()-.5)*2,vy:-Math.random()*1.5,life:.4,max:.4,col:'#fff2d8',size:2,shrink:1})}}
+  if(riding&&a===RD()&&Math.abs(a.vx)>1.7)for(const r of ramps)if(cx0>r.x&&cx0<r.x+44){a.vy=nitroNow?-9.2:-8;a.grounded=false;a.rampJ=1;a.jumps=1;sfx('jump2');shake=Math.max(shake,1.5);for(let i=0;i<8;i++)emit({x:cx0,y:a.y+a.h,vx:(Math.random()-.5)*2,vy:-Math.random()*1.5,life:.4,max:.4,col:'#fff2d8',size:2,shrink:1})}}
  for(const t of tun)if(cx0>t.x1&&cx0<t.x2&&a.y<GROUND-40){a.y=GROUND-40;if(a.vy<0)a.vy=0}
  if(a.y>H+24){if(a===actors[active])hurtPlayer(a,a.x,1);else{a.x=actors[active].x-10;a.y=GROUND-a.h-5;a.vy=0}}
  if(a.grounded&&!wasG&&impact>2.4){a.sx=1.22;a.sy=.78;puff(a,6);sfx('land');if(impact>5.5)shake=Math.max(shake,2)}
@@ -649,7 +668,7 @@ function toggleBike(){if(TH().race||TH().coop)return;if(scene!=='play'||D.on||lo
  const k=RD();
  if(bike.mounted){bike.mounted=false;bike.parked=1;bike.x=k.x+5;bike.y=k.y+k.h;bike.face=k.face;if(cast==='duo'){const g=actors[1];g.x=k.x-14*k.face;g.y=k.y;g.vx=g.vy=0}toast('Dominar’dan indiniz.');setBikeHud();puff(k,5);return}
  if(Math.abs(k.x+5-bike.x)<45&&inTun(k.x+5)){toast('Dar geçitte motora binilemez.');sfx('err')}else if(Math.abs(k.x+5-bike.x)<45){bike.mounted=true;bike.parked=0;k.x=bike.x-5;k.y=GROUND-k.h;k.vx=0;shake=Math.max(shake,2);sfx('mount');toast(cast==='gizem'?'NS200 hazır! Shift: nitro':'Gizem artçı koltuğunda! İyi yolculuklar ❤️',2200);setBikeHud();for(let i=0;i<8;i++)emit({x:bike.x-18,y:GROUND-6,vx:-Math.random()*1.2,vy:-Math.random()*.4,g:-.004,life:.7,max:.7,col:'#9aa4b2',size:3,shrink:1})}
- else if(Math.abs(k.x+5-bike.x)<430&&!inTun(k.x+5)){bike.call=1;toast('Dominar sana geliyor!');sfx('mount')}else{toast('Dominar çok uzakta ya da dar geçitte.');sfx('err')}}
+ else if(!inTun(k.x+5)){bike.call=1;toast('Dominar sana geliyor!');sfx('mount')}else{toast('Dar geçitte Dominar çağrılamaz.');sfx('err')}}
 function swap(){if(scene!=='play'||D.on||locked||modal)return;if(cast!=='duo'){toast('Şu an karakter değiştirilemez.');sfx('err');return}if(bike.mounted)toggleBike();active=1-active;el('who').textContent=actors[active].name;toast(actors[active].name+' kontrol ediliyor',1200);sfx('swap');const a=actors[active];for(let i=0;i<8;i++)emit({x:a.x+5,y:a.y+8,vx:Math.cos(i)*1.2,vy:Math.sin(i)*1.2,life:.4,max:.4,col:'#ffd36e',size:2,add:1,shrink:1})}
 function ending(){scene='ending';locked=true;try{localStorage.removeItem(STORE)}catch(e){}
  for(let i=0;i<40;i++)wxp.push({x:Math.random()*W,y:-Math.random()*H,ph:Math.random()*6,s:Math.random(),vy:.4+Math.random()*.6,vx:0,heart:1});
@@ -965,7 +984,8 @@ function drawCar(){const b=bike,P=[],A=(x,y,w,h,c,n)=>P.push([x,y,w,h,c,n]),ring
 
 /* ================= SİNEMATİK MOTORU ================= */
 const CY=196,RY=136,hh=i=>{const x=Math.sin(i*127.1)*43758.5453;return x-Math.floor(x)};
-const SITBG=['cafe','tiles','study','soup','course'];
+const SITBG=['cafe','incafe','tiles','study','soup','course'];
+const KP={'#c92e3d':'#d94f4f'};
 function csky(a,b){const g=ctx.createLinearGradient(0,0,0,CY);g.addColorStop(0,a);g.addColorStop(1,b);ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
 function cfloor(c,l){R(0,CY,W,H-CY,c);R(0,CY,W,2,l);const g=ctx.createLinearGradient(0,CY,0,H);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.45)');ctx.fillStyle=g;ctx.fillRect(0,CY,W,H-CY)}
 function cstars(n,a){for(let i=0;i<n;i++){ctx.globalAlpha=a*(.4+.6*Math.abs(Math.sin(clock*1.5+i)));R(hh(i)*W,hh(i+99)*120,1,1,'#fff6d8')}ctx.globalAlpha=1}
@@ -986,6 +1006,9 @@ function cbg(n){const T=clock;
  case'soup':csky('#101826','#243248');cbuild('#1a2234',CY,90,40,90,.3);R(0,60,W,100,'#3a2a20');R(150,40,180,20,'#c93a46');for(let i=0;i<24;i++)R(160+i*7,42,4,16,i%2?'#ffe08a':'#fff');cfloor('#2a2018','#4a3828');R(150,CY-30,180,4,'#a07850');for(const bx of[200,280]){R(bx,CY-38,22,8,'#e8eef5');R(bx+2,CY-36,18,3,'#e8a050');for(let i=0;i<4;i++){ctx.globalAlpha=.5;R(bx+4+i*5+Math.sin(T*3+i)*2,CY-46-((T*14+i*6)%14),2,4,'#fff');ctx.globalAlpha=1}}glow(240,80,140,'255,190,120',.5);break;
  case'course':csky('#d8d0b8','#e8e0c8');R(0,0,W,CY,'#d8d0b8');R(120,30,240,70,'#26402e');R(116,26,248,4,'#8b6446');R(120,98,240,3,'#8b6446');R(140,50,60,2,'#e8eef5');R(140,60,100,2,'#e8eef5');cfloor('#a08868','#c0a888');R(60,CY-28,140,4,'#8b6446');R(290,CY-28,150,4,'#8b6446');for(let i=0;i<5;i++)R(320+i*20,CY-34,10,6,'#fff');break;
  case'ride':csky('#7ab8e8','#f6e8c4');chills('#8fb89a',CY-20,26,3);for(let i=0;i<6;i++)ctree(((i*110-T*90)%(W+80)+W+80)%(W+80)-40,60,'#3f6a42');cfloor('#4a4d56','#6a6e7a');for(let i=0;i<9;i++)R(((i*60-T*300)%W+W)%W,CY+24,30,3,'#e8e0c0');for(let i=0;i<5;i++)R(((i*130-T*360)%W+W)%W,CY-12+i*9,40,1,'rgba(255,255,255,.5)');break;
+ case'incafe':csky('#4a3430','#5e463c');R(0,0,W,CY,'#5e463c');for(let x=0;x<W;x+=24)R(x,0,1,CY,'rgba(0,0,0,.12)');R(0,CY-92,W,4,'#3a2820');R(330,34,100,80,'#2a1e18');R(334,38,92,72,'#a8d0ec');R(378,38,4,72,'#2a1e18');R(334,72,92,3,'#2a1e18');glow(380,80,110,'255,240,200',.35);R(30,40,110,5,'#3a2820');R(30,70,110,5,'#3a2820');for(let i=0;i<8;i++){R(36+i*13,28+(i%3)*2,8,12,['#c9684a','#e8d8b0','#6a8a6a'][i%3]);R(36+i*13,58+(i%2)*2,8,12,['#e8d8b0','#c9684a','#7a6a9a'][i%3])}R(20,CY-44,120,44,'#3a2820');R(24,CY-40,112,6,'#6a4a38');R(40,CY-62,22,18,'#8a96a8');R(44,CY-58,14,6,'#c93a46');for(const lx of[200,280]){R(lx,0,1,34,'#2a1e18');R(lx-9,34,19,8,'#2a1e18');R(lx-7,36,15,5,'#ffd58a');glow(lx,44,70,'255,200,120',.5)}cfloor('#6a4a34','#8a6a4c');for(let i=0;i<10;i++)R(i*52,CY+6,1,H-CY,'rgba(0,0,0,.25)');R(184,CY-38,112,5,'#8b6446');R(184,CY-33,112,2,'#5a3f2a');R(196,CY-31,4,31,'#5a3f2a');R(280,CY-31,4,31,'#5a3f2a');R(214,CY-42,5,4,'#fff');R(262,CY-42,5,4,'#fff');break;
+ case'kart':csky('#7ab8e8','#d8ecf8');chills('#8fb89a',CY-26,24,4);R(150,24,180,22,'#c93a46');for(let i=0;i<18;i++)R(154+i*10,28,5,6,i%2?'#fff':'#111');R(150,24,4,CY-24,'#8a96a8');R(326,24,4,CY-24,'#8a96a8');cfloor('#4a4d56','#6a6e7a');for(let i=0;i<14;i++){const x=10+i*36;R(x,CY-14,22,14,i%2?'#d8584a':'#e8eef5');R(x,CY-14,22,2,'rgba(0,0,0,.25)');R(x+2,CY-9,18,3,'#1a1a1a')}for(let i=0;i<9;i++)R(((i*60-T*40)%W+W)%W,CY+26,30,3,'#e8e0c0');break;
+ case'tabview':csky('#0a0e18','#141c30');R(60,18,360,232,'#1a1e28');R(64,22,352,224,'#2a2f3c');R(72,30,336,208,'#05080f');{const sx=76,sy=34,sw=328,sh2=200;ctx.save();ctx.beginPath();ctx.rect(sx,sy,sw,sh2);ctx.clip();const g=ctx.createLinearGradient(0,sy,0,sy+sh2);g.addColorStop(0,'#2a2550');g.addColorStop(1,'#f09a7c');ctx.fillStyle=g;ctx.fillRect(sx,sy,sw,sh2);cstars(24,.6);disc(ctx,340,sy+80,16,'#ffd9a0');chills('#3a3050',sy+150,30,2);R(sx,sy+150,sw,50,'#2a2d38');for(let i=0;i<7;i++)R(((i*70-T*220)%sw+sw)%sw+sx,sy+176,34,3,'#c8c8a0');for(let i=0;i<5;i++)R(((i*90-T*100)%(sw+30)+sw+30)%(sw+30)+sx-30,sy+30+Math.sin(T*2+i)*8,2,2,'#ffe08a');cbike(sx+120,sy+168,1.7);for(let i=0;i<3;i++)drawHeart(sx+150+i*34,sy+50+Math.sin(T*2+i)*7,3,'#ff6f96','#ffc2d4');ctx.restore()}R(232,242,16,3,'#4a4f5e');glow(240,140,170,'150,190,255',.18);break;
  case'sunset':csky('#4b4378','#ffc47a');disc(ctx,300,CY-50,26,'#ffe3a0');glow(300,CY-50,100,'255,190,110',.7);chills('#6c4a66',CY-24,34,2);cfloor('#443f50','#ffe0a0');for(let i=0;i<9;i++)R(((i*60-T*200)%W+W)%W,CY+24,30,3,'#ffe0a0');break;
  case'cell':csky('#07090f','#10151f');R(0,0,W,CY,'#141a26');for(let y=0;y<CY;y+=9){for(let x=(y/9%2)*14;x<W;x+=28)R(x,y,1,9,'rgba(0,0,0,.5)');R(0,y,W,1,'rgba(0,0,0,.5)')}for(let i=0;i<7;i++)R(30+i*70,20,4,CY-20,'#3a4558');R(0,24,W,4,'#3a4558');cfloor('#1c2430','#4a586c');glow(240,40,120,'255,200,130',.35);break;
  case'hospital':csky('#dfeaf2','#eef4f8');R(0,0,W,CY,'#dfeaf2');R(330,30,110,90,'#9ccbe8');R(334,34,50,82,'#cfe8f6');R(388,34,48,82,'#cfe8f6');glow(385,70,130,'255,250,230',.6);cfloor('#c3ccd6','#e8eef5');R(110,CY-24,150,18,'#e8eef5');R(110,CY-8,150,8,'#9db4c9');R(106,CY-44,4,44,'#cfd6df');R(262,CY-34,4,34,'#cfd6df');R(40,CY-70,3,70,'#aab2be');R(30,CY-72,20,3,'#aab2be');R(34,CY-62,12,16,'#cfe8f6');R(60,CY-48,34,22,'#1a2230');for(let i=0;i<30;i++)R(62+i,CY-38-Math.round(Math.sin((i-(T*20%30))*.6)*(i%10<3?8:1)),1,1,'#6fe0a0');break;
@@ -994,6 +1017,9 @@ function cbg(n){const T=clock;
  default:csky('#000','#000')}}
 function cfg(n,sh){const T=clock;
  if(n==='night'){R(110,CY-30,280,26,'#2f5fa8');R(110,CY-8,280,5,'#1d3a6a');R(160,CY-62,160,32,'#3a70c0');R(166,CY-58,48,24,'rgba(156,203,232,.18)');R(222,CY-58,92,24,'rgba(156,203,232,.18)');R(160,CY-36,160,3,'#2f5fa8');R(380,CY-24,8,6,'#fff3b0');glow(400,CY-20,70,'255,240,170',.7);for(const wx of[160,350])ring2(wx,CY-4);R(100,CY-22,10,6,'#ff3a48')}
+ if(sh&&sh.tablet){const [tx,ty]=sh.tablet;R(tx-14,ty-10,28,20,OUT);R(tx-13,ty-9,26,18,'#2a2f3c');R(tx-11,ty-7,22,14,'#9ad0ff');R(tx-11,ty-7,22,5,'#ffb48a');R(tx-8+((T*14)%12),ty+1,6,2,'#fff');R(tx-6,ty-1,6,3,'#c92e3d');glow(tx,ty-8,50,'150,200,255',.4)}
+ if(sh&&sh.bouquet){const [bx,by]=sh.bouquet;R(bx-1,by,3,18,'#3a8a4a');R(bx-6,by+6,12,12,'#f0e0c8');R(bx-5,by+8,10,2,'#e8c8a0');for(const [dx,dy,c] of[[-6,-6,'#ff6f96'],[0,-10,'#ffd36e'],[6,-6,'#ff9ec0'],[-3,-1,'#e8484f'],[3,-2,'#fff'],[0,-5,'#ff6f96']]){R(bx+dx-3,by+dy-3,7,7,OUT);R(bx+dx-2,by+dy-2,5,5,c);R(bx+dx-1,by+dy-1,1,1,'#fff6d8')}glow(bx,by,40,'255,200,220',.35)}
+ if(sh&&sh.emo)for(const [ex,ey,k] of sh.emo){if(k==='anger'){const p=Math.sin(T*10)>0?1:0,c='#ff3a3a';R(ex-6-p,ey-2,5,2,c);R(ex+2+p,ey-2,5,2,c);R(ex-1,ey-7-p,2,5,c);R(ex-1,ey+1+p,2,5,c)}if(k==='cry'){for(let i=0;i<3;i++){const dy=((T*34+i*9)%22);ctx.globalAlpha=1-dy/24;R(ex-6,ey+dy,3,5,'#6fc3ff');R(ex+4,ey+((dy+9)%22),3,5,'#6fc3ff');ctx.globalAlpha=1}}if(k==='spark'){for(let i=0;i<4;i++){const a2=T*2+i*1.6;ctx.globalAlpha=.5+.5*Math.sin(T*8+i);R(ex+Math.cos(a2)*16,ey+Math.sin(a2)*12,2,2,'#fff6c8');ctx.globalAlpha=1}}}
  if(sh&&sh.heart){const b=Math.sin(T*3)*3;for(const [hx,hy] of sh.heart){drawHeart(hx-7,hy-6+b,2,'#ff6f96','#ffc2d4')}}
  if(n==='rain'&&sh&&sh.phone){glow(sh.phone[0],sh.phone[1],26,'160,210,255',.8+.2*Math.sin(T*10));R(sh.phone[0]-2,sh.phone[1]-3,4,6,'#bfe0ff')}
  if(n==='ride')for(let i=0;i<3;i++)R(((i*77-T*420)%W+W)%W,CY+16+i*8,60,1,'rgba(255,255,255,.35)')}
@@ -1011,14 +1037,19 @@ function cineTick(dt){if(!cine||!cine.sh)return;const sh=cine.sh;cine.t+=dt;cine
  for(const c of cine.ch){const nx=lerp(c.x0,c.x1,e),mv=Math.abs(c.x1-c.x0)>1&&p<1;c.vx=mv?(c.x1>c.x0?1.3:-1.3):0;if(mv)c.face=c.x1>c.x0?1:-1;c.x=nx+(c.shake?Math.sin(clock*40)*.8:0);if(mv)c.walkT+=.28;c.blink-=c.closed?0:dt;if(!c.closed&&c.blink<-.12)c.blink=2.5+Math.random()*3}
  if(!sh.lines&&cine.t>=dur)nextShot()}
 function drawCine(){const sh=cine.sh;if(!sh)return;cbg(sh.bg);
- if(sh.vehicles)for(const v of sh.vehicles){if(v.t==='bike')cbike(v.x,CY,1.5,v.tint);else{R(v.x-22,CY-14,40,5,'#4a8ad0');R(v.x-16,CY-24,10,12,'#4a8ad0');R(v.x+8,CY-24,3,12,'#cfd6df');ring2b(v.x-18,CY-4);ring2b(v.x+16,CY-4)}}
+ if(sh.vehicles)for(const v of sh.vehicles){if(v.t==='kart'){}else if(v.t==='bike')cbike(v.x,CY,1.5,v.tint);else{R(v.x-22,CY-14,40,5,'#4a8ad0');R(v.x-16,CY-24,10,12,'#4a8ad0');R(v.x+8,CY-24,3,12,'#cfd6df');ring2b(v.x-18,CY-4);ring2b(v.x+16,CY-4)}}
  if(sh.bg==='ride'||sh.bg==='sunset')for(const v of sh.rv||[])cbike(v.x,CY,v.sc||1.6,v.tint);
+ if(sh.vehicles)for(const v of sh.vehicles)if(v.t==='kart'){const x=v.ch!==undefined&&cine.ch[v.ch]?cine.ch[v.ch].x:((v.x+cine.t*v.sp)%(W+160)+W+160)%(W+160)-80;drawKart(x,CY-2+(v.dy||0),v.col,v.drift?Math.sin(cine.t*3+v.x)*.26:0,v.drift,v.hc);if(v.k!==undefined){const py=CY-12+(v.dy||0);drawParts(personParts({kind:v.k,x,y:py,face:1,pose:'sit',vx:0,vy:0,grounded:true,walkT:0,blink:2,closed:0,wave:0,shake:0}),x,py,2,2,1)}}
  for(const c of cine.ch){const sit=c.pose==='sit';if(sit&&SITBG.includes(sh.bg)){R(c.x-9,c.y,18,3,'#6b4a3a');R(c.x-8,c.y+3,3,CY-c.y-3,'#4a3226');R(c.x+5,c.y+3,3,CY-c.y-3,'#4a3226')}
   ctx.fillStyle='rgba(0,0,0,.3)';ctx.fillRect(Math.round(c.x-12),CY+1,24,3);drawParts(personParts(c),c.x,c.y,2,2,c.face)}
  if(sh.tumble){const a=cine.t*7,x=140+cine.t*90,y=CY-60-Math.sin(clamp(cine.t/2,0,1)*Math.PI)*70+clamp(cine.t/2,0,1)*50;ctx.save();ctx.translate(x,y);ctx.rotate(a);cbike(0,16,1.6);ctx.restore();for(let i=0;i<4;i++)R(x-20-i*8,y+10+i*2,6,2,'rgba(255,255,255,.4)')}
  cfg(sh.bg,sh);
  if(sh.black){ctx.fillStyle=`rgba(0,0,0,${clamp(cine.t/1.6,0,1)})`;ctx.fillRect(0,0,W,H)}
  if(cine.flash>0){ctx.fillStyle=`rgba(255,255,255,${cine.flash*.8})`;ctx.fillRect(0,0,W,H)}}
+function drawKart(x,y,col,tilt,smoke,hc){if(smoke)for(let i=0;i<5;i++){ctx.globalAlpha=.55-i*.09;const q=((clock*40+i*8)%8);R(x-26-i*9-q,y-6-i*2,6+i,6+i,'#eceff3')}ctx.globalAlpha=1;ctx.save();ctx.translate(Math.round(x),Math.round(y));ctx.rotate(tilt);
+ R(-23,-20,6,12,OUT);R(-22,-19,4,10,'#222');R(-19,-13,38,10,OUT);R(-18,-12,36,8,col);R(-18,-12,36,2,'rgba(255,255,255,.4)');R(13,-11,12,6,OUT);R(14,-10,10,5,col);R(22,-8,5,8,'#222');R(-14,-22,8,10,'#222');R(5,-20,2,7,'#222');
+ for(const wx of[-17,10]){R(wx-1,-9,11,11,OUT);R(wx,-8,9,9,'#111');R(wx+3,-5,3,3,'#9aa4b2')}
+ if(hc){R(-9,-34,12,12,OUT);R(-8,-33,10,10,hc);R(-1,-30,4,3,'#fff');R(-8,-23,10,8,hc)}ctx.restore()}
 function ring2b(cx,cy){for(let dy=-6;dy<=6;dy++){const hw=Math.round(Math.sqrt(36-dy*dy));R(cx-hw,cy+dy,hw*2+1,1,'#14181f')}}
 const C=(k,x,o)=>Object.assign({k,x},o||{});
 const CINE={
@@ -1054,12 +1085,25 @@ const CINE={
   {bg:'lair',fx:'flash',ch:[C(0,170),C(1,340,{f:-1}),C(4,380,{f:-1})],d:1.2},
   {bg:'lair',ch:[C(0,170),C(1,340,{x1:200,f:-1})],d:3,lines:[['YOL','Kaan, motorunun üstündeki silahı çekip tamirciyi etkisiz hale getirir. Gizem kurtulur ve Kaan’a doğru koşar.']]},
   {bg:'lair',heart:[[200,90]],ch:[C(0,190),C(1,214,{f:-1})],d:2.4}]};
-const MEMKEY={1:['m1','m2','m3'],2:['m4','m5','m6'],3:['g1','g2']};
+
+CINE.g3=[
+ {bg:'kart',vehicles:[{t:'kart',x:60,sp:120,col:'#d94f4f',k:2,drift:1},{t:'kart',x:300,sp:100,col:'#3fae5a',k:3,drift:1}],ch:[],d:3.6,lines:[['HATIRA','Dörtlü go-kart pistinde. Oğuz ile Ömer piste atılır; yan yan drift atıp birbirlerini sollarlar.'],['ÖMER','Bak Oğuz, drift böyle atılır!'],['OĞUZ','Ben seni şimdi sollarım!']]},
+ {bg:'kart',vehicles:[{t:'kart',ch:0,col:'#3a70c0'},{t:'kart',ch:1,col:'#e86a9a'}],ch:[C(0,-30,{x1:225,y:CY-12,p:'sit'}),C(1,300,{y:CY-12,p:'sit'})],d:2.8,lines:[['HATIRA','Sıra Kaan ile Gizem’de. İkisi de kendi kartına biner; Gizem pistte önden gider.'],['KAAN','Fren nerede? Fren nerede?!']]},
+ {bg:'kart',fx:'hit',vehicles:[{t:'kart',ch:0,col:'#3a70c0'},{t:'kart',ch:1,col:'#e86a9a'}],ch:[C(0,225,{x1:258,y:CY-12,p:'sit'}),C(1,300,{x1:335,y:CY-12,p:'sit',sh:1})],d:1.6},
+ {bg:'kart',vehicles:[{t:'kart',ch:0,col:'#3a70c0'},{t:'kart',ch:1,col:'#e86a9a'}],ch:[C(0,258,{y:CY-12,p:'sit'}),C(1,335,{y:CY-12,p:'sit',f:-1,sh:1})],emo:[[335,CY-76,'anger'],[258,CY-48,'cry']],lines:[['GİZEM','Ne yapıyorsun Kaan?! Beni öldürme gibi bir niyetin mi var?!'],['KAAN','(ağlayarak) Valla çok özür dilerim...']]},
+ {bg:'kart',vehicles:[{t:'kart',ch:0,col:'#3a70c0'},{t:'kart',ch:1,col:'#e86a9a'}],ch:[C(0,258,{y:CY-12,p:'sit'}),C(1,335,{y:CY-12,p:'sit',f:-1})],heart:[[297,90]],d:3.4,lines:[['HATIRA','Gizem’in kızgınlığı uzun sürmez; Kaan’ın halini görünce ikisi de kahkahayı basar.']]}];
+CINE.last=[
+ {bg:'incafe',ch:[C(0,200,{y:CY-14,p:'sit'}),C(1,280,{y:CY-14,p:'sit',f:-1})],tablet:[250,CY-48],d:3.6,lines:[['HATIRA','Son anı. Kafede Kaan ve Gizem aynı masada.'],['GİZEM','Kaan bak! Hikâyemizi oyun yapmışlar. Motor, çorba, hatta o go-kart kazası bile var!'],['KAAN','(gülerek) Beni ağlarken de göstermişler mi?'],['GİZEM','Hem de çok tatlı!']]},
+ {bg:'tabview',ch:[],d:3.2,lines:[['GİZEM','(tabletteki yolculuğa bakarak) Bunların hepsi biziz... Çok mutluyum Kaan.']]},
+ {bg:'incafe',ch:[C(0,200,{y:CY-14,p:'sit'}),C(1,280,{x1:226,y:CY-14,f:-1})],emo:[[213,CY-72,'spark']],heart:[[222,84],[248,70]],d:3.2,lines:[['HATIRA','Gizem tableti bırakıp Kaan’a sarılır.']]},
+ {bg:'incafe',ch:[C(0,200,{y:CY-14,p:'sit'}),C(1,226,{y:CY-14,f:-1})],bouquet:[190,CY-30],heart:[[222,84],[248,70],[196,64]],d:3.4,lines:[['KAAN','(Gizem’in arkasından buketi çıkararak) Bunu sana almıştım. Bu hikâyenin sonu değil, yeni bir başlangıcı.'],['GİZEM','(gülümseyerek) Çok güzel...']]},
+ {bg:'incafe',black:1,ch:[C(0,200,{y:CY-14,p:'sit'}),C(1,226,{y:CY-14,f:-1})],bouquet:[190,CY-30],heart:[[222,84],[248,70],[196,64]],d:3,lines:[['YOL','SON ❤️ — İki Kişilik Bir Yol']]}];
+const MEMKEY={1:['m1','m2','m3'],2:['m4','m5','m6'],3:['g1','g2','g3']};
 
 /* ================= GİRİŞ / KONTROL ================= */
 let last=0,acc=0;
 function frame(ts){if(!last)last=ts;let dt=Math.min(.1,(ts-last)/1000);last=ts;acc+=dt;let n=0;while(acc>=1/60&&n<6){tick(1/60);acc-=1/60;n++}if(n===6)acc=0;render();requestAnimationFrame(frame)}
-window.addEventListener('keydown',e=>{keys[e.code]=true;if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code))e.preventDefault();if(e.repeat)return;
+window.addEventListener('keydown',e=>{if(e.code.startsWith('Key')&&!e.repeat){codeBuf=(codeBuf+e.code.slice(3)).slice(-12);if(codeBuf.endsWith('KAANGIZEM'))openCheat()}if(e.code==='Escape'&&cheatOpen&&!cine){closeCheat();return}keys[e.code]=true;if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code))e.preventDefault();if(e.repeat)return;
  if(e.code==='KeyE'||e.code==='Enter'){if(scene==='title'&&el('overlay').style.display!=='none')return;interact()}
  if(cine&&e.code==='Escape'){skipCine();return}
  if(e.code==='KeyB'){if(garageOpen)closeGarage();else if(scene==='play'&&!locked&&!D.on&&!modal&&!cine)openGarage();return}
@@ -1079,7 +1123,7 @@ el('dialogue').addEventListener('pointerdown',()=>{if(D.on)nextLine()});canvas.a
 el('pclose').onclick=closePuzzle;bindBtn('fbtn',{tap:()=>shoot(),rep:150});bindBtn('cbtn',{tap:()=>useCar()});
 el('mute').onclick=()=>{audioInit();setMute(!muted)};
 function begin(n){audioInit();el('overlay').style.display='none';scene='play';startChapter(n)}
-el('start').onclick=()=>{resetProg();begin(0)};el('gclose').onclick=closeGarage;el('garBtn').onclick=()=>{if(garageOpen)closeGarage();else if(scene==='play'&&!locked&&!D.on&&!modal&&!cine)openGarage()};
+el('start').onclick=()=>{resetProg();begin(0)};el('gclose').onclick=closeGarage;el('cclose').onclick=closeCheat;el('chapter').onclick=()=>{const n=performance.now();tapN=n-tapT<1500?tapN+1:1;tapT=n;if(tapN>=5){tapN=0;openCheat()}};el('garBtn').onclick=()=>{if(garageOpen)closeGarage();else if(scene==='play'&&!locked&&!D.on&&!modal&&!cine)openGarage()};
 saved=load();if(saved!==null)el('continue').style.display='inline-block';
 el('continue').onclick=()=>begin(saved??0);
 el('restart').onclick=()=>{if(scene==='play'&&!locked&&!D.on)startChapter(chapter)};
